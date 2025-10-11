@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('supabase.auth.token', JSON.stringify(data));
                 messageDiv.style.color = 'green';
                 messageDiv.textContent = 'ログインに成功しました。';
-                window.location.href = 'index.html'; // 問題作成ページへ
+                window.location.href = '/index.html'; // 問題作成ページへ
             } else {
                 messageDiv.textContent = data.error || 'ログインに失敗しました。';
             }

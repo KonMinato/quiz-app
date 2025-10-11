@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アンケート</title>
+    <link rel="stylesheet" href="/survey.css">
+</head>
+<body>
+    <div class="container">
+        <h1>アンケートご協力のお願い</h1>
+        <p>この問題作成ツールの品質向上のため、ぜひご意見をお聞かせください。</p>
+
+        <form id="surveyForm">
+            <fieldset class="form-group">
+                <legend>あなたの立場を教えてください</legend>
+                <label><input type="radio" name="role" value="student" required> 学生</label>
+                <label><input type="radio" name="role" value="teacher"> 教員</label>
+                <label><input type="radio" name="role" value="other"> その他</label>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>よく利用する問題種別は何ですか？（複数選択可）</legend>
+                <label><input type="checkbox" name="usage" value="knowledge"> 知識問題</label>
+                <label><input type="checkbox" name="usage" value="programming"> プログラム作成問題</label>
+                <label><input type="checkbox" name="usage" value="binary"> 進数問題</label>
+                <label><input type="checkbox" name="usage" value="calculation"> 計算問題</label>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>このツールの総合的な満足度を教えてください</legend>
+                <div class="rating">
+                    <span>不満</span>
+                    <label><input type="radio" name="satisfaction" value="1"> 1</label>
+                    <label><input type="radio" name="satisfaction" value="2"> 2</label>
+                    <label><input type="radio" name="satisfaction" value="3"> 3</label>
+                    <label><input type="radio" name="satisfaction" value="4"> 4</label>
+                    <label><input type="radio" name="satisfaction" value="5"> 5</label>
+                    <span>満足</span>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="comments">ご意見・ご感想があれば自由にお書きください</label>
+                <textarea id="comments" name="comments" rows="5"></textarea>
+            </div>
+
+            <button type="submit">アンケートを送信する</button>
+        </form>
+
+        <div id="thankYouMessage" class="thank-you-message" style="display: none;">
+            <h2>ご協力ありがとうございました！</h2>
+            <p>貴重なご意見をいただき、感謝いたします。</p>
+        </div>
+
+    </div>
+    <a href="/toppage.html" class="return">トップへ戻る</a>
+    <script src="/survey.js"></script>
+</body>
+</html>

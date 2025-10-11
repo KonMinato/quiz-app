@@ -69,12 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const calculationUnits = ["27 統計量とデータの尺度"];
 
     const filePathMap = {
-        "01 情報と情報社会": "word/word1/word1_01.html", "02 問題解決の考え方": "word/word1/word1_02.html", "03 法規による安全対策": "word/word1/word1_03.html", "04 個人情報とその扱い": "word/word1/word1_04.html", "05 知的財産権の概要と産業財産権": "word/word1/word1_05.html", "06 著作権": "word/word1/word1_06.html",
-        "07 コミュニケーションとメディア": "word/word2/word2_07.html", "08 情報デザインと表現の工夫": "word/word2/word2_08.html", "09 Webページと情報デザイン": "word/word2/word2_09.html",
-        "10 デジタル情報の特徴": "word/word3/word3_10.html", "11 数値と文字の表現": "word/word3/word3_11.html", "12 演算の仕組み": "word/word3/word3_12.html", "13 音の表現": "word/word3/word3_13.html", "14 画像の表現": "word/word3/word3_14.html", "15 コンピュータの構成と動作": "word/word3/word3_15.html", "16 コンピュータの性能": "word/word3/word3_16.html",
-        "17 ネットワークとプロトコル": "word/word4/word4_17.html","18 インターネットの仕組み": "word/word4/word4_18.html", "19 Webページの閲覧とメールの送受信": "word/word4/word4_19.html", "20 情報システム": "word/word4/word4_20.html", "21 情報システムを支えるデータベース": "word/word4/word4_21.html", "22 データベースの仕組み": "word/word4/word4_22.html", "23 個人による安全対策": "word/word4/word4_23.html", "24 安全のための情報技術": "word/word4/word4_24.html",
-        "25 データの収集と整理": "word/word5/word5_25.html", "26 ソフトウェアを利用したデータの処理": "word/word5/word5_26.html", "27 統計量とデータの尺度": "word/word5/word5_27.html", "28 時系列分析と回帰分析": "word/word5/word5_28.html", "29 モデル化とシミュレーション": "word/word5/word5_29.html",
-        "30 アルゴリズムとプログラミング": "word/word6/word6_30.html", "31 プログラミングの基本": "word/word6/word6_31.html", "32 配列": "word/word6/word6_32.html", "33 関数": "word/word6/word6_33.html", "34 探索のプログラム": "word/word6/word6_34.html", "35 整列のプログラム": "word/word6/word6_35.html"
+        "01 情報と情報社会": "/word/word1/word1_01.html", "02 問題解決の考え方": "/word/word1/word1_02.html", "03 法規による安全対策": "/word/word1/word1_03.html", "04 個人情報とその扱い": "/word/word1/word1_04.html", "05 知的財産権の概要と産業財産権": "/word/word1/word1_05.html", "06 著作権": "/word/word1/word1_06.html",
+        "07 コミュニケーションとメディア": "/word/word2/word2_07.html", "08 情報デザインと表現の工夫": "/word/word2/word2_08.html", "09 Webページと情報デザイン": "/word/word2/word2_09.html",
+        "10 デジタル情報の特徴": "/word/word3/word3_10.html", "11 数値と文字の表現": "/word/word3/word3_11.html", "12 演算の仕組み": "/word/word3/word3_12.html", "13 音の表現": "/word/word3/word3_13.html", "14 画像の表現": "/word/word3/word3_14.html", "15 コンピュータの構成と動作": "/word/word3/word3_15.html", "16 コンピュータの性能": "/word/word3/word3_16.html",
+        "17 ネットワークとプロトコル": "/word/word4/word4_17.html","18 インターネットの仕組み": "/word/word4/word4_18.html", "19 Webページの閲覧とメールの送受信": "/word/word4/word4_19.html", "20 情報システム": "/word/word4/word4_20.html", "21 情報システムを支えるデータベース": "/word/word4/word4_21.html", "22 データベースの仕組み": "/word/word4/word4_22.html", "23 個人による安全対策": "/word/word4/word4_23.html", "24 安全のための情報技術": "/word/word4/word4_24.html",
+        "25 データの収集と整理": "/word/word5/word5_25.html", "26 ソフトウェアを利用したデータの処理": "/word/word5/word5_26.html", "27 統計量とデータの尺度": "/word/word5/word5_27.html", "28 時系列分析と回帰分析": "/word/word5/word5_28.html", "29 モデル化とシミュレーション": "/word/word5/word5_29.html",
+        "30 アルゴリズムとプログラミング": "/word/word6/word6_30.html", "31 プログラミングの基本": "/word/word6/word6_31.html", "32 配列": "/word/word6/word6_32.html", "33 関数": "/word/word6/word6_33.html", "34 探索のプログラム": "/word/word6/word6_34.html", "35 整列のプログラム": "/word/word6/word6_35.html"
     };
     
     const promptMap = {

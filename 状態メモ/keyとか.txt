@@ -15,3 +15,8 @@ ngrok http 3000
 
 supabaseのkey
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoZWhzaXV3ZW1vcHN0b3lieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxNDc3NjYsImV4cCI6MjA3NTcyMzc2Nn0.xMKNohysHncstsIO_BxEAI-eHfIPs2f7KC3xTsCT_H4
+
+
+git add .
+git commit -m "Fix file paths for deployment"
+git push

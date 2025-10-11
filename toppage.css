@@ -1,0 +1,134 @@
+/* 全ての要素で、paddingとborderを幅の内側に含めるようにする */
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+/* 基本設定 */
+body {
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.container {
+    max-width: 960px;
+    margin: 10px auto;
+    padding: 20px;
+}
+
+/* 見出し */
+.main-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 20px;
+    font-weight: normal;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* グリッドレイアウト */
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+/* リンクボックス */
+.link-box {
+    display: flex;
+    flex-direction: column;
+    /* height: 120px; を削除しました */
+    background-color: #ffffff;
+    color: #34495e;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* justify-content と align-items を削除し、テキストが左上に揃うようにしました */
+}
+
+/* リンクボックスのホバー効果 */
+.link-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* リンクボックス内のテキスト */
+.link-box .chapter {
+    font-weight: bold;
+    font-size: 16px;
+    color: #3498db;
+    /* テキストを左揃えにするため align-items を削除したので、text-align: left を追加 */
+    width: 100%;
+    text-align: left;
+}
+
+.link-box .box-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+    /* テキストを左揃えにするため align-items を削除したので、text-align: left を追加 */
+    width: 100%;
+    text-align: left;
+}
+
+/* 説明文のスタイル */
+.description {
+    font-size: 14px;
+    color: #555;
+    margin: 15px 0 0 0; /* 上の余白を少し調整 */
+    line-height: 1.6;
+    flex-grow: 1; 
+}
+
+
+/* --- スマートフォン対応 (2列表示) --- */
+/* 画面幅が768px以下の場合に適用 */
+@media (max-width: 768px) {
+
+    .container {
+        margin: 0;
+        padding: 20px;
+    }
+
+    .main-title {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .link-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 1列表示に */
+        gap: 20px;
+    }
+
+    .link-box {
+        /* height: 100px; を削除しました */
+        padding: 20px; /* パディングを少し戻します */
+    }
+
+    .link-box .box-title {
+        font-size: 20px;
+    }
+
+    .link-box:hover {
+        transform: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}

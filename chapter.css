@@ -1,0 +1,240 @@
+/* 全ての要素で、paddingとborderを幅の内側に含めるようにする */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* 基本設定 */
+body {
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    /* 戻るボタンの分の余白を確保 */
+    padding-bottom: 80px; 
+}
+
+/* コンテナと見出し */
+.container {
+    max-width: 800px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+}
+
+.main-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-weight: normal;
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* アコーディオンメニュー全体 */
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-group {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.menu-group:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* 開閉ボタン */
+.accordion-toggle {
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    border: none;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    box-shadow: none;
+    transform: none;
+}
+.accordion-toggle:hover {
+    background-color: #f8f9fa;
+    transform: none;
+}
+
+/* 矢印アイコン */
+.accordion-toggle::after {
+    content: '▼';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #3498db;
+    transition: transform 0.3s ease;
+}
+
+/* 開いたときの矢印 */
+.accordion-toggle.active::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* サブメニュー（説明・練習問題） */
+.menu-buttons {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out, padding 0.4s ease-out;
+}
+
+.menu-buttons.show {
+    max-height: 250px; /* 十分な高さを設定 */
+    opacity: 1;
+    padding: 0px 20px 20px 20px;
+}
+
+.button-wrapper {
+    display: flex;
+    gap: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+}
+
+.button-wrapper button {
+    padding: 10px 20px;
+    background-color: #eaf4fc;
+    color: #3498db;
+    border: 1px solid #cce3f6;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.button-wrapper button:hover {
+    background-color: #3498db;
+    color: white;
+    transform: none;
+}
+.button-wrapper button.practice {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+.button-wrapper button.practice:hover {
+    background-color: #0c5460;
+    color: white;
+}
+
+
+/* トップへ戻るボタン */
+.return {
+    position: fixed;
+    bottom: 20px;
+    left: 88%;
+    transform: translateX(-50%);
+    padding: 12px 25px;
+    background-color: #2c3e50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.return:hover{
+    transform: translate(-50%, -5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background-color: #34495e;
+}
+
+
+/* --- スマートフォン対応 --- */
+/* 画面幅が768px以下の場合に適用 */
+@media (max-width: 768px) {
+    
+    .container {
+        /* 上下の余白を少し詰める */
+        margin: 15px auto 30px;
+        padding: 0 15px;
+    }
+
+    .main-title {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    
+    .accordion-toggle {
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .accordion-toggle::after {
+        right: 15px;
+    }
+    
+    .menu-buttons.show {
+        padding: 0px 15px 15px 15px;
+    }
+
+    .button-wrapper button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .button-wrapper {
+        flex-wrap: wrap; /* PCでも幅が足りなければ折り返すように */
+    }
+
+    @media (max-width: 768px) {
+        .button-wrapper {
+            flex-direction: column; /* スマホでは縦並びにする */
+            gap: 10px; /* ボタン間の隙間を調整 */
+        }
+        .button-wrapper button {
+            width: 100%; /* ボタンの幅を親要素いっぱいに広げる */
+            text-align: center;
+        }
+    }
+
+    /* 「トップへ戻る」ボタンの位置を調整 */
+    .return {
+        /* PC用の left と transform を解除 */
+        left: auto;
+        transform: none;
+
+        /* 画面右下に配置 */
+        right: 15px;
+        bottom: 15px;
+        padding: 10px 20px;
+    }
+
+    /* スマホではホバー効果は不要 */
+    .return:hover {
+        transform: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        background-color: #2c3e50;
+    }
+}
