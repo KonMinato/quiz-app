@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word6.css">
+    <title>プログラミング＿配列</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３２　配列</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>配列</h2>
+            </div>
+            <div class="details">
+                <p>配列(リスト)：データの数が多い場合に、異なる名前の変数を複数用意することなく、複数の値を1つの名前(配列名)によって管理する仕組み</p>
+                
+                <p>要素：配列の中の各変数</p>
+                <p>添字(インデックス)：要素の番号</p>
+                <p>一次元配列：配列の要素を1つの添字で指定する配列</p>
+                <p>二次元配列：2つの添字で指定する配列</p>
+                <p>一次元配列の宣言と値の代入には、</p>
+                <ul>
+                    <li>
+                        宣言と要素の代入を同時に行う方法
+                        <ul><li>a=[3,63,27]</li></ul>
+                    </li>
+                    <li>
+                        からの配列を宣言し、appendを使って配列末尾へ要素を追加する方法
+                        <ul><li>a=[]</li><li>a.append(3)</li><li>a.append(63)</li><li>a.append(27)</li></ul>
+                    </li>
+                </ul>
+                <p>などがある。</p>
+            </div>
+        </section>
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題1：一次元配列</h2>
+                <h3>下のように表示するプログラムを作成しなさい</h3>
+                <h3>
+                    3<br>63<br>27
+                </h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　a=[3,63,27]
+                    <br>②　for i in range(0,3,1):
+                    <br>③　　print(a[i])
+                </p>
+                <p>
+                    ①　a[0]～a[2]の設定
+                    ②　i=0,1,2
+                    ③　a[i]の表示
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>②～③行目を「print(a)」に変更すると、下のようになる。</p>
+                <p>[3,63,37]</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題2：二次元配列</h2>
+                <h3>下のように表示するプログラムを作成しなさい。</h3>
+                <h3>あいうえお
+                    <br>かきくけこ
+                    <br>さしすせそ
+                </h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　a=[
+                    <br>②　　['あ','い','う','え','お']
+                    <br>③　　['か','き','く','け','こ']
+                    <br>④　　['さ','し','す','せ','そ']
+                    <br>⑤　]
+                    <br>⑥　for i in range(0,3,1):
+                    <br>⑦　　for j in range(0,5,1):
+                    <br>⑧　　　print(a[i][j],end='')
+                    <br>⑨　　print('')
+                </p>
+                <p>
+                    ①～⑤　二次元配列の設定
+                    <br>⑥　i←0,1,2
+                    <br>⑦　j←0,1,2,3,4
+                    <br>⑧　a[i,j]と半角空白の表示
+                    <br>⑨　改行
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>print関数は、自動的に末尾に改行を含んで表示するため、改行を必要としない場合は、⑧行目にあるendオプションを使う。
+                    「''」はシングルクォーテーション2つだけである。
+                </p>
+            </div>
+        </section>
+
+                <section class="topic">
+            <div class="topic-header">
+                <h2>例題3：配列への数値の複数入力</h2>
+                <h3>整数である数値を半角の「,」で区切りながらキーボードから複数入力したとき、その和を表示するプログラムを作成しなさい。</h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　b=input('数値の複数入力')
+                    <br>②　a=b.split(',')
+                    <br>③　sum=0
+                    <br>④　for i in range(0,len(a),1):
+                    <br>⑤　　sum=sum+int(a[i])
+                    <br>⑥　print('合計= ',sum)
+                </p>
+                <p>
+                    ①　入力文字列をbに代入
+                    <br>②　変数bから「,」で分割し、配列aに代入
+                    <br>③　変数sumに0を代入
+                    <br>④　i←0,1,…,[要素数-1]
+                    <br>⑤　文字列を数値に変換しsumに加算
+                    <br>⑥　sumを表示
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>「split」は変数を区切り文字(この場合は「,」)で分割した文字列を配列要素に入れる。「len(a)」は、配列aの要素数を得る関数である。</p>
+                <p>b=input('数値の複数入力') a=b.split(',')</p>
+                <p>数値の複数入力 3,63,27,16,88　合計=197</p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="array.html" class="show-button">配列を確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

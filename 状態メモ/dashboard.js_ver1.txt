@@ -1,0 +1,102 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // テーブルとコントロール要素の取得
+    const knowledgeTableBody = document.getElementById('knowledgeScoreTableBody');
+    const programmingTableBody = document.getElementById('programmingScoreTableBody');
+    const calcTableBody = document.getElementById('calcScoreTableBody'); // ★ 追加
+    const knowledgeSortSelect = document.getElementById('knowledgeSort');
+    const programmingSortSelect = document.getElementById('programmingSort');
+    const calcSortSelect = document.getElementById('calcSort'); // ★ 追加
+    const resetButton = document.getElementById('resetButton');
+
+    let allScores = {}; // スコアデータを保持する変数
+
+    // ソートとテーブル描画を行うメイン関数
+    function renderTables() {
+        // スコアデータを問題種別で分類
+        const knowledgeScores = Object.values(allScores).filter(s => s.type === '知識問題');
+        const programmingScores = Object.values(allScores).filter(s => s.type === 'プログラム作成問題');
+        // ★「計算問題」と「進数問題」をまとめる
+        const calcScores = Object.values(allScores).filter(s => s.type === '計算問題' || s.type === '進数問題');
+
+        // 各テーブルを描画
+        populateTable(knowledgeTableBody, knowledgeScores, knowledgeSortSelect.value);
+        populateTable(programmingTableBody, programmingScores, programmingSortSelect.value);
+        populateTable(calcTableBody, calcScores, calcSortSelect.value); // ★ 追加
+    }
+
+    // テーブルにデータを描画するヘルパー関数
+    const populateTable = (tableBody, scoreArray, sortType) => {
+        tableBody.innerHTML = ''; // テーブルをクリア
+
+        if (scoreArray.length === 0) {
+            const row = tableBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 4;
+            cell.textContent = 'まだ学習記録がありません。';
+            cell.style.textAlign = 'center';
+            return;
+        }
+
+        // --- ソート処理 ---
+        const chapterOrder = { "情報社会": 1, "情報デザイン": 2, "デジタル": 3, "ネットワーク": 4, "問題解決": 5, "プログラミング": 6 };
+        
+        scoreArray.sort((a, b) => {
+            const accuracyA = a.total > 0 ? a.correct / a.total : -1;
+            const accuracyB = b.total > 0 ? b.correct / b.total : -1;
+
+            switch (sortType) {
+                case 'accuracy-asc':
+                    return accuracyA - accuracyB;
+                case 'accuracy-desc':
+                    return accuracyB - accuracyA;
+                case 'accuracy-by-chapter-asc':
+                    const orderA_asc = chapterOrder[a.chapter] || 99;
+                    const orderB_asc = chapterOrder[b.chapter] || 99;
+                    if (orderA_asc !== orderB_asc) return orderA_asc - orderB_asc;
+                    return accuracyA - accuracyB;
+                case 'accuracy-by-chapter-desc':
+                    const orderA_desc = chapterOrder[a.chapter] || 99;
+                    const orderB_desc = chapterOrder[b.chapter] || 99;
+                    if (orderA_desc !== orderB_desc) return orderA_desc - orderB_desc;
+                    return accuracyB - accuracyA;
+                case 'default':
+                default:
+                    const defaultOrderA = chapterOrder[a.chapter] || 99;
+                    const defaultOrderB = chapterOrder[b.chapter] || 99;
+                    if (defaultOrderA !== defaultOrderB) return defaultOrderA - defaultOrderB;
+                    return a.tangen.localeCompare(b.tangen);
+            }
+        });
+
+        // --- テーブル行の生成 ---
+        scoreArray.forEach(scoreData => {
+            const correct = scoreData.correct;
+            const total = scoreData.total;
+            const accuracy = total > 0 ? ((correct / total) * 100).toFixed(1) : 0;
+
+            const row = tableBody.insertRow();
+            row.insertCell().textContent = scoreData.chapter;
+            row.insertCell().textContent = scoreData.tangen;
+            row.insertCell().textContent = `${correct} / ${total}`;
+            row.insertCell().textContent = `${accuracy}%`;
+        });
+    };
+
+    // 並び替えメニュー変更時のイベントリスナー
+    knowledgeSortSelect.addEventListener('change', renderTables);
+    programmingSortSelect.addEventListener('change', renderTables);
+    calcSortSelect.addEventListener('change', renderTables); // ★ 追加
+
+    // リセットボタンの処理
+    resetButton.addEventListener('click', () => {
+        if (confirm('本当にすべての学習記録をリセットしますか？この操作は元に戻せません。')) {
+            localStorage.removeItem('quizScores');
+            allScores = {};
+            renderTables();
+        }
+    });
+
+    // --- 初期データの読み込みと表示 ---
+    allScores = JSON.parse(localStorage.getItem('quizScores')) || {};
+    renderTables();
+});

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>論理ゲートシミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .gate-selector {
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .gate-selector label {
+            padding: 10px 20px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .gate-selector input[type="radio"] {
+            display: none;
+        }
+        .gate-selector input[type="radio"]:checked + label {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .simulator {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 30px;
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .io-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .switch-label {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .switch {
+            width: 60px;
+            height: 30px;
+            background-color: #bdc3c7;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s;
+        }
+        .switch.on {
+            background-color: #2ecc71;
+        }
+        .switch.on::after {
+            transform: translateX(30px);
+        }
+        
+        .gate-visual {
+            font-size: 4em;
+            font-weight: bold;
+            color: #3498db;
+            width: 120px;
+        }
+
+        .output-lamp {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #7f8c8d;
+            background-color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #7f8c8d;
+            transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+        }
+        .output-lamp.on {
+            background-color: #f1c40f;
+            box-shadow: 0 0 25px #f1c40f;
+            color: white;
+        }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>論理ゲートシミュレーター</h1>
+
+    <div class="gate-selector" id="gate-selector">
+        <input type="radio" id="and" name="gate" value="AND" checked>
+        <label for="and">AND</label>
+        
+        <input type="radio" id="or" name="gate" value="OR">
+        <label for="or">OR</label>
+
+        <input type="radio" id="not" name="gate" value="NOT">
+        <label for="not">NOT</label>
+    </div>
+
+    <div class="simulator">
+        <div class="io-panel">
+            <div class="switch-container" id="switch-a-container">
+                <span class="switch-label">A</span>
+                <div class="switch" id="switch-a"></div>
+            </div>
+            <div class="switch-container" id="switch-b-container">
+                <span class="switch-label">B</span>
+                <div class="switch" id="switch-b"></div>
+            </div>
+        </div>
+        
+        <div class="gate-visual" id="gate-visual">AND</div>
+
+        <div class="output-lamp" id="output-lamp">OFF</div>
+    </div>
+
+    <a href="word3_12.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const gateSelector = document.getElementById('gate-selector');
+    const switchA = document.getElementById('switch-a');
+    const switchB = document.getElementById('switch-b');
+    const switchBContainer = document.getElementById('switch-b-container');
+    const gateVisual = document.getElementById('gate-visual');
+    const outputLamp = document.getElementById('output-lamp');
+
+    function calculateOutput() {
+        const selectedGate = document.querySelector('input[name="gate"]:checked').value;
+        const inputA = switchA.classList.contains('on');
+        const inputB = switchB.classList.contains('on');
+        
+        let result = false;
+
+        switch (selectedGate) {
+            case 'AND':
+                result = inputA && inputB;
+                break;
+            case 'OR':
+                result = inputA || inputB;
+                break;
+            case 'NOT':
+                result = !inputA;
+                break;
+        }
+
+        // 出力ランプの表示を更新
+        if (result) {
+            outputLamp.classList.add('on');
+            outputLamp.textContent = 'ON';
+        } else {
+            outputLamp.classList.remove('on');
+            outputLamp.textContent = 'OFF';
+        }
+    }
+
+    function updateUI() {
+        const selectedGate = document.querySelector('input[name="gate"]:checked').value;
+        gateVisual.textContent = selectedGate;
+
+        // NOTゲートの時は入力Bを隠す
+        if (selectedGate === 'NOT') {
+            switchBContainer.style.display = 'none';
+        } else {
+            switchBContainer.style.display = 'flex';
+        }
+        calculateOutput();
+    }
+
+    // イベントリスナー
+    gateSelector.addEventListener('change', updateUI);
+    switchA.addEventListener('click', () => {
+        switchA.classList.toggle('on');
+        calculateOutput();
+    });
+    switchB.addEventListener('click', () => {
+        switchB.classList.toggle('on');
+        calculateOutput();
+    });
+
+    // 初期化
+    updateUI();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>ネットワーク＿データベースの仕組み</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２２　データベースの仕組み</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データベースの特徴</h2>
+            </div>
+            <div class="details">
+                <p>データベースの分類</p>
+                <ul>
+                    <li><span class="term">階層型</span></li>
+                    <li><span class="term">ネットワーク型</span></li>
+                    <li><span class="term">リレーショナル型</span></li>
+                </ul>
+                <p><strong class="term">リレーショナルデータベース</strong>：今日の情報システムで最も利用されるもの　データを内容ごとに分類した<strong class="hide-me">テーブル(表)</strong>に格納し、
+                        表は<strong class="hide-me">レコード(行あるいは組)</strong>と<strong class="hide-me">フィールド(列あるいは属性)</strong>の二次元で構成され、行と列を指定することでデータを特定することができる
+                </p>
+                
+                <p>リレーショナルデータベースは複数の表で構成されており、<span class="hide-me">それらの表を共通する項目で関連づける</span>こと(<strong class="term">リレーションシップ</strong>)によってデータを統合的に扱うことができる。</p> 
+                
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>リレーショナルデータベースのデータ操作</h2>
+            </div>
+            <div class="details">
+                <p>リレーショナルデータベースの大きな特徴は、表に対して結合、選択、射影という3つの操作(<strong class="term">関係演算</strong>)を<strong class="term">SQL</strong>などのデータ操作言語で行い、さまざまな形でデータを扱えることである。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="term green">結合</td><td><span class="hide-me">複数の表を共通する項目で結び付け一つの表として表示する</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term green">選択</td><td><span class="hide-me">与えた条件に合う行を取り出して表として表示する</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term green">射影</td><td><span class="hide-me">表の中から一部の列を抽出して表として表示する</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>結合、選択、射影で操作された表は<strong class="term">仮想表(ビュー)</strong>として定義することができる。仮想表は表と同じように扱えるが、実データが存在
+                        しないためセキュリティを高めたり、複雑な表を簡便に利用したりする目的で利用される。
+                </p>
+                
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>SQLでのデータ操作</h2>
+            </div>
+            <div class="details">
+                <p>表のデータを操作する結合や選択、射影の操作は、SQLでは次のような<strong class="term">SELECT</strong>という構文を用いて指定する。</p>
+                <p>SELECT　表名, 列名,…　FROM　対象となる表　WHERE 条件:</p>
+                
+            </div>
+        </section>
+        
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

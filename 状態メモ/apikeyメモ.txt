@@ -1,0 +1,6 @@
+apikey
+https://console.cloud.google.com/apis/credentials?authuser=0&project=gen-lang-client-0000340657
+
+Gemini API プロジェクト	gen-lang-client-0000340657
+
+icloudの方

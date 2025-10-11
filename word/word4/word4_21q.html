@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>ネットワーク＿情報システムを支えるデータベース</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２１　情報システムを支えるデータベース</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データベースとその役割</h2>
+            </div>
+            <div class="details">
+                <p>銀行における顧客や口座の管理情報やPOSシステムで扱う商品情報などは膨大であるため、<strong class="term">データベース</strong>を利用してデータを管理している。
+                        データベースは、<span class="hide-me">大量のデータを体系的に整理し、容易に検索・抽出などの再利用をできるようにしたもの</span>であり、情報システムではデータベースが稼働していることが多い。
+                        <br>一般に、データベースは<span class="hide-me">情報システムと独立しており</span>(<strong class="term">データの独立性</strong>)、蓄積されたデータは、複数の利用者が同時に利用しても
+                        <span class="hide-me">データの整合性</span>が保たれる(<strong class="term">データの一貫性</strong>)。また、重要な情報資産であるデータベースをシステム障害や不正アクセスから守るために、
+                        <span class="hide-me">障害対策</span>(<strong class="term">データの可用性</strong>)や<span class="hide-me">安全対策</span>(<strong class="term">データの機密性</strong>)が施されている。これらの機能は、<strong class="term">DBMS(データベース管理システム)</strong>で行われており、
+                        データベースへの要求はすべてこのデータベース管理システムを介して行われ、利用者は複雑なデータベースの仕組みを意識することなく利用できる。
+                </p>
+                
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データベースサーバとの連携</h2>
+            </div>
+            <div class="details">
+                <p>データベースは、サーバとしてほかのサーバシステムやアプリケーションと連携する形で利用されることが多い。
+                        例えば、ECサイトでは、データベースサーバはWebサーバと連携して商品情報や販売情報などのデータを蓄積したり提供したりしている。
+                        また、ECサイトの運営者は、同じデータベースのデータをアプリケーションサーバを通して販売管理や顧客管理に利用したり、蓄積されたデータを分析し、販売戦略に利用したりしている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>蓄積されたデータの活用</h2>
+            </div>
+            <div class="details">
+                <p>インターネットを利用した商品の購入履歴やWebページの閲覧履歴、検索履歴など利用者によって日々生成されるデータは膨大になっている。
+                        また、インターネットを利用しなくても企業別のポイントカードや共通ポイントカードあるいは電子マネーを利用することによって、顧客一人ひとり
+                        の購買行動などが詳細なデータとして蓄積されている。
+                </p>
+                <p><strong class="term">ビッグデータ</strong>：<span class="hide-me">インターネットの普及と情報技術の進歩によって生まれた、膨大かつ多様なデータ</span></p>
+                <p><strong class="term">オープンデータ</strong>：<span class="hide-me">おもに行政機関から提供される気象データや国勢調査結果などのデータ</span></p>
+                <p>これまで企業などでは、そのデータ量と更新頻度、多様性から活用できなかった。しかし、今日では、これら膨大なデータを高速に処理し、
+                        人工知能技術によって分析・予測することが可能となり、これまで勘や経験に頼っていた企業のビジネスのあり方や私たちの生活に大きな変革をもたらしている。
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

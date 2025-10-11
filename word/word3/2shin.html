@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>二進数コンバーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        /* ▼▼▼【変更点1】説明文のスタイルを追加 ▼▼▼ */
+        .description {
+            margin: -10px auto 25px auto;
+            color: #555;
+            line-height: 1.7;
+            max-width: 500px;
+        }
+        .converter-group {
+            margin: 25px 0;
+        }
+        label {
+            display: block;
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+        input[type="number"], input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            font-size: 1.5em;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        input[type="text"] {
+            background-color: #ecf0f1;
+            color: #555;
+        }
+        .visualizer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .bit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .bulb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #bdc3c7;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .bulb.on {
+            background-color: #f1c40f;
+            box-shadow: 0 0 15px #f1c40f;
+        }
+        .bit-value {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>二進数コンバーター＆計算機</h1>
+
+    <p class="description">
+        このツールでは、10進数と2進数の関係を双方向で体験できます。<br>
+        上のボックスに<strong>10進数</strong>を入力すると下の電球が点灯し、逆に下の<strong>電球</strong>をクリックすると対応する10進数が計算されます。
+    </p>
+    
+    <div class="converter-group">
+        <label for="decimal-input">10進数 (0-255)</label>
+        <input type="number" id="decimal-input" min="0" max="255" value="0">
+    </div>
+
+    <div class="converter-group">
+        <label for="binary-output">2進数 (8ビット)</label>
+        <input type="text" id="binary-output" readonly>
+    </div>
+
+    <div class="visualizer" id="visualizer">
+        </div>
+    
+    <a href="word3_11.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const decimalInput = document.getElementById('decimal-input');
+    const binaryOutput = document.getElementById('binary-output');
+    const visualizer = document.getElementById('visualizer');
+    
+    for (let i = 7; i >= 0; i--) {
+        const bitValue = Math.pow(2, i);
+        
+        const bitDiv = document.createElement('div');
+        bitDiv.classList.add('bit');
+        
+        const bulb = document.createElement('div');
+        bulb.classList.add('bulb');
+        bulb.dataset.value = bitValue;
+        
+        const valueSpan = document.createElement('span');
+        valueSpan.classList.add('bit-value');
+        valueSpan.textContent = bitValue;
+        
+        bitDiv.appendChild(bulb);
+        bitDiv.appendChild(valueSpan);
+        visualizer.appendChild(bitDiv);
+    }
+
+    function updateFromDecimal(value) {
+        if (value < 0 || value > 255) return;
+        
+        const binaryString = value.toString(2).padStart(8, '0');
+        binaryOutput.value = binaryString;
+        
+        const bulbs = document.querySelectorAll('.bulb');
+        for (let i = 0; i < 8; i++) {
+            if (binaryString[i] === '1') {
+                bulbs[i].classList.add('on');
+            } else {
+                bulbs[i].classList.remove('on');
+            }
+        }
+    }
+
+    function updateFromVisual() {
+        let decimalValue = 0;
+        const bulbs = document.querySelectorAll('.bulb');
+        bulbs.forEach(bulb => {
+            if (bulb.classList.contains('on')) {
+                decimalValue += parseInt(bulb.dataset.value);
+            }
+        });
+        decimalInput.value = decimalValue;
+        updateFromDecimal(decimalValue); 
+    }
+
+    decimalInput.addEventListener('input', () => {
+        let value = parseInt(decimalInput.value);
+        if (isNaN(value)) value = 0;
+        if (value > 255) value = 255;
+        if (value < 0) value = 0;
+        decimalInput.value = value;
+        updateFromDecimal(value);
+    });
+
+    visualizer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('bulb')) {
+            e.target.classList.toggle('on');
+            updateFromVisual();
+        }
+    });
+
+    updateFromDecimal(0);
+});
+</script>
+
+</body>
+</html>

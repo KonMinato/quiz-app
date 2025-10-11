@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>関数と変数スコープ体験シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="function.css">
+</head>
+<body>
+<div class="container">
+    <div class="column left-panel">
+        <div class="panel">
+            <h1>自販機シミュレーター</h1>
+            <div class="control-group">
+                <label for="money-input">投入金額（実引数1）</label>
+                <select id="money-input">
+                    <option value="130">130円</option>
+                    <option value="150" selected>150円</option>
+                    <option value="500">500円</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="juice-select">買いたいジュース（実引数2）</label>
+                <select id="juice-select">
+                    <option value="お茶">お茶 (130円)</option>
+                    <option value="サイダー">サイダー (150円)</option>
+                </select>
+            </div>
+            <button id="buy-btn">購入する</button>
+        </div>
+
+        <div class="panel status-panel">
+            <h2>ステータス</h2>
+            <p id="status-text">上のボタンから購入するジュースを選んで、「購入する」ボタンを押してください。</p>
+        </div>
+
+        <div class="panel code-panel">
+            <h2 class="code-toggle-btn" id="code-toggle-btn">
+                <span>Pythonコード</span>
+                <span class="arrow">▼</span>
+            </h2>
+            <div class="code-wrapper" id="code-wrapper">
+                <div class="code-display" id="code-display">
+                    <span class="code-line" id="line1"># グローバル変数</span>
+                    <span class="code-line" id="line2">total_sales = 0</span>
+                    <span class="code-line" id="line3"></span>
+                    <span class="code-line" id="line4"># 自販機関数</span>
+                    <span class="code-line" id="line5">def vending_machine(money, juice):</span>
+                    <span class="code-line" id="line6">  price = 0</span>
+                    <span class="code-line" id="line7">  if juice == "お茶": price = 130</span>
+                    <span class="code-line" id="line8">  else: price = 150</span>
+                    <span class="code-line" id="line9">  change = money - price</span>
+                    <span class="code-line" id="line10">  # global total_sales を使って更新</span>
+                    <span class="code-line" id="line11">  return f"{juice}と おつり{change}円"</span>
+                    <span class="code-line" id="line12"></span>
+                    <span class="code-line" id="line13"># メインプログラム</span>
+                    <span class="code-line" id="line14">my_money = 150</span>
+                    <span class="code-line" id="line15">my_choice = "お茶"</span>
+                    <span class="code-line" id="line16">result = vending_machine(my_money, my_choice)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="column right-panel">
+        <div class="scopes-container">
+            <div class="scope global-scope" id="global-scope">
+                <h3>プログラム全体（グローバルスコープ）</h3>
+                <div class="variable" id="var-g-money"><span class="name">my_money</span><div class="value">...</div></div>
+                <div class="variable" id="var-g-juice"><span class="name">my_choice</span><div class="value">...</div></div>
+                <div class="variable" id="var-g-result"><span class="name">result (戻り値)</span><div class="value">...</div></div>
+                <div class="variable" id="var-g-sales"><span class="name">total_sales (グローバル変数)</span><div class="value">0</div></div>
+            </div>
+            <div class="scope function-scope" id="function-scope">
+                <h3>関数 `vending_machine` の中（ローカルスコープ）</h3>
+                <div class="variable" id="var-l-money"><span class="name">money (仮引数)</span><div class="value">...</div></div>
+                <div class="variable" id="var-l-juice"><span class="name">juice (仮引数)</span><div class="value">...</div></div>
+                <div class="variable" id="var-l-price"><span class="name">price (ローカル変数)</span><div class="value">...</div></div>
+                <div class="variable" id="var-l-change"><span class="name">change (ローカル変数)</span><div class="value">...</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="word6_33.html" class="return">説明ページへ戻る</a>
+<a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+<script src="function.js"></script>
+</body>
+</html>

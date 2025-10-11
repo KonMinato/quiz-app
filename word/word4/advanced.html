@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="advanced.css">
+    <title>DHCP通信の様子</title>
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        
+        <main class="main-content">
+            <header class="intro">
+                <h3>DHCP通信の様子をアニメーションで確認</h3>
+            </header>
+
+            <div class="main-layout">
+                <section class="animation-stage">
+                    <div class="node-container client-node">
+                        <div class="node" id="node-pc">
+                            <img src="img/pc0.png" class="node-image">
+                            <div class="node-info">
+                                <p>IP: <span id="pc-ip">0.0.0.0</span></p>
+                                <p>MAC: 11:..:11</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="packet" id="packet1"><span class="packet-label"></span></div>
+                    <div class="packet" id="packet2"><span class="packet-label"></span></div>
+                    <div class="packet" id="packet3"><span class="packet-label"></span></div>
+
+                    <div class="node-container server-nodes">
+                        <div class="node" id="node-server1">
+                            <img src="img/server0.png" class="node-image">
+                            <div class="node-info server-info">DHCPサーバ 1</div>
+                        </div>
+                        <div class="node" id="node-server2">
+                            <img src="img/server0.png" class="node-image">
+                            <div class="node-info server-info">DHCPサーバ 2</div>
+                        </div>
+                        <div class="node" id="node-server3">
+                            <img src="img/server0.png" class="node-image">
+                            <div class="node-info server-info">DHCPサーバ 3</div>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="sidebar">
+                    <section class="info-grid">
+                        <div class="info-box status-box">
+                            <h2>DHCP</h2>
+                            <p id="dhcp-status">Discover</p>
+                        </div>
+                        <div class="info-box table-box">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>送信元</th>
+                                        <th>宛先</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>IP</th>
+                                        <td id="ip-source">0.0.0.0</td>
+                                        <td id="ip-dest">255.255.255.255</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MAC</th>
+                                        <td id="mac-source">11:..:11 (PC)</td>
+                                        <td id="mac-dest">FF:..:FF (Broadcast)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="info-box description-box">
+                            <p id="description-1">DHCPサーバにブロードキャストで『IPアドレスが欲しい』と送信する</p>
+                            <p id="description-2">送信元IPは0.0.0.0を、宛先IPには255.255.255.255（ブロードキャスト）を使用する</p>
+                        </div>
+                    </section>
+
+                    <footer class="controls">
+                        <div class="buttons">
+                            <button class="btn" id="btn-prev">前へ</button>
+                            <button class="btn" id="btn-next">次へ</button>
+                        </div>
+                        <div class="return-link">
+                            <a href="word4_18.html" class="btn-nav">説明ページへ戻る</a>
+                            <a href="../../../Chapter4.html" class="btn-nav">章の目次へ戻る</a>
+                        </div>
+                    </footer>
+                </aside>
+            </div>
+        </main>
+    </div>
+    <script src="advanced.js"></script>
+</body>
+</html>

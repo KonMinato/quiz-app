@@ -1,0 +1,140 @@
+:root {
+    --main-blue: #3498db; --light-blue: #ecf5ff; --dark-blue: #2980b9;
+    --orange: #f39c12; --text-dark: #34495e; --text-light: #7f8c8d; --border-color: #dcdfe6;
+}
+
+html, body {
+    margin: 0; padding: 0; font-family: 'Noto Sans JP', sans-serif, system-ui;
+    background-color: #f4f7f9; color: var(--text-dark); box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+.container { max-width: 1600px; margin: 0 auto; padding: 1rem; }
+.main-content { position: relative; z-index: 2; }
+#canvas { display: none; }
+.intro { text-align: center; }
+.intro h3 { margin: 0 0 1rem 0; font-size: 1.2rem; font-weight: normal; }
+
+.main-layout { display: grid; grid-template-columns: 2fr 1fr; align-items: start; gap: 2rem; }
+
+/* --- アニメーション --- */
+.animation-container { display: flex; flex-direction: column; gap: 1rem; }
+.animation-stage {
+    position: relative; background-color: #fff; border-radius: 8px;
+    padding: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); min-height: 300px;
+}
+.device-row { display: flex; justify-content: space-between; align-items: flex-end; }
+.bottom-row { margin-top: 40px; justify-content: flex-start; }
+.node { text-align: center; width: 100px; }
+.node p { margin: 5px 0 0 0; font-size: 0.8em; font-weight: bold; }
+.node-image { width: 100%; height: auto; max-height: 80px; object-fit: contain; }
+.internet-img { max-height: 70px; }
+.packet {
+    position: absolute; display: flex; justify-content: center; align-items: center;
+    width: 100px; height: 50px; padding: 0.5rem;
+    background: linear-gradient(45deg, var(--orange), #d35400);
+    color: white; font-weight: bold; text-align: center; border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.napt-table-container { background-color: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
+.table-wrapper { overflow-x: auto; }
+#napt-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+#napt-table th, #napt-table td { border: 1px solid var(--border-color); padding: 0.8rem; }
+#napt-table thead { background-color: var(--text-dark); color: white; }
+#napt-table tr.highlight { background-color: #fffbe6; transition: background-color 0.3s; }
+
+/* --- 情報・操作エリア --- */
+.sidebar { position: sticky; top: 1rem; }
+.info-grid { display: grid; gap: 1rem; }
+.info-box { background-color: #fff; border-radius: 8px; padding: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.packet-info { border-top: 4px solid var(--main-blue); }
+.packet-info h3 { margin: 0 0 1rem 0; }
+.packet-info p { margin: 0.5rem 0; word-break: break-all; }
+.packet-info hr { border: 0; border-top: 1px solid var(--border-color); margin: 1rem 0; }
+.description-box { border-top: 4px solid var(--orange); }
+.description-box p { font-size: 0.9rem; line-height: 1.7; }
+.controls { margin-top: 1.5rem; text-align: center; }
+.buttons { margin-bottom: 1rem; margin-top: 1.5rem; display: flex; justify-content: center; gap: 1rem; }
+.btn { flex-grow: 1; padding: 0.8em 1em; border: none; border-radius: 25px; background-color: var(--dark-blue); color: #fff; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.2s ease; }
+.btn:hover { opacity: 0.8; }
+.btn:disabled { background-color: #ccc; cursor: not-allowed; }
+.return-link {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.return-link a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.btn-nav {
+    padding: 0.6em 1.5em;
+    border-radius: 20px;
+    border: 1px solid var(--text-light);
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.btn-nav:hover {
+    background-color: var(--text-light);
+    color: #fff;
+}
+
+/* --- スマートフォン対応 --- */
+@media (max-width: 900px) {
+    /* 全体のレイアウトを縦1列に変更 */
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* 右カラムだった説明エリアを通常の要素に戻す */
+    .sidebar {
+        position: static;
+        top: auto;
+    }
+
+    /* アニメーションステージの調整 */
+    .animation-stage {
+        min-height: 250px;
+        padding: 0.5rem;
+    }
+    .device-row {
+        align-items: center; /* 画像の垂直位置を中央に */
+    }
+    .node {
+        width: auto; /* 幅を自動調整に */
+    }
+    .node-image {
+        width: 15vw; /* 画面幅に応じたサイズに */
+        max-width: 60px; /* ただし最大60pxまで */
+    }
+    .node p {
+        font-size: 0.7em;
+    }
+
+    /* NAPTテーブルの文字サイズなどを調整 */
+    .napt-table-container h3 {
+        font-size: 1.1rem;
+    }
+    #napt-table th, #napt-table td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    /* 説明エリアのボックスの余白を調整 */
+    .info-box {
+        padding: 1rem;
+    }
+    .packet-info h3, .description-box h3 {
+        font-size: 1.1rem;
+    }
+    
+    /* ボタンのサイズを調整 */
+    .btn {
+        font-size: 0.9rem;
+    }
+}

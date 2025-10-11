@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>著作権OK？NG？クイズ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        /* クイズカード */
+        .quiz-card {
+            background-color: #fafafa;
+            border: 1px solid #e6ebf1;
+            padding: 25px;
+            border-radius: 8px;
+        }
+        .question-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        .scenario {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 15px 0 25px 0;
+            min-height: 100px;
+        }
+        .answer-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .answer-options button {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .answer-options button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #ok-btn { background-color: #2ecc71; color: white; }
+        #ng-btn { background-color: #e74c3c; color: white; }
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* 解説エリア */
+        .explanation {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            line-height: 1.7;
+        }
+        .explanation.correct { background-color: #e8f8f5; border: 2px solid #a3e4d7; }
+        .explanation.incorrect { background-color: #fdedec; border: 2px solid #f5b7b1; }
+        .explanation .result-text { font-size: 1.2em; font-weight: bold; margin-bottom: 10px; }
+        .result-text.correct { color: #1e8449; }
+        .result-text.incorrect { color: #b03a2e; }
+
+        #next-btn {
+            display: block; width: 100%; padding: 12px; margin-top: 20px;
+            font-size: 1.1em; border: none; border-radius: 5px; color: white;
+            background-color: #3498db; cursor: pointer;
+        }
+
+        #score-container { text-align: center; }
+        #score-text { font-size: 2em; font-weight: bold; color: #2c3e50; margin-bottom: 20px; }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="quiz-container">
+    <h1>著作権 OK? NG? クイズ</h1>
+    <div id="card-container"></div>
+</div>
+
+    <a href="word1_06.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter1.html" class="return-button">章の目次へ戻る</a>
+
+<script src="quiz.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>バブルソートの可視化</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ページの基本スタイル */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* 操作ボタンのスタイル */
+        .controls {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* ボタン間のスペース */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        /* グラフ描画エリア */
+        #visualization-area {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* 棒を下に揃える */
+            height: 350px; /* ラベル表示のため高さを少し増やす */
+            border: 1px solid #ecf0f1;
+            background-color: #fafafa;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* ▼▼▼【変更点1】棒とラベルの入れ物コンテナのスタイルを追加 ▼▼▼ */
+        .bar-container {
+            display: flex;
+            flex-direction: column; /* 棒とラベルを縦に並べる */
+            align-items: center;
+            width: 45px;
+            margin: 0 3px;
+        }
+
+        /* グラフの棒のスタイル */
+        .bar {
+            width: 100%; /* 親要素(container)の幅に合わせる */
+            background-color: #3498db;
+            display: inline-block;
+            transition: height 0.3s, background-color 0.3s;
+        }
+
+        /* ▼▼▼【変更点2】棒の下の数値ラベルのスタイルを追加 ▼▼▼ */
+        .bar-label {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        /* 状態変化のスタイル */
+        .bar-compare {
+            background-color: #e74c3c; /* 比較中の色 (赤) */
+        }
+        .bar-sorted {
+            background-color: #2ecc71; /* ソート完了の色 (緑) */
+        }
+        
+        /* ステータス表示パネル */
+        #status-panel {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #555;
+            min-height: 25px; /* 高さを確保してガタツキ防止 */
+            font-weight: 500;
+        }
+
+        /* 説明エリア */
+        .explanation {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: left;
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            color: #2c3e50;
+        }
+        .explanation h3 {
+            margin-top: 0;
+        }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>アルゴリズムの可視化: 整列</h1>
+
+    <div class="explanation">
+        <p>
+            <span style="background-color: #e74c3c;"></span><strong>赤色</strong>: 現在比較中の要素
+        </p>
+        <p>
+            <span style="background-color: #2ecc71;"></span><strong>緑色</strong>: ソートが完了し、位置が確定した要素
+        </p>
+    </div>
+
+    <div class="controls">
+        <button id="resetButton">新しい配列を生成</button>
+        <button id="startButton">ソート開始</button>
+    </div>
+
+    <div id="visualization-area"></div>
+    <div id="status-panel">ボタンを押して開始してください</div>
+
+    <a href="word6_35.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const visualizationArea = document.getElementById('visualization-area');
+    const resetButton = document.getElementById('resetButton');
+    const startButton = document.getElementById('startButton');
+    const statusPanel = document.getElementById('status-panel');
+
+    let array = [];
+    let isSorting = false;
+    const arraySize = 10;
+    const animationSpeed = 500;
+
+    function generateArray() {
+        array = [];
+        for (let i = 0; i < arraySize; i++) {
+            array.push(Math.floor(Math.random() * 100) + 5);
+        }
+        renderArray(array);
+        statusPanel.textContent = '「ソート開始」ボタンで処理を開始します';
+    }
+
+    // ▼▼▼【変更点3】renderArray関数を修正 ▼▼▼
+    // 棒とラベルをセットで描画するように変更
+    function renderArray(arr, compareIndices = [], sortedIndex = -1) {
+        visualizationArea.innerHTML = '';
+        arr.forEach((value, index) => {
+            // 棒とラベルをまとめるコンテナを作成
+            const container = document.createElement('div');
+            container.classList.add('bar-container');
+
+            // 棒を作成
+            const bar = document.createElement('div');
+            bar.classList.add('bar');
+            bar.style.height = `${value * 2.5}px`;
+
+            // ラベル（数値）を作成
+            const label = document.createElement('span');
+            label.classList.add('bar-label');
+            label.textContent = value;
+
+            // 状態に応じて色を付ける
+            if (compareIndices.includes(index)) {
+                bar.classList.add('bar-compare');
+            }
+            if (index > sortedIndex) {
+                 bar.classList.add('bar-sorted');
+            }
+            
+            // コンテナに棒とラベルを追加
+            container.appendChild(bar);
+            container.appendChild(label);
+            
+            // 描画エリアにコンテナを追加
+            visualizationArea.appendChild(container);
+        });
+    }
+    
+    async function bubbleSort() {
+        isSorting = true;
+        disableButtons();
+        
+        let n = array.length;
+        for (let i = 0; i < n - 1; i++) {
+            for (let j = 0; j < n - i - 1; j++) {
+                if (!isSorting) return;
+
+                renderArray(array, [j, j + 1], n - i);
+                statusPanel.textContent = `${array[j]} と ${array[j + 1]} を比較中...`;
+                await sleep(animationSpeed);
+
+                if (array[j] > array[j + 1]) {
+                    statusPanel.textContent = `順序が逆なので入れ替えます`;
+                    await sleep(animationSpeed * 1.5);
+                    
+                    [array[j], array[j + 1]] = [array[j + 1], array[j]];
+
+                    renderArray(array, [j, j + 1], n - i);
+                    await sleep(animationSpeed);
+                }
+            }
+        }
+        
+        isSorting = false;
+        statusPanel.textContent = 'ソートが完了しました！';
+        renderArray(array, [], -1);
+        enableButtons();
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function disableButtons() {
+        resetButton.disabled = true;
+        startButton.disabled = true;
+    }
+
+    function enableButtons() {
+        resetButton.disabled = false;
+        startButton.disabled = false;
+    }
+
+    startButton.addEventListener('click', () => {
+        if (!isSorting) {
+            bubbleSort();
+        }
+    });
+
+    resetButton.addEventListener('click', () => {
+        isSorting = false;
+        enableButtons();
+        generateArray();
+    });
+
+    generateArray();
+});
+</script>
+
+</body>
+</html>

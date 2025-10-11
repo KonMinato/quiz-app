@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word4.css">
+    <title>ネットワーク＿データベースの仕組み</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２２　データベースの仕組み</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データベースの特徴</h2>
+            </div>
+            <div class="details">
+                <p>データベースの分類</p>
+                <ul>
+                    <li>階層型</li>
+                    <li>ネットワーク型</li>
+                    <li>リレーショナル型</li>
+                </ul>
+                <p>リレーショナルデータベース：今日の情報システムで最も利用されるもの　データを内容ごとに分類したテーブル(表)に格納し、
+                    表はレコード(行あるいは組)とフィールド(列あるいは属性)の二次元で構成され、行と列を指定することでデータを特定することができる
+                </p>
+                
+                <p>リレーショナルデータベースは複数の表で構成されており、それらの表を共通する項目で関連づけること(リレーションシップ)によってデータを統合的に扱うことができる。</p>
+                <p>リレーショナルデータベースのテーブル</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>ISBN</td><td class="red">書籍名</td><td class="green">著者コード</td><td class="blue">分類コード</td>
+                                <td></td><td class="green">著者コード</td><td>著者名</td>
+                                <td></td><td class="blue">分類コード</td><td>分類名</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-00-33△△-△△-6</td><td class="red">学問のすすめ</td><td class="green">JP015</td><td class="blue">370</td>
+                                <td></td><td class="green">JP015</td><td>福沢諭吉</td>
+                                <td></td><td class="blue">910</td><td>日本文学</td>
+                            </tr>
+                            <tr>
+                                <td class="pink">978-4-90-36△△-△△-7</td><td class="red">舞姫</td><td class="pink">JP821</td><td class="pink">910</td>
+                                <td></td><td class="green">JP194</td><td>川端康成</td>
+                                <td></td><td class="blue">920</td><td>中国文学</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-04-40△△-△△-2</td><td class="red">春琴抄</td><td class="green">JP034</td><td class="blue">910</td>
+                                <td></td><td class="green">JP823</td><td>宮沢賢治</td>
+                                <td></td><td class="blue">930</td><td>英米文学</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-04-10△△-△△-1</td><td class="red">雪国</td><td class="green">JP194</td><td class="blue">910</td>
+                                <td></td><td class="green">US222</td><td>Rバック</td>
+                                <td></td><td class="blue">940</td><td>ドイツ文学</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-10-11△△-△△-4</td><td class="red">高熱隧道</td><td class="green">JP701</td><td class="blue">910</td>
+                                <td></td><td class="green">US891</td><td>ソロー</td>
+                                <td></td><td class="blue">950</td><td>フランス文学</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>赤：フィールド　ピンク：レコード　緑：リレーションシップ　青：リレーションシップ</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>リレーショナルデータベースのデータ操作</h2>
+            </div>
+            <div class="details">
+                <p>リレーショナルデータベースの大きな特徴は、表に対して結合、選択、射影という3つの操作(関係演算)をSQLなどのデータ操作言語で行い、さまざまな形でデータを扱えることである。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="green">結合</td><td>複数の表を共通する項目で結び付け一つの表として表示する</td>
+                            </tr>
+                            <tr>
+                                <td class="green">選択</td><td>与えた条件に合う行を取り出して表として表示する</td>
+                            </tr>
+                            <tr>
+                                <td class="green">射影</td><td>表の中から一部の列を抽出して表として表示する</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>結合、選択、射影で操作された表は仮想表(ビュー)として定義することができる。仮想表は表と同じように扱えるが、実データが存在
+                    しないためセキュリティを高めたり、複雑な表を簡便に利用したりする目的で利用される。
+                </p>
+                <p>テーブル</p>
+                <p>書籍マスタ</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="green">ISBN</th><th class="green">書籍名</th><th class="green">著者コード</th><th class="green">分類コード</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>978-4-00-33△△-△△-6</td><td>学問のすすめ</td><td>JP015</td><td>370</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-90-33△△-△△-7</td><td>舞姫</td><td>JP821</td><td>910</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-04-33△△-△△-2</td><td>春琴抄</td><td>JP034</td><td>910</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-04-33△△-△△-1</td><td>雪国</td><td>JP194</td><td>910</td>
+                            </tr>
+                            <tr>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>978-4-33-47△△-△△-6</td><td>車輪の下で</td><td>DE824</td><td>940</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>蔵書マスタ</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="green">書籍コード</th><th class="green">ISBN</th><th class="green">登録日</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>913-00〇〇</td><td>978-4-00-31△△-△△-8</td><td>1998/5/15</td>
+                            </tr>
+                            <tr>
+                                <td>913-87〇〇</td><td>978-4-00-31△△-△△-8</td><td>2021/10/23</td>
+                            </tr>
+                            <tr>
+                                <td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>002-83〇〇</td><td>978-4-00-31△△-△△-8</td><td>2011/12/13</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>著者マスタ</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="green">著者コード</th><th class="green">著者名</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>JP194</td><td>川端康成</td>
+                            </tr>
+                            <tr>
+                                <td>JP015</td><td>福沢諭吉</td>
+                            </tr>
+                            <tr>
+                                <td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>RS044</td><td>プーシキン</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>分類マスタ</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th class="green">分類コード</th><th class="green">分類名</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>000</td><td>総記</td></tr>
+                            <tr><td></td><td></td></tr>
+                            <tr><td>370</td><td>教育</td></tr>
+                            <tr><td></td><td></td></tr>
+                            <tr><td>910</td><td>日本文学</td></tr>
+                            <tr><td>920</td><td>中国文学</td></tr>
+                            <tr><td></td><td></td></tr>
+                            <tr><td>940</td><td>ドイツ文学</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>仮想表</p>
+                <p>結合：複数の表を共通する項目で結び付け一つの表として表示する</p>
+                <p>蔵書一覧</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="yellow">書籍コード</th><th class="yellow">書籍名</th><th class="yellow">著者名</th><th class="yellow">分類名</th><th class="yellow">登録日</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>913-00〇〇</td><td>夜明け前</td><td>島崎藤村</td><td>日本文学</td><td>1998/5/15</td>
+                            </tr>
+                            <tr>
+                                <td>913-87〇〇</td><td>高熱隧道</td><td>吉村昭</td><td>日本文学</td><td>2021/10/23</td>
+                            </tr>
+                            <tr>
+                                <td>913-31〇〇</td><td>雪国</td><td>川端康成</td><td>日本文学</td><td>2008/2/20</td>
+                            </tr>
+                            <tr>
+                                <td>913-81〇〇</td><td>舞姫</td><td>森鷗外</td><td>日本文学</td><td>2005/6/9</td>
+                            </tr>
+                            <tr>
+                                <td>002-83〇〇</td><td>学問のすすめ</td><td>福沢諭吉</td><td>教育</td><td>2011/12/13</td>
+                            </tr>
+                            <tr>
+                                <td>913-82〇〇</td><td>春琴抄</td><td>谷崎純一郎</td><td>日本文学</td><td>2019/5/4</td>
+                            </tr>
+                            <tr>
+                                <td>943-76〇〇</td><td>魔の山</td><td>トーマス・マン</td><td>ドイツ文学</td><td>1998/12/12</td>
+                            </tr>
+                            <tr>
+                                <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td>913-75〇〇</td><td>伊豆の踊子</td><td>川端康成</td><td>日本文学</td><td>1989/10/19</td>
+                            </tr>
+                            <tr>
+                                <td>933-14〇〇</td><td>イリュージョン</td><td>Rバック</td><td>英米文学</td><td>2001/2/5</td>
+                            </tr>
+                            <tr>
+                                <td>913-37〇〇</td><td>月に吠える</td><td>萩原朔太郎</td><td>日本文学</td><td>2019/9/11</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>射影：表の中から一部の列を表示する</p>
+                <p>書籍一覧</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="blue">ISBN</th><th class="blue">書籍名</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>978-4-00-33△△-△△-6</td><td>学問のすすめ</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-90-36△△-△△-7</td><td>舞姫</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-04-40△△-△△-2</td><td>春琴抄</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-04-10△△-△△-1</td><td>雪国</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>選択：与えた条件に合う行を取り出して表示する</p>
+                <p>ドイツ文学一覧</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="pink">ISBN</th><th class="pink">書籍名</th><th class="pink">著者コード</th><th class="pink">分類コード</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>978-4-10-20△△-△△-1</td><td>城</td><td>DE685</td><td>940</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-33-47△△-△△-6</td><td>車輪の下で</td><td>DE824</td><td>940</td>
+                            </tr>
+                            <tr>
+                                <td>978-4-00-32△△-△△-6</td><td>三文オペラ</td><td>DE008</td><td>940</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>SQLでのデータ操作</h2>
+            </div>
+            <div class="details">
+                <p>表のデータを操作する結合や選択、射影の操作は、SQLでは次のようなSELECTという構文を用いて指定する。</p>
+                <p>SELECT　表名, 列名,…　FROM　対象となる表　WHERE 条件:</p>
+                <p>例えば、書籍マスタからドイツ文学(分類コード:940)のみ抽出して書籍名と分類コードを表示させる(選択)SQLは次のようになる。</p>
+                <p>
+                    SELECT　書籍マスタ.書籍名, 書籍マスタ.分類コード
+                    <br>FROM　書籍マスタ
+                    <br>WHERE　分類コード=940;
+                </p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <p>SQLの結果</p>
+                        <tr>
+                            <td class="blue">書籍名</td><td class="blue">分類コード</td>
+                        </tr>
+                        <tr>
+                            <td>城</td><td>940</td>
+                        </tr>
+                        <tr>
+                            <td>車輪の下で</td><td>940</td>
+                        </tr>
+                        <tr>
+                            <td>三文オペラ</td><td>940</td>
+                        </tr>
+                        <tr>
+                            <td>魔の山</td><td>940</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>SQLでは、これらの操作以外にもデータの定義や列の追加や削除、更新などさまざまな操作ができる。</p>
+                <p>例：著者マスタに新しいレコードを追加する
+                    <br>INSERT INTO 著者マスタ(著者コード,著者名) VALUES('JP980','高山登')
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="word4_22_show.html" class="show-button">データベースを操作する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

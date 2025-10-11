@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word3.css">
+    <title>デジタル＿画像の表現</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１４　画像の表現</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>画像</h2>
+            </div>
+            <div class="details">
+                <p>ディスプレイの画面を高倍率のルーペなどで拡大すると、光の三原色である、赤(R)、緑(G)、青(B)の光が出てくる小さな部分からできていることがわかる。</p>
+                
+                <p>R、G、Bの3つの部分をまとめて画素(ピクセル)といい、画像の最小単位である。1つの画素のR、G、Bの部分から出てくる光の明るさの割合を変えることにより、様々な色を表すことができる。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>解像度</h2>
+            </div>
+            <div class="details">
+                <p>解像度：画素の細かさ　高いほど滑らかな画像になる</p>
+                <p>画像ファイルやディスプレイなどの解像度は、横の画素数×縦の画素数で表し、デジタルカメラなどの解像度はそう画素数で表す。</p>
+                <p>画面解像度：ディスプレイの画面上に配置された画素の細かさ</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>階調</h2>
+            </div>
+            <div class="details">
+                <p>階調：光の明るさが変化する段階数　R、G、Bの明るさがそれぞれ256段階で変化すると256階調になる</p>
+                <p>24ビットフルカラー：ディスプレイの画素のR、G、Bの部分の明るさを0~255の256段階で変化できるとすると、R、G、Bにそれぞれ8ビットずつ、1画素では合計24ビットの濃淡データを割り当て、
+                    2⁸×2⁸×2⁸=256³=16777216色まで表現できるような画像</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>画像の性質とソフトウェア</h2>
+            </div>
+            <div class="details">
+                <p>ペイント系ソフトウェア：画像を画素と呼ばれる点の集まりとして表現する　画像形式はラスタ形式</p>
+                <p>ドロー系ソフトウェア：画像を基準となる点からの座標や角度、太さなどで表現する　画像形式はベクタ形式</p>
+                <p>ペイント系ソフトウェアでは、拡大するとジャギー(ギザギザ)が目立つが、ドロー系ソフトウェアでは倍率に合わせて作画し直すためジャギーは生じない。
+                    また、ドロー系ソフトウェアは変形や回転が容易であるため、ロゴマークなどのようにさまざまな大きさで使用される幾何学的な図形を作画するのに適している。</p>
+            </div>
+        </section>
+
+        <div class="show-button-container">
+            <a href="imagechange.html" class="show-button">解像度と階調を確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+:root {
+    --main-blue: #3498db;
+    --light-blue: #ecf5ff;
+    --dark-blue: #2980b9;
+    --orange: #f39c12;
+    --green: #2ecc71;
+    --text-dark: #34495e;
+    --text-light: #7f8c8d;
+    --border-color: #dcdfe6;
+}
+
+html, body {
+    margin: 0; padding: 0;
+    font-family: 'Noto Sans JP', sans-serif, system-ui;
+    background-color: #f4f7f9;
+    color: var(--text-dark);
+    box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 1rem; }
+
+/* main-contentは通常の要素として配置 */
+.main-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* canvasは一時的に非表示 */
+#canvas {
+    display: none;
+}
+
+.intro { text-align: center; margin-bottom: 1rem; }
+.intro h3 { margin: 0; font-size: 1.2rem; font-weight: normal; }
+
+/* --- 2カラムレイアウト --- */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    align-items: start;
+    gap: 2rem;
+}
+
+/* --- 【左カラム】アニメーションステージ --- */
+.animation-stage {
+    position: relative; /* パケットの絶対配置の基準点 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 450px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.node-container { display: flex; flex-direction: column; gap: 1rem; height: 100%; }
+.client-node { justify-content: center; }
+.server-nodes { justify-content: space-around; }
+.node { text-align: center; transition: all 0.3s ease; }
+.node.highlight { transform: scale(1.1); }
+.node.dimmed { opacity: 0.4; transform: scale(0.9); }
+.node-image { width: 100px; height: auto; }
+.node-info { margin-top: 0.5rem; font-size: 0.8rem; background: var(--light-blue); border-radius: 4px; padding: 0.5rem; }
+
+.packet {
+    position: absolute; display: flex; justify-content: center; align-items: center;
+    width: 100px; height: 50px; padding: 0.5rem;
+    background: linear-gradient(45deg, var(--main-blue), var(--dark-blue));
+    color: white; font-weight: bold; text-align: center; border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; z-index: 10;
+    transition: opacity 0.3s ease;
+}
+.packet.offer { background: linear-gradient(45deg, var(--green), #27ae60); }
+.packet.request { background: linear-gradient(45deg, var(--orange), #d35400); }
+
+/* --- 【右カラム】情報・操作エリア --- */
+.sidebar { position: sticky; top: 1rem; }
+.info-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.info-box { background-color: #fff; border-radius: 8px; padding: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.status-box { border-top: 4px solid var(--main-blue); text-align: center; }
+.status-box h2 { margin: 0 0 0.5rem 0; font-size: 1.2rem; }
+.status-box p { font-size: 2rem; font-weight: bold; color: var(--main-blue); margin: 0; transition: color 0.3s; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 0.6rem; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+thead th, tbody th { font-weight: bold; color: var(--text-light); }
+.description-box { border-top: 4px solid var(--orange); }
+.description-box p { margin: 0.5rem 0; font-size: 0.9rem; line-height: 1.7; }
+
+/* --- 操作エリア --- */
+.controls { margin-top: 1.5rem; text-align: center; }
+.buttons { margin-bottom: 1rem; display: flex; justify-content: center; gap: 1rem; }
+.btn { flex-grow: 1; padding: 0.8em 1em; border: 1px solid var(--dark-blue); border-radius: 25px; background-color: var(--dark-blue); color: #fff; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.2s ease; }
+.btn:hover { opacity: 0.8; }
+.btn:disabled { background-color: #ccc; border-color: #ccc; cursor: not-allowed; }
+.return-link {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* ▼▼▼ このスタイルを新しく追加 ▼▼▼ */
+.btn-nav {
+    text-decoration: none;
+    padding: 0.6em 1.5em;
+    border-radius: 20px;
+    border: 1px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+.btn-nav:hover {
+    background-color: var(--text-light);
+    color: #fff;
+}
+/* ▲▲▲ 追加ここまで ▲▲▲ */
+
+/* --- スマートフォン対応 --- */
+@media (max-width: 900px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; top: auto; }
+    .animation-stage { flex-direction: column; min-height: auto; height: auto; padding-bottom: 2rem; }
+    .node-container { flex-direction: row; width: 100%; }
+    .server-nodes { margin-top: 2rem; }
+    .node-image { width: 60px; }
+    .node-info { font-size: 0.7rem; }
+}

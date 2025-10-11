@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="2page.css">
+    <title>初級パケットの動き</title>
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div class="main">
+            <div class="intro">
+                <h3>ここでは通信の際にパケットの中身がどのように変化しているかをアニメーションでみることができます</h3>
+            </div>
+            
+            <div class="animation-stage">
+                <div class="device-row">
+                    <img src="img/pc.png" id="img01"/>
+                    <img src="img/wi-fi.png" id="img02"/>
+                    <img src="img/onu.png" id="img03"/>
+                    <img src="img/internet.svg" id="img04"/>
+                    <img src="img/server.png" id="img05"/>
+                </div>
+                <div class="packet" id="pkt">
+                    <p>パケット</p>
+                </div>
+            </div>
+
+            <div class="explanation-area">
+                <div class="packet-info">
+                    <h3>パケット内容</h3>
+                    <div class="ip-info">
+                        <p>送信元IPアドレス: 192.168.1.1</p>
+                        <p>送信先IPアドレス: 133.12.241.200</p>
+                    </div>
+                    <div class="mac-info">
+                        <p>送信元MACアドレス: 11:11:11:22:22:22</p>
+                        <p>送信先MACアドレス: 22:22:22:33:33:33</p>
+                    </div>
+                </div>
+                <div class="description">
+                    <h3>説明</h3>
+                    <div class="description-text">
+                        <h4>IPアドレスは通信の最終的な出発地と目的地を示します。そのため、このパケットのIPアドレスはPCとWebサーバのまま変わりません。</h4>
+                        <h4>MACアドレスは隣接する機器間の宛先を示します。ルータなどを経由するたびに、このMACアドレスは書き換えられていきます。</h4>
+                        <div class="current-status">
+                            <p>現在、PCからWi-Fiルータへ向かっています。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" type="button" id="btn-start">再生</button>
+                <button class="btn" type="button" id="btn-stop">停止</button>
+                <button class="btn" type="button" id="btn-reverse">逆再生</button>
+            </div>
+            
+            <div class="return-link"><a href="../../../chapter4.html">ホーム画面に戻る</a></div>
+        </div>
+    </div>
+    <script src="2page.js"></script>
+</body>
+</html>

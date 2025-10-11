@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>問題解決＿ソフトウェアを利用したデータの処理</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２６　ソフトウェアを利用したデータの処理</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>関数の利用</h2>
+            </div>
+            <div class="details">
+                <p>表計算ソフトウェアには、加減乗除の四則演算以外にも、関数など多様な計算方法が用意されている。<strong class="term">関数</strong>とは、関数名の後に続く()内に
+                        並べられたデータ(<strong class="term">引数</strong>)をもとに、あらかじめ定義された計算を行うものである。関数の中には、条件によって異なる結果(<strong class="term">戻り値</strong>)を返すものもある。
+                </p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>関数</th><th>書式</th><th>説明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="term">SUM関数</td><td><span class="term">=SUM(範囲)</span></td><td><span class="hide-me">範囲中の数値の合計を返す</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">COUNT関数</td><td><span class="term">=COUNT(範囲)</span></td><td><span class="hide-me">範囲中の数値の個数を返す</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">AVERAGE関数</td><td><span class="term">=AVERAGE(範囲)</span></td><td><span class="hide-me">範囲中の数値の平均を返す</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">IF関数</td><td><span class="term">=IF(論理式,真の場合,偽の場合)</span></td><td><span class="hide-me">論理式が真の場合は「真の場合」の値を、論理式が偽の場合は「偽の場合」の値を返す</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">COUNTIF関数</td><td><span class="term">=COUNTIF(範囲,検索条件)</span></td><td><span class="hide-me">範囲中で検索条件が真となるセルの個数を返す</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">SUMIF関数</td><td><span class="term">=SUMIF(範囲,検索条件,合計範囲)</span></td><td><span class="hide-me">範囲中で検索条件が真となるセルに対応する合計範囲のセルについて、数値の合計を返す</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>グラフの利用</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">可視化</strong>：<span class="hide-me">収集したデータを表やグラフにまとめて視覚的に表現し、その特徴や傾向を把握しやすくすること</span>
+                        <br>グラフから情報を読み取るには、全体的な傾向を捉えるとともに、<span class="hide-me">グラフの周期性</span>や<span class="hide-me">大きく変化した部分</span>などの特徴に注目する。
+            </div>
+        </section>
+
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

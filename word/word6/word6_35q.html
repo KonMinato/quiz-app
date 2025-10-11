@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>プログラミング＿整列のプログラム</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３５　整列のプログラム</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>交換法による整列</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">交換法</strong>：<span class="hide-me">データを昇順または降順に並べ替える整列のアルゴリズムのうち、配列の中の隣り合うデータの大小を比較し交換を行う方法</span></p>
+                
+                <p>＜例1＞[88,43,27,65]を交換法で昇順に整列</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>a[0]</th><th>a[1]</th><th>a[2]</th><th>a[3]</th><th>処理</th>
+                                <th>i</th><th>j</th><th>a[j]</th><th>a[j+1]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>88</td><td>43</td><td>27</td><td>65</td><td><span class="hide-me">a[2]＜a[3]のため交換しない</span></td>
+                                <td>0</td><td>2</td><td>27</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>88</td><td>43</td><td>27</td><td>65</td><td><span class="hide-me">a[1]＞a[2]のため交換する</span></td>
+                                <td></td><td>1</td><td>43</td><td>27</td>
+                            </tr>
+                            <tr>
+                                <td>88</td><td>27</td><td>43</td><td>65</td><td><span class="hide-me">a[0]＞a[1]のため交換する</span></td>
+                                <td></td><td>0</td><td>88</td><td>27</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>88</td><td>43</td><td>65</td><td><span class="hide-me">a[0]が確定する</span></td>
+                                <td></td><td></td><td>27</td><td>88</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>88</td><td>43</td><td>65</td><td><span class="hide-me">a[2]＜a[3]のため交換しない</span></td>
+                                <td>1</td><td>2</td><td>43</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>88</td><td>43</td><td>65</td><td><span class="hide-me">a[1]＞a[2]のため交換する</span></td>
+                                <td></td><td>1</td><td>88</td><td>43</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>88</td><td>65</td><td><span class="hide-me">a[1]が確定する</span></td>
+                                <td></td><td></td><td>43</td><td>88</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>88</td><td>65</td><td><span class="hide-me">a[2]＞a[3]のため交換する</span></td>
+                                <td>2</td><td>2</td><td>88</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>65</td><td>88</td><td><span class="hide-me">a[2]が確定するa[3]も確定する</span></td>
+                                <td></td><td></td><td>65</td><td>88</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>選択法による整列</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">選択法</strong>：<span class="hide-me">要素の中から最小(または最大)のものを見つけ出し、先頭にもっていくことを繰り返す整列のアルゴリズム</span></p>
+                
+                <p>＜例2＞[88,43,27,65]を選択法で昇順に整列</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>a[0]</th><th>a[1]</th><th>a[2]</th><th>a[3]</th><th>処理</th>
+                                <th>i</th><th>j</th><th>a[i]</th><th>a[j]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>88</td><td>43</td><td>27</td><td>65</td><td><span class="hide-me">a[0]＞a[1]のため交換する</span></td>
+                                <td>0</td><td>1</td><td>88</td><td>43</td>
+                            </tr>
+                            <tr>
+                                <td>43</td><td>88</td><td>27</td><td>65</td><td><span class="hide-me">a[0]＞a[2]のため交換する</span></td>
+                                <td></td><td>2</td><td>43</td><td>27</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>88</td><td>43</td><td>65</td><td><span class="hide-me">a[0]＜a[3]のため交換しない</span></td>
+                                <td></td><td>3</td><td>27</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>88</td><td>43</td><td>65</td><td><span class="hide-me">a[0]が確定する</span></td>
+                                <td></td><td></td><td>27</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>88</td><td>43</td><td>65</td><td><span class="hide-me">a[1]＞a[2]のため交換する</span></td>
+                                <td>1</td><td>2</td><td>88</td><td>43</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>88</td><td>65</td><td><span class="hide-me">a[1]＜a[3]のため交換しない</span></td>
+                                <td></td><td>3</td><td>43</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>88</td><td>65</td><td><span class="hide-me">a[1]が確定する</span></td>
+                                <td></td><td></td><td>43</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>88</td><td>65</td><td><span class="hide-me">a[2]＞a[3]のため交換する</span></td>
+                                <td>2</td><td>3</td><td>88</td><td>65</td>
+                            </tr>
+                            <tr>
+                                <td>27</td><td>43</td><td>65</td><td>88</td><td><span class="hide-me">a[2]が確定するa[3]も確定する</span></td>
+                                <td></td><td></td><td>65</td><td>88</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>整列における比較回数と交換回数</h2>
+            </div>
+            <div class="details">
+                <p>
+                        交換法や選択法において、要素間の比較回数は、n個の要素の場合、最初の1つのデータの位置を確定するために<span class="hide-me">(n-1)</span>回の比較が必要である。
+                        次は、比較対象のデータが1つ減っているので<span class="hide-me">(n-2)</span>回の比較が必要である。これを繰り返すので、
+                </p>
+                <p><span class="hide-me">(n-1)+(n-2)+…2+1=n(n-1)/2</span>回になる。</p>
+                <p>
+                    要素間の交換回数は、データの並び方によって異なるが、比較するたびに交換する時が最大回数なので、比較回数と同じ<span class="hide-me">n(n-1)/2</span>回になる。
+                    最小は初めから整列している場合で<span class="hide-me">0</span>回になる。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>値渡しと参照渡し</h2>
+            </div>
+            <div class="details">
+                <p>
+                    呼び出し側の関数の実引数から関数内の仮引数に値を渡す際に、<span class="hide-me">実引数が数値や文字列</span>の場合は、仮引数がローカル変数となって、
+                    関数内でその値が変更されても、呼び出し側にある実引数には影響がない。
+                    このように<span class="hide-me">値をコピーする</span>渡し方を<strong class="term">値渡し</strong>という。
+                </p>
+                <p>
+                    これに対して<span class="hide-me">実引数が配列</span>の場合は、仮引数の要素の値が変更されると、実引数にも反映される。
+                    このように<span class="hide-me">値を共有する</span>ような渡し方を<strong class="term">参照渡し</strong>という。
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

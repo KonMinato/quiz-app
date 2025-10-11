@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>ネットワーク＿Webページの閲覧とメールの送受信</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１９　Webページの閲覧とメールの送受信</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページ閲覧の仕組み</h2>
+            </div>
+            <div class="details">
+                <p>WebブラウザでWebページを閲覧する場合、クライアントのコンピュータとWebサーバとは、TCP/IP上のプロトコルである<span class="term">HTTP</span>や<span class="term">HTTPS</span>を使い、次のようなやり取りが行われる。</p>
+                
+                <p>気象庁のWebページhttps://www.jma.go.jp/jma/index.htmlにアクセスする場合</p>
+                <p>①：Webブラウザのアドレス欄に指定されたURLより<span class="hide-me">ドメイン名(www.jma.go.jp)</span>を取り出し、そのWebサーバのIPアドレスを<span class="hide-me">DNSサーバ</span>に問い合わせる。</p>
+                <p>②：DNSサーバから<span class="hide-me">WebサーバのIPアドレス</span>を受け取る。</p>
+                <p>③：宛先として<span class="hide-me">WebサーバのIPアドレス</span>、送信元として<span class="hide-me">閲覧するコンピュータ(クライアント)のIPアドレス</span>を付けて、閲覧の要求をルータを経由してインターネットへ送り出す。</p>
+                <p>④：さまざまなルータを経由して、目的のWebサーバにたどり着く。</p>
+                <p>⑤：Webサーバは、Webページ(index.html)のデータをクライアントに向けて送る。</p>
+                <p>⑥：閲覧するコンピュータにWebページが表示される。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>メールの送受信の仕組み</h2>
+            </div>
+            <div class="details">
+                <p>メールは、いくつかのルータを経由して宛先のコンピュータである受信側のメールサーバに届く。
+                        メールの送受信には、TCP/IP上のプロトコルである<span class="term">SMTP(送信・転送)</span>やI<span class="term">MAP(受信)</span>または<span class="term">POP(受信)</span>を使い、次のようなやり取りが行われる。</span>
+                </p>
+                
+                <p>アドレスtaro@sample.ed.jpにメールを送る場合</p>
+                <p>①：送信側コンピュータから、送信側のメールサーバ(<span class="hide-me">SMTPサーバ</span>)にメールのデータが送られる。</p>
+                <p>②：宛先として指定された受信側のメールアドレスから<span class="hide-me">ドメイン名(sample.ed.jp)</span>を取り出し、そのドメインのメールサーバのIPアドレスを<span class="hide-me">DNSサーバ</span>に問い合わせる。</p>
+                <p>③：DNSサーバから<span class="hide-me">受信側のメールサーバのIPアドレス</span>を受け取る。</p>
+                <p>④：メールのデータに宛先として<span class="hide-me">受信側のメールサーバのIPアドレス</span>、送信元として<span class="hide-me">送信側のメールサーバのIPアドレス</span>を付けて、インターネットへ送り出す。</p>
+                <p>⑤：さまざまなルータを経由して、目的の受信側のメールサーバにたどり着き、指定されたユーザ(taro)のメールの保存場所(メールボックス)に一時的に保存される。</p>
+                <p>⑥：受信側コンピュータは、自分宛(taro)のメールが来ていないか受信側のメールサーバに確認し受信要求をする。</p>
+                <p>⑦：受信側コンピュータにメールが届く。</p>
+            </div>
+        </section>
+        
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

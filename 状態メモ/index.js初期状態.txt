@@ -1,0 +1,106 @@
+index.js初期状態
+
+document.addEventListener('DOMContentLoaded', () => {
+    const questionForm = document.getElementById('questionForm');
+    const chapterSelect = document.getElementById('chapter');
+    const tangenSelect = document.getElementById('tangen');
+    const countSelect = document.getElementById('count');
+    const generateButton = document.getElementById('generateButton');
+    const outputArea = document.getElementById('outputArea');
+    const statusMessage = document.getElementById('statusMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const tangendata = {
+        programing: ["1", "2", "3", "4", "5"],
+        problem: ["1.1", "2.2", "3.3", "4.4", "5.5"]
+    };
+
+    chapterSelect.addEventListener('change', function() {
+        const selectedChapter = this.value;
+
+        tangenSelect.innerHTML = '<option value="">単元を選択してください</option>';
+
+        if (selectedChapter) {
+            tangenSelect.disabled = false;
+            const tangen = tangendata[selectedChapter];
+
+            tangen.forEach(tangen => {
+                const option = document.createElement('option');
+                option.value = tangen;
+                option.textContent = tangen;
+                tangenSelect.appendChild(option);
+            });
+        } else {
+            tangenSelect.disabled = true;
+            tangenSelect.innerHTML = '<option value="">単元を選択してください</option>';
+        }
+    });
+
+    questionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const chapter = chapterSelect.value;
+        const tangen = tangenSelect.value;
+        const count = countSelect.value;
+
+        if (!chapter || !tangen || !count) {
+            errorMessage.textContent = '章、単元、問題数をすべて選択してください。';
+            statusMessage.textContent = '';
+            return;
+        }
+
+        statusMessage.textContent = '問題生成中……しばらくお待ちください。AIの応答には時間がかかる場合があります。';
+        errorMessage.textContent = '';
+        outputArea.innerHTML = '<p class="placeholder-text">AIが問題を生成しています……</p>';
+        generateButton.disabled = true;
+
+        try {
+            // Gemini APIに送るための具体的なプロンプト文字列を構築
+            const promptText = `情報Ⅰの${chapter}章、${tangen}単元に関する問題を${count}問作成してください。
+回答はマークダウン形式で、問題と解答と解説を明確に分けて提示してください。
+例えば、問題1、解答1、解説1、問題2、解答2、解説2のような形式でお願いします。`;
+
+            // fetchFromProxy関数から直接テキスト文字列が返されることを想定
+            const generatedQuestions = await fetchFromProxy(promptText);
+
+            // generatedQuestions は直接テキスト文字列なので、そのまま outputArea.textContent に設定
+            if (generatedQuestions) { // 文字列が空でなければ成功と判断
+                outputArea.textContent = generatedQuestions;
+                statusMessage.textContent = '問題が生成されました';
+            } else {
+                outputArea.innerHTML = '<p class="placeholder-text">問題の生成に失敗しました。もう一度お試しください。</p>';
+                statusMessage.textContent = '';
+                errorMessage.textContent = '問題の生成に失敗しました。AIからの応答がありませんでした。';
+            }
+        } catch (error) {
+            console.error('問題生成エラー:', error);
+            errorMessage.textContent = `問題の生成中にエラーが発生しました: ${error.message}`;
+            outputArea.innerHTML = '<p class="placeholder-text">問題の生成に失敗しました。</p>';
+            statusMessage.textContent = '';
+        } finally {
+            generateButton.disabled = false;
+        }
+    });
+});
+
+// fetchFromProxy 関数: プロキシサーバーにリクエストを送信
+// この関数は、プロキシサーバーがGeminiからのテキスト応答を直接返すと仮定します。
+async function fetchFromProxy(promptString) {
+    const proxyUrl = 'http://localhost:3000/api/gemini'; 
+
+    const response = await fetch(proxyUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: promptString }) 
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`サーバーエラー: ${response.status} - ${errorData.error || response.statusText}`);
+    }
+
+    // プロキシサーバーが直接テキストを返しているため、ここではそのままJSONとしてパースして返す
+    // server.jsがres.json(string)の場合、これは文字列としてパースされる
+    const result = await response.json(); 
+    return result; 
+}

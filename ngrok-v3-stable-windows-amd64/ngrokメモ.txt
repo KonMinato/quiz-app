@@ -1,0 +1,17 @@
+AIzaSyDOeWLDVrF1pW6p6MwECaiOwp7jqGdOGAk
+
+node server.js
+
+ターミナルで、cdでgemini-backendに移動
+
+
+
+ngrokを開く
+↓はいらないかも？
+ngrok config add-authtoken 33uAj08unwmKIld0rSFBEyFNeH9_UBSErc8VCPANZd2Cc3dC
+
+これをコピペ
+ngrok http 3000
+
+supabaseのkey
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoZWhzaXV3ZW1vcHN0b3lieHl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxNDc3NjYsImV4cCI6MjA3NTcyMzc2Nn0.xMKNohysHncstsIO_BxEAI-eHfIPs2f7KC3xTsCT_H4

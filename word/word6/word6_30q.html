@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>プログラミング＿アルゴリズムとプログラミング</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３０　アルゴリズムとプログラミング</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>アルゴリズムとプログラミング</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">アルゴリズム</strong>：<span class="hide-me">問題を解決するための方法や手順。「何を」、「どのような順番で」、「何に対して行うのか」などを記述したもの。</span></p>
+                <p><strong class="term">プログラム</strong>：<span class="hide-me">アルゴリズムをコンピュータ上で実行できるように、コンピュータに命令を指示する言語を用いて表したもの</span></p>
+                <p><strong class="term">プログラミング</strong>：<span class="hide-me">プログラムを作成すること</span></p>
+                <p><strong class="term">フローチャート</strong>：<span class="hide-me">アルゴリズムを視覚的に分かりやすく表現した図</span></p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>名称</td><td>内容</td><td>名称</td><td>内容</td>
+                            </tr>
+                            <tr>
+                                <td class="term">端子</td><td><span class="hide-me">開始と終了</span></td><td class="term">データ</td><td><span class="hide-me">データの入力や出出力</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">処理</td><td><span class="hide-me">演算などの処理</span></td><td class="term">手操作入力</td><td><span class="hide-me">キーボード入力のデータなど</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">判断</td><td><span class="hide-me">条件による分岐</span></td><td class="term">表示</td><td><span class="hide-me">画面に表示されるデータなど</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">ループ端</td><td><span class="hide-me">繰り返しの開始と終了</span></td><td class="term">線</td><td><span class="hide-me">処理の流れ</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">定義済処理</td><td><span class="hide-me">関数などの処理</span></td><td class="term">結合子</td><td><span class="hide-me">ページ内での続き</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラミング言語</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">プログラミング言語</strong>：<span class="hide-me">コンピュータに対して動作手順などを適切に指示するために用いられる人工的に構成された言語体系。人間が扱いやすい。</span></p>
+                <p><strong class="term">機械語</strong>：<span class="hide-me">0と1のビット列からなる、コンピュータが理解できる命令。人間が扱うことは難しい。</span></p>
+                <p>プログラミング言語の分類例</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>分類方法</th><th>種類</th><th>特徴と言語</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>記述の方法による分類</td><td class="term">低級言語</td><td><span class="hide-me">CPUが直接実行できる機械語や、それに近いアセンブリ言語</span></td></tr>
+                            <tr><td></td><td class="term">高級言語</td><td><span class="hide-me">人間の言葉に近い形式で記述される言語</span></td></tr>
+                            <tr><td>表現方法による分類</td><td class="term">テキストプログラミング言語</td><td><span class="hide-me">文字で表現する言語　C、C++、Java、JavaScript、Python、BASICなど</span></td></tr>
+                            <tr><td></td><td class="term">ビジュアルプログラミング言語</td><td><span class="hide-me">ブロックなど図形で表現する言語　Scratch、VISCUITなど</span></td></tr>
+                            <tr><td>変換方式による分類</td><td class="term">コンパイラ型言語</td><td><span class="hide-me">高級言語を一括して機械語に変換し実行する言語　C、C++、Javaなど</span></td></tr>
+                            <tr><td></td><td class="term">インタプリタ型言語</td><td><span class="hide-me">高級言語を1行ずつ機械語に変換し実行する言語　JavaScript、Pythonなど</span></td></tr>
+                            <tr><td>実行場所による分類</td><td class="term">クライアントサイド型言語</td><td><span class="hide-me">クライアント側で実行される言語　JavaScript、Pythonなど</span></td></tr>
+                            <tr><td></td><td class="term">サーバサイド型言語</td><td><span class="hide-me">サーバ側で実行される言語　PHP、Python、Perl、JavaScriptなど</span></td></tr>
+                            <tr><td>方法論による分類</td><td class="term">手続き型言語</td><td><span class="hide-me">処理手順を実行する順番に記述する言語　C、Fortranなど</span></td></tr>
+                            <tr><td></td><td class="term">関数型言語</td><td><span class="hide-me">関数を呼び出して処理を行う言語　Haskell</span></td></tr>
+                            <tr><td></td><td class="term">論理型言語</td><td><span class="hide-me">記号論理学の体系をもとにした言語　Prologなど</span></td></tr>
+                            <tr><td></td><td class="term">オブジェクト指向型言語</td><td><span class="hide-me">オブジェクト指向を取り入れた言語　C++、Java、JavaScript、Pythonなど</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラムの処理の流れ</h2>
+            </div>
+            <div class="details">
+                <p>多くのプログラムは、値の入力があって、その値を使った計算を行い、結果を出力するという処理の流れで構成される。
+                        この値は、プログラムに<strong class="term">定数</strong>で書き込まれたり、実行時にキーボードなどの入力装置から入力されたり、別のファイルから読み込まれる。
+                        入力された値は、プログラム中では<strong class="term">変数</strong>により取り扱われ、変数を使った計算が行われる。
+                        この値は、通常の実行では変数の変化を見ることができないので、変化を追いかけるためには明示的に出力する命令を使う必要がある。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラミングの流れ</h2>
+            </div>
+            <div class="details">
+                <p>①　<span class="hide-me">最初に問題解決の手順を考える</span></p>
+                <p>②　<span class="hide-me">任意のプログラミング言語で記述する</span></p>
+                <p>③　<span class="hide-me">コンピュータで実行する</span></p>
+                <p>④　<span class="hide-me">エラーが出れば修正する</span></p>
+                <p>⑤　<span class="hide-me">結果を検証し、問題があれば何が原因かを考え、正しい結果が得られるまで同じ手順を繰り返す</span></p>
+                <p><strong class="term">バグ</strong>：<span class="hide-me">問題の原因</span></p>
+                <p><strong class="term">デバッグ</strong>：<span class="hide-me">バグを取り除く作業</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>さまざまなエラー</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">構文エラー</strong>：<span class="hide-me">プログラムを機械語に変換する際に、文法上のミスによって変換できない際に生じる</span>エラー　<span class="hide-me">編集ソフトの機能によって指摘されるため、解決しやすい</span></p>
+                <p><strong class="term">実行時エラー</strong>：<span class="hide-me">プログラムの実行中に、何らかの誤りが原因で途中で止まる</span>エラー　<span class="hide-me">エラーメッセージが返されるため、解決しやすい</span></p>
+                <p><strong class="term">論理エラー</strong>：<span class="hide-me">文法上の問題もなく実行も途中で止まることはないが、正しい結果の得られない</span>エラー　<span class="hide-me">エラーメッセージがなく発見が難しい</span></p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の-目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

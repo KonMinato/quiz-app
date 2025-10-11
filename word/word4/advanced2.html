@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="advanced2.css">
+    <title>名前解決の仕組み</title>
+</head>
+<body>
+    <div class="container">
+        <header class="intro">
+            <h3>名前解決の様子をアニメーションで確認</h3>
+        </header>
+
+        <main class="main-content">
+            <div class="main-layout">
+                <div class="packet" id="packet"><p id="packet-label"></p></div>
+                <section class="animation-stage">
+                    <svg id="dns-lines-svg" class="dns-lines-svg"></svg>
+
+                    <div class="node" id="node-pc">
+                        <img src="img/pc0.png" class="node-image">
+                        <div class="node-info-box">
+                            <p>www.jma.go.jp</p>
+                            <p>のアドレスは？</p>
+                        </div>
+                    </div>
+                    <div class="node" id="node-dns-local">
+                        <img src="img/server0.png" class="node-image">
+                        <p class="node-label">DNSサーバ</p>
+                    </div>
+
+                    
+
+                    <div class="dns-tree">
+                        <div class="dns-level">
+                            <div class="node" id="node-dns-root"><img src="img/server0.png" class="node-image"><p class="node-label circle">root</p></div>
+                        </div>
+                        <div class="dns-level">
+                            <div class="node" id="node-dns-jp"><img src="img/server0.png" class="node-image"><p class="node-label circle">jp</p></div>
+                            <div class="node" id="node-dns-uk"><img src="img/server0.png" class="node-image"><p class="node-label circle">uk</p></div>
+                        </div>
+                        <div class="dns-level">
+                            <div class="node" id="node-dns-go"><img src="img/server0.png" class="node-image"><p class="node-label circle">go</p></div>
+                            <div class="node" id="node-dns-co"><img src="img/server0.png" class="node-image"><p class="node-label circle">co</p></div>
+                        </div>
+                        <div class="dns-level">
+                            <div class="node" id="node-dns-jma"><img src="img/server0.png" class="node-image"><p class="node-label circle">jma</p></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <aside class="sidebar">
+                    <section class="info-grid">
+                        <div class="info-box status-box">
+                            <h2>ステップ</h2>
+                            <p id="step-number">①</p>
+                        </div>
+                        <div class="info-box description-box">
+                            <h3>説明</h3>
+                            <p id="step-description">DNSサーバにwww.jma.go.jpのアドレスを問い合わせる</p>
+                        </div>
+                    </section>
+                    <footer class="controls">
+                        <div class="buttons">
+                            <button class="btn" id="btn-prev">前へ</button>
+                            <button class="btn" id="btn-next">次へ</button>
+                        </div>
+                        <div class="return-link">
+                           <a href="word4_19.html" class="btn-nav">説明ページへ戻る</a>
+                           <a href="../../../Chapter4.html" class="btn-nav">章の目次へ戻る</a>
+                        </div>
+                    </footer>
+                </aside>
+            </div>
+        </main>
+    </div>
+    <script src="advanced2.js"></script>
+</body>
+</html>

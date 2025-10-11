@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データの並べ替え・抽出シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8; color: #333; font-size: 16px;
+        }
+        .container {
+            background-color: #ffffff; padding: 30px; border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 90%; max-width: 700px; margin: 20px auto;
+        }
+        h1 { color: #2c3e50; text-align: center; }
+
+        .filter-controls {
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+            background-color: #fafafa; padding: 15px; border-radius: 8px; margin-bottom: 20px;
+        }
+        .filter-controls select, .filter-controls input {
+            padding: 8px; font-size: 1em; border: 1px solid #ccc; border-radius: 5px;
+        }
+        .filter-controls button {
+            padding: 8px 15px; font-size: 1em; border: none; border-radius: 5px;
+            color: white; cursor: pointer;
+        }
+        #apply-filter-btn { background-color: #3498db; }
+        #reset-filter-btn { background-color: #95a5a6; }
+        
+        #data-table { border-collapse: collapse; width: 100%; }
+        #data-table th, #data-table td {
+            border: 1px solid #ccc; padding: 10px; text-align: center;
+        }
+        #data-table th {
+            background-color: #2c3e50; color: white;
+            position: relative; user-select: none;
+        }
+        /* ▼▼▼【変更点1】クリックできるヘッダーのみカーソルが変わるように修正 ▼▼▼ */
+        #data-table th.sortable {
+            cursor: pointer;
+        }
+        
+        .sort-icon {
+            display: inline-flex;
+            flex-direction: column;
+            line-height: 0.8;
+            margin-left: 5px;
+        }
+        .sortable .sort-icon::before,
+        .sortable .sort-icon::after {
+            opacity: 0.3;
+        }
+        .sortable .sort-icon::before { content: '▲'; }
+        .sortable .sort-icon::after { content: '▼'; }
+        
+        .sortable.sorted-asc .sort-icon::before { opacity: 1; color: #f1c40f; }
+        .sortable.sorted-desc .sort-icon::after { opacity: 1; color: #f1c40f; }
+        
+        #data-table tbody tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>データの並べ替え・抽出シミュレーター</h1>
+    
+    <div class="filter-controls">
+        <span>「点数」が</span>
+        <select id="filter-op">
+            <option value=">=">≥</option>
+            <option value="<=">≤</option>
+            <option value="==">=</option>
+        </select>
+        <input type="number" id="filter-value" value="80">
+        <button id="apply-filter-btn">抽出</button>
+        <button id="reset-filter-btn">リセット</button>
+    </div>
+
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th data-column="name">教科</th>
+                <th data-column="score" class="sortable">点数 <span class="sort-icon"></span></th>
+                <th data-column="class" class="sortable">クラス <span class="sort-icon"></span></th>
+                <th data-column="teacher" class="sortable">担当 <span class="sort-icon"></span></th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <a href="word5_26.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tableBody = document.getElementById('table-body');
+    const headers = document.querySelectorAll('#data-table th');
+    const applyFilterBtn = document.getElementById('apply-filter-btn');
+    const resetFilterBtn = document.getElementById('reset-filter-btn');
+    
+    const originalData = [
+        { name: '国語', score: 85, class: 'A', teacher: '佐藤' },
+        { name: '数学', score: 92, class: 'B', teacher: '鈴木' },
+        { name: '理科', score: 78, class: 'A', teacher: '高橋' },
+        { name: '社会', score: 88, class: 'A', teacher: '田中' },
+        { name: '英語', score: 72, class: 'B', teacher: '鈴木' },
+        { name: '体育', score: 95, class: 'A', teacher: '高橋' },
+        { name: '音楽', score: 81, class: 'B', teacher: '田中' }
+    ];
+    
+    let currentData = [...originalData];
+    let sortState = { column: null, order: 'none' };
+
+    function renderTable(data) {
+        tableBody.innerHTML = '';
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row.name}</td><td>${row.score}</td><td>${row.class}</td><td>${row.teacher}</td>`;
+            tableBody.appendChild(tr);
+        });
+        updateSortIcons();
+    }
+    
+    function updateSortIcons() {
+        headers.forEach(th => {
+            if (th.classList.contains('sortable')) {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+                if (th.dataset.column === sortState.column) {
+                    if (sortState.order === 'asc') {
+                        th.classList.add('sorted-asc');
+                    } else if (sortState.order === 'desc') {
+                        th.classList.add('sorted-desc');
+                    }
+                }
+            }
+        });
+    }
+
+    // ▼▼▼【変更点3】並べ替えのクリックイベントを sortable クラスを持つヘッダーだけに限定 ▼▼▼
+    headers.forEach(header => {
+        if (header.classList.contains('sortable')) {
+            header.addEventListener('click', () => {
+                const column = header.dataset.column;
+                if (sortState.column === column && sortState.order === 'asc') {
+                    sortState.order = 'desc';
+                } else {
+                    sortState.column = column;
+                    sortState.order = 'asc';
+                }
+                sortAndRender();
+            });
+        }
+    });
+
+    function sortAndRender() {
+        currentData.sort((a, b) => {
+            const valA = a[sortState.column];
+            const valB = b[sortState.column];
+            let comparison = 0;
+            if (valA > valB) comparison = 1;
+            else if (valA < valB) comparison = -1;
+            return sortState.order === 'asc' ? comparison : comparison * -1;
+        });
+        renderTable(currentData);
+    }
+    
+    function applyFilter(data) {
+        const op = document.getElementById('filter-op').value;
+        const value = parseFloat(document.getElementById('filter-value').value);
+        if (isNaN(value)) return data;
+        
+        return data.filter(row => {
+            switch(op) {
+                case '>=': return row.score >= value;
+                case '<=': return row.score <= value;
+                case '==': return row.score == value;
+                default: return true;
+            }
+        });
+    }
+
+    applyFilterBtn.addEventListener('click', () => {
+        currentData = applyFilter([...originalData]); // 必ず元のデータからフィルタする
+        sortState = { column: null, order: 'none' };
+        renderTable(currentData);
+    });
+    
+    // ▼▼▼【変更点4】リセットボタンのロジックを再確認・確定 ▼▼▼
+    resetFilterBtn.addEventListener('click', () => {
+        currentData = [...originalData]; // 必ず元のデータで上書きする
+        document.getElementById('filter-value').value = '80';
+        sortState = { column: null, order: 'none' };
+        renderTable(currentData);
+    });
+
+    renderTable(currentData);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word6.css">
+    <title>プログラミング＿関数</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３３　関数</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>関数</h2>
+            </div>
+            <div class="details">
+                <p>関数：定められた一連の処理を定義し、それを呼び出すと一連の処理が実行される仕組み</p>
+                <p>組み込み関数：プログラミング言語などの仕様にあらかじめ用意された関数 printやinputなど</p>
+                <p>ユーザ定義関数：ユーザが作成する関数</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>関数の定義と呼び出す方法</h2>
+            </div>
+            <div class="details">
+                <p>引数：関数に引き渡す値</p>
+                
+                <ul>
+                    <li>仮引数：呼び出される側(関数の定義側)の引数</li>
+                    <li>実引数：呼び出す側の引数</li>
+                </ul>
+                <p>戻り値(返り値)：関数内で処理した結果を呼び出す側に戻す値</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>変数の有効範囲</h2>
+            </div>
+            <div class="details">
+                <ul>
+                    <li>グローバル変数：関数の外側で宣言した変数 有効範囲はプログラム全体</li>
+                    <li>ローカル変数：関数内で宣言した変数 有効範囲はその関数の内側のみ</li>
+                    <p>関数の仮引数もローカル変数になる</p>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題1：関数</h2>
+            </div>
+            <div class="details">
+                <h3>以下の三角形の面積計算プログラムを、底辺と高さを引数とし、面積を戻り値としたユーザ定義関数areaを用いたプログラムに変更しなさい。</h3>
+                <p>
+                    ①　a=float(input('底辺 '))
+                    <br>②　b=float(input('高さ '))
+                    <br>③　c=a*b/2
+                    <br>④　print('面積=',c)
+                </p>
+                <p>底辺 10.5 → 高さ 5.8 → 面積= 30.45</p>
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　def area(x,y):
+                    <br>②　　z=x*y/2
+                    <br>③　　return z
+                    <br>④　a=float(input('底辺 '))
+                    <br>⑤　b=float(input('高さ '))
+                    <br>⑥　c=area(a, b)
+                    <br>⑦　print('面積=',c)
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>
+                    引数と戻り値の有無によって次のarea関数が考えられる。
+                    <br>ⓐ　引数あり、戻り値ありの関数　ⓑ　引数あり、戻り値なしの関数
+                    <br>Ⓒ　引数なし、戻り値ありの関数　ⓓ　引数なし、戻り値なしの関数
+                    <br>このうち、上記のプログラムはⓐのタイプの関数を使っている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題2：グローバル変数とローカル変数</h2>
+            </div>
+            <div class="details">
+                <h3>以下の④、⑦、⑩、⑬行目の各print文で表示される数値を答えなさい。</h3>
+                <p>
+                    ①　def test():
+                    <br>②　　global x
+                    <br>③　　x=0
+                    <br>④　　print(x)
+                    <br>⑤　x=1
+                    <br>⑥　test()
+                    <br>⑦　print(x)
+                    <br>
+                    <br>⑧　def test():
+                    <br>⑨　　x=0
+                    <br>⑩　　print(x)
+                    <br>⑪　x=1
+                    <br>⑫　test()
+                    <br>⑬　print(x)
+                </p>
+                <p style="color: red;">解答</p>
+                <p>④ 0　⑦ 0　⑩ 0　⑬ 1</p>
+                <p  style="color: blue;">考察</p>
+                <p>①行目は⑥丸行メロから、⑧行目は⑫行目からそれぞれ呼び出される。④行目と⑦行目のxは②行目の「global x」により関数内でも
+                    グローバル変数になるため、③行目で0に変更される。⑩行目のxは⑨行目の代入文「x=0」によりローカル変数になるため、0になる。
+                    ⑬行目のxは⑪行目の代入文「x=1」によりグローバル変数になり関数内で変更されないため、1である。グローバル変数xとローカル変数x
+                    は同じ名前であるが異なる変数になる。
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="function.html" class="show-button">関数を確認する</a>
+            </div>
+    </div>
+
+    <a href="../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

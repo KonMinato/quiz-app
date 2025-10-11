@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word5.css">
+    <title>問題解決＿モデル化とシミュレーション</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２９　モデル化とシミュレーション</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>モデル化とシミュレーション</h2>
+            </div>
+            <div class="details">
+                <p>現実の問題にはさまざまな要素が含まれており、それらをすべて考慮すると解決が容易でない場合がある。
+                    その際、問題の本質的な部分を残して問題を単純化・抽象化することをモデル化という。
+                    また、問題解決の結果を予測するために同様の条件で模擬動作させてみることをシミュレーションという。
+                    安全性・費用・効率などの点から、実際と同じ条件で行うことが困難な場合は、単純化されたモデルで代替することもある。
+                    問題解決のためには、どのようなモデルを選択してシミュレーションするかが重要なポイントになる。
+                    <br>モデルには対象や表現方法などによっていろいろなものがある。
+                </p>
+                
+                <ul>
+                    <li>
+                        物理モデルと論理モデル
+                        <ul>
+                            <li>
+                                物理モデル：実物を模したモデル
+                                <p>例：モデルルームなどの実物モデル、分子模型などの拡大モデル、ミニカーなどの縮尺モデル　など</p>
+                            </li>
+                            <li>
+                                論理モデル：現象や手続きなどを表現したモデル
+                                <p>例：現象や法則などを数学的に表した数式モデル、列車の路線図や試合のトーナメント表などの図的モデル　など</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        静的モデルと動的モデル
+                        <ul>
+                            <li>
+                                静的モデル：時間の経過がほかの要素に影響を与えないモデル
+                                <p>例：円の半径と面積の関係　など</p>
+                            </li>
+                            <li>
+                                動的モデル：時間の経過がほかの要素に影響を与えるモデル
+                                <p>例：落下する物体の運動　など</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        確定的モデルと確率的モデル
+                        <ul>
+                            <li>
+                                確定的モデル：変動する要素がなく、結果が1つに定まるモデル
+                                <p>例：等速度で走る車の時間と移動距離　など</p>
+                            </li>
+                            <li>
+                                確率的モデル：変動する要素があり、結果が1つにならないモデル
+                                <p>例：2つのサイコロを振って出る目の数の合計　など</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>確率的モデル</h2>
+            </div>
+            <div class="details">
+                <p>私たちの身の回りには、サイコロを振った時に出る目のように、不確定な要素を含んだ現象がある。
+                    このような現象を確率的な考え方を用いてモデル化したものを確率的モデルという。
+                    この確率的モデルの中で乱数を用いて問題を解決する手法をモンテカルロ法という。
+                    乱数とは、値が一定の範囲内で不規則かつ等確率で現れる数字の列である。
+                    例えば、表計算ソフトウェアで使われるRAND関数は、0以上で1未満の実数をランダムに発生させる。
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

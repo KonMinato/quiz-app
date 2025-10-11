@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>問題解決＿時系列分析と回帰分析</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２８　時系列分析と回帰分析</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>時系列分析</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">時系列データ</strong>：<span class="hide-me">時間とともに変動する量を時間順に並べたもの</span></p>
+                
+                <p><strong class="term">移動平均法</strong>：<span class="hide-me">時系列データの傾向を調べるための、一定時間範囲のデータの平均値をその範囲の代表値とする方法</span>
+                        <br>例えば5年間の移動平均では、ある年を中心とした5年間の平均値をその年の移動平均値とする。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>回帰分析</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">回帰分析</strong>：<span class="hide-me">複数の系列のデータがあるとき、その間に成り立つ関係を関数を使って表現する手法</span></p>
+                <ul>
+                    <li>
+                        <strong class="term">直線回帰</strong>
+                            <p><strong class="term">散布図</strong>：<span class="hide-me">2つの変数をもつデータの変数間の関係を表現するグラフ</span></p>
+                            <p><strong class="term">直線回帰</strong>：<span class="hide-me">2つの数の関係を直線関係(一次関数)と仮定して近似すること</span></p>
+                            <p><strong class="term">回帰直線</strong>：<span class="hide-me">近似された直線</span></p>
+                            <p>直線近似以外にも、回帰分析では、<span class="hide-me">2つの変数間の関係</span>をさまざまな関数y=f(x)として表す。これを<strong class="term">モデル関数</strong>という。</p>
+                    </li>
+                    <li>
+                        <strong class="term">相関係数</strong>
+                            <p><span class="hide-me">変数間の相関の強さ</span>は<strong class="term">相関係数</strong>で表される。散布図におけるデータの平均値からのずれ(偏差)は2次元になるから、データの広がりは次の式のような<strong class="term">共分散</strong>で表す。</p>
+                            <p class="term">共分散</p>
+                            <p><span class="hide-me">σxy=<u>(x₁-<span style="text-decoration: overline">x</span>)*(y₁-<span style="text-decoration: overline">y</span>)
+                                + (x₂-<span style="text-decoration: overline">x</span>)*(y₂-<span style="text-decoration: overline">y</span>)
+                                + ...+(xₙ-<span style="text-decoration: overline">x</span>)*(yₙ-<span style="text-decoration: overline">y</span>)</u></p>
+                            <p>　　　　　n</p>
+                            <p class="term">相関係数</p>
+                            <p>r=<span class="hide-me">共分散σxy/(xの標準偏差σx*yの標準偏差σy)</span></p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

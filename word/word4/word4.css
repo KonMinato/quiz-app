@@ -1,0 +1,227 @@
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* 基本設定 */
+body {
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    padding-bottom: 80px; /* 戻るボタンの分の余白 */
+}
+
+/* コンテナと見出し */
+.container {
+    max-width: 900px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+}
+
+.main-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* トピックカード */
+.topic {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    overflow: hidden; /* アニメーションのため */
+}
+
+.topic-header {
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+    user-select: none; /* テキスト選択を無効化 */
+    transition: background-color 0.2s ease;
+}
+
+.topic-header:hover {
+    background-color: #f8f9fa;
+}
+
+.topic-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+/* 矢印アイコン (水色テーマ) */
+.topic-header::after {
+    content: '▼';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #007bff; /* Blue color */
+    transition: transform 0.3s ease;
+}
+
+.topic-header.active::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* 詳細コンテンツ */
+.details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.8s ease-out, opacity 0.5s ease-out, padding 0.5s ease-out;
+    padding: 0 20px;
+    line-height: 1.8;
+}
+
+.details.show {
+    max-height: 2000px; /* 十分な高さを確保 */
+    opacity: 1;
+    padding: 10px 20px 25px 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+/* テーブルのスタイル */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* テーブルヘッダー (水色テーマ) */
+thead {
+    background-color: #e7f5ff; /* Light blue */
+}
+
+th {
+    font-weight: bold;
+    color: #004085; /* Dark blue */
+}
+
+/* 戻るボタン (水色テーマ) */
+.return-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 25px;
+    background-color: #0069d9; /* Blue */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.return-button:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background-color: #0056b3; /* Darker blue */
+}
+
+.show-button{
+    padding:12px 25px;
+    background-color:#5a6268;
+    color:#fff;
+    text-decoration:none;
+    border-radius:50px;
+    font-weight:bold;
+    z-index:100;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    transition:transform 0.2s ease,box-shadow 0.2s ease,background-color 0.2
+}
+.show-button:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background-color: #494e53; /* Darker gray */
+}
+
+.show-button-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* PCでも幅が足りなければ折り返す */
+    gap: 15px; /* ボタン間の隙間 */
+    margin-top: 40px;
+}
+
+/* --- スマートフォン対応 --- */
+/* 画面幅が768px以下の場合に適用 */
+@media (max-width: 768px) {
+
+    .container {
+        padding: 0 15px;
+        margin: 15px auto 30px;
+    }
+
+    .main-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .topic-header {
+        padding: 15px;
+    }
+
+    .topic-header h2 {
+        font-size: 18px;
+    }
+
+    .details.show {
+        padding: 10px 15px 20px 15px;
+    }
+    
+    p {
+        font-size: 15px; /* 段落の文字を少し小さく */
+        line-height: 1.7;
+    }
+
+    /* テーブルを左右にスクロールさせるための設定 */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* iOSでのスクロールを滑らかに */
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* 戻るボタンのサイズ調整 */
+    .return-button {
+        padding: 10px 20px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .return-button:hover {
+        transform: none;
+    }
+
+    .show-button-container {
+        flex-direction: column; /* 縦並びにする */
+        align-items: center;  /* 中央揃えにする */
+        gap: 20px;
+    }
+
+    .show-button {
+        width: 90%; /* ボタンの幅を画面に合わせる */
+        text-align: center;
+    }
+}

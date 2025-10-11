@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word6.css">
+    <title>プログラミング＿アルゴリズムとプログラミング</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３０　アルゴリズムとプログラミング</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>アルゴリズムとプログラミング</h2>
+            </div>
+            <div class="details">
+                <p>アルゴリズム：問題を解決するための方法や手順。「何を」、「どのような順番で」、「何に対して行うのか」などを記述したもの。</p>
+                <p>プログラム：アルゴリズムをコンピュータ上で実行できるように、コンピュータに命令を指示する言語を用いて表したもの</p>
+                <p>プログラミング：プログラムを作成すること</p>
+                <p>フローチャート：アルゴリズムを視覚的に分かりやすく表現した図</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>名称</td><td>内容</td><td>名称</td><td>内容</td>
+                            </tr>
+                            <tr>
+                                <td class="symbol-terminal">端子</td><td>開始と終了</td><td class="symbol-data">データ</td><td>データの入力や出出力</td>
+                            </tr>
+                            <tr>
+                                <td class="symbol-process">処理</td><td>演算などの処理</td><td class="symbol-manual-input">手操作入力</td><td>キーボード入力のデータなど</td>
+                            </tr>
+                            <tr>
+                                <td class="symbol-decision">判断</td><td>条件による分岐</td><td class="symbol-display">表示</td><td>画面に表示されるデータなど</td>
+                            </tr>
+                            <tr>
+                                <td class="symbol-loop">ループ端</td><td>繰り返しの開始と終了</td><td class="symbol-flowline">線</td><td>処理の流れ</td>
+                            </tr>
+                            <tr>
+                                <td class="symbol-predefined">定義済処理</td><td>関数などの処理</td><td class="symbol-connector">結合子</td><td>ページ内での続き</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラミング言語</h2>
+            </div>
+            <div class="details">
+                <p>プログラミング言語：コンピュータに対して動作手順などを適切に指示するために用いられる人工的に構成された言語体系。人間が扱いやすい。</p>
+                <p>機械語：0と1のビット列からなる、コンピュータが理解できる命令。人間が扱うことは難しい。</p>
+                <p>プログラミング言語の分類例</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>分類方法</th><th>種類</th><th>特徴と言語</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>記述の方法による分類</td><td>低級言語</td><td>CPUが直接実行できる機械語や、それに近いアセンブリ言語</td></tr>
+                            <tr><td></td><td>高級言語</td><td>人間の言葉に近い形式で記述される言語</td></tr>
+                            <tr><td>表現方法による分類</td><td>テキストプログラミング言語</td><td>文字で表現する言語　C、C++、Java、JavaScript、Python、BASICなど</td></tr>
+                            <tr><td></td><td>ビジュアルプログラミング言語</td><td>ブロックなど図形で表現する言語　Scratch、VISCUITなど</td></tr>
+                            <tr><td>変換方式による分類</td><td>コンパイラ型言語</td><td>高級言語を一括して機械語に変換し実行する言語　C、C++、Javaなど</td></tr>
+                            <tr><td></td><td>インタプリタ型言語</td><td>高級言語を1行ずつ機械語に変換し実行する言語　JavaScript、Pythonなど</td></tr>
+                            <tr><td>実行場所による分類</td><td>クライアントサイド型言語</td><td>クライアント側で実行される言語　JavaScript、Pythonなど</td></tr>
+                            <tr><td></td><td>サーバサイド型言語</td><td>サーバ側で実行される言語　PHP、Python、Perl、JavaScriptなど</td></tr>
+                            <tr><td>方法論による分類</td><td>手続き型言語</td><td>処理手順を実行する順番に記述する言語　C、Fortranなど</td></tr>
+                            <tr><td></td><td>関数型言語</td><td>関数を呼び出して処理を行う言語　Haskell</td></tr>
+                            <tr><td></td><td>論理型言語</td><td>記号論理学の体系をもとにした言語　Prologなど</td></tr>
+                            <tr><td></td><td>オブジェクト指向型言語</td><td>オブジェクト指向を取り入れた言語　C++、Java、JavaScript、Pythonなど</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラムの処理の流れ</h2>
+            </div>
+            <div class="details">
+                <p>多くのプログラムは、値の入力があって、その値を使った計算を行い、結果を出力するという処理の流れで構成される。
+                    この値は、プログラムに定数で書き込まれたり、実行時にキーボードなどの入力装置から入力されたり、別のファイルから読み込まれる。
+                    入力された値は、プログラム中では変数により取り扱われ、変数を使った計算が行われる。
+                    この値は、通常の実行では変数の変化を見ることができないので、変化を追いかけるためには明示的に出力する命令を使う必要がある。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラミングの流れ</h2>
+            </div>
+            <div class="details">
+                <p>①　最初に問題解決の手順を考える</p>
+                <p>②　任意のプログラミング言語で記述する</p>
+                <p>③　コンピュータで実行する</p>
+                <p>④　エラーが出れば修正する</p>
+                <p>⑤　結果を検証し、問題があれば何が原因かを考え、正しい結果が得られるまで同じ手順を繰り返す</p>
+                <p>バグ：問題の原因</p>
+                <p>デバッグ：バグを取り除く作業</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>さまざまなエラー</h2>
+            </div>
+            <div class="details">
+                <p>構文エラー：プログラムを機械語に変換する際に、文法上のミスによって変換できない際に生じるエラー　編集ソフトの機能によって指摘されるため、解決しやすい</p>
+                <p>実行時エラー：プログラムの実行中に、何らかの誤りが原因で途中で止まるエラー　エラーメッセージが返されるため、解決しやすい</p>
+                <p>論理エラー：文法上の問題もなく実行も途中で止まることはないが、正しい結果の得られないエラー　エラーメッセージがなく発見が難しい</p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="debug.html" class="show-button">デバッグを体験する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

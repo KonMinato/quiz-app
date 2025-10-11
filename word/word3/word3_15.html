@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word3.css">
+    <title>デジタル＿コンピュータの構成と動作</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１５　コンピュータの構成と動作</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>ハードウェア</h2>
+            </div>
+            <div class="details">
+                <p>コンピュータには、キーボードやマウスなどの入力装置から、文字、数値、画像、音声などのデータや命令を入力する。
+                <br>そして、それらを主記憶装置(メモリ)やハードディスクドライブなど補助記憶装置に保存し、演算装置によって計算や判断をする。
+                その処理結果をディスプレイやプリンタなどの出力装置に出力する。
+                <br>また、これらの装置を制御しているのが制御装置である。各装置をハードウェアといい、このうち演算装置、制御装置を合わせて中央処理装置(CPU)という。
+                <br>なお、コンピュータで情報を処理する場合は、あらかじめ処理の手順を指示しておかなければならない。この処理手順を一定の形式で表したものをプログラムという。</p>
+                
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>ソフトウェア</h2>
+            </div>
+            <div class="details">
+                <p>ソフトウェアの種類</p>
+                <ul>
+                    <li>基本ソフトウェア：オペレーティングシステム(OS)</li>
+                    <li>応用ソフトウェア：ワードプロセッサ、表計算ソフトウェア、画像処理ソフトウェア、Webブラウザなど</li>
+                </ul>
+                <p>基本ソフトウェアであるOSは、周辺機器を動作させるためのデバイスドライバというプログラムを追加することで、
+                    さまざまな周辺機器に対応させることができる。このため、応用ソフトウェアを使う場合には、
+                    周辺機器の違いをほとんど意識することなく作業をすることができる。
+                    <br>また、OSは利用者とコンピュータとの間の入出力の手段であるユーザインターフェースの作業を行う。これは利用者の使いやすさに影響する。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>オペレーティングシステムの機能</h2>
+            </div>
+            <div class="details">
+                <p>OSは、ハードウェアと応用ソフトウェアとの仲介をすることを目的として、次のような管理を行う。</p>
+                <ul>
+                    <li>タスク管理：ソフトウェアの実行順序やCPUへの割り当てなどを管理する</li>
+                    <li>記憶(メモリ)管理：各ソフトウェアが使うメモリの割り当てを管理する</li>
+                    <li>入出力管理：キーボードやプリンタなどの周辺機器のハードウェアを管理する</li>
+                    <li>ファイル管理：補助記憶装置とのファイルのやり取り(読み/書き)を管理する</li>
+                    <li>資源(リソース)管理：CPU、メモリ、ハードディスクなどのコンピュータ資源を管理する</li>
+                    <li>ユーザ管理：複数のユーザアカウントを登録したり、削除したりして、コンピュータの利用者を管理する</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>キャッシュメモリ</h2>
+            </div>
+            <div class="details">
+                <p>キャッシュメモリ：CPUの動作速度に間に合わない主記憶装置のために、間に配置される小容量ながら高速な記憶装置</p>
+                <p>CPUが複数のキャッシュメモリを内蔵している場合もあり、CPUに近い方から1次キャッシュメモリ、2次キャッシュメモリと呼ばれる。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>CPUの動作</h2>
+            </div>
+            <div class="details">
+                <p>主記憶装置とCPU内部の基本的な構成を次に示す。
+                    <br>CPU内部では、プログラムの構成単位である命令の取り出し・解読・実行の一連の動作が順番に行われる。
+                    命令の実行が完了すると、次の命令の取り出し・解読・実行が行われる。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th class="yellow">装置</th><th class="yellow">内容</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>主記憶装置</td><td>命令やデータが保存されている</td></tr>
+                            <tr><td>プログラムカウンタ</td><td>主記憶装置のどの番地の命令を次に取り出すかを指定する</td></tr>
+                            <tr><td>命令レジスタ</td><td>主記憶装置から取り出した命令を一時的に保存する</td></tr>
+                            <tr><td>命令解読器</td><td>命令を解読して各部を制御する</td></tr>
+                            <tr><td>データレジスタ(レジスタ)</td><td>データを一時的に保存する</td></tr>
+                            <tr><td>演算装置</td><td>加算などの算術演算やその他の演算を行う</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>計算の仕組み</h2>
+            </div>
+            <div class="details">
+                <p>仮想プログラミング言語で加算(3+5=8)する時のコンピュータの計算の手順を考える。
+                    <br>主記憶装置には、データや以下の命令が保存されているとする。表の仮想プログラミング言語で加算するプログラムは、以下のようになる。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th class="yellow">READ</th><th>メモリからレジスタに読み出し</th></tr>
+                            <tr><th class="yellow">WRITE</th><th>レジスタから目盛りに書き込み</th></tr>
+                            <tr><th class="yellow">ADD</th><th>レジスタとメモリ間の和</th></tr>
+                            <tr><th class="yellow">STOP</th><th>プログラムの停止</th></tr>
+                        </thead>
+                    </table>
+                </div>
+                <ul>
+                    <li>手順1：1番地の命令を解読する</li>
+                    <p>①番地指定：プログラムカウンタのデータ「1」が指定する番地となる</p>
+                    <p>②命令の取り出し：指定された番地に格納されている命令を命令レジスタに読み込む</p>
+                    <p>③命令の解読：解読器で命令を解読する</p>
+                    <p>④番地指定：読み込んだ命令から、指定される番地は10となる</p>
+                    <p>⑤データの読み出し(命令の実行)：10番地のデータ「3」をレジスタAに読み出し、プログラムカウンタを2番地にする</p>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td></td><td></td><td>番地</td><td>主記憶装置</td></tr>
+                            <tr><td>プログラムカウンタ</td><td>1</td><td>1</td><td class="yellow">READ A,(10)</td></tr>
+                            <tr><td>命令レジスタ</td><td>READ A,(10)</td><td>2</td><td class="blue">ADD A,(11)</td></tr>
+                            <tr><td>命令解読器</td><td>10番地からレジスタAへ読み出し</td><td>3</td><td class="blue">WRITE (12),A</td></tr>
+                            <tr><td>レジスタA</td><td>3</td><td>4</td><td class="blue">STOP</td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td>演算装置</td><td>+</td><td>10</td><td class="yellow">3</td></tr>
+                            <tr><td></td><td></td><td>11</td><td class="blue">5</td></tr>
+                            <tr><td></td><td></td><td>12</td><td class="blue"></td></tr>
+                        </table>
+                    </div>
+
+                    <li>手順2：2番地の命令を解読する</li>
+                    <p>①番地指定：プログラムカウンタのデータ「2」が指定する番地となる</p>
+                    <p>②命令の取り出し：指定された番地に格納されている命令を命令レジスタに読み込む</p>
+                    <p>③命令の解読：解読器で命令を解読する</p>
+                    <p>④番地指定：読み込んだ命令から、指定される番地は11となる</p>
+                    <p>⑤データの読み出し(命令の実行)：レジスタAの内容「3」と11番地のデータ「5」を加算して、その和「8」をレジスタAに取り込み、プログラムカウンタを3番地にする</p>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td></td><td></td><td>番地</td><td>主記憶装置</td></tr>
+                            <tr><td>プログラムカウンタ</td><td>2</td><td>1</td><td class="blue">READ A,(10)</td></tr>
+                            <tr><td>命令レジスタ</td><td>ADD A,(11)</td><td>2</td><td class="yellow">ADD A,(11)</td></tr>
+                            <tr><td>命令解読器</td><td>レジスタAと11番地の和をレジスタAに</td><td>3</td><td class="blue">WRITE (12),A</td></tr>
+                            <tr><td>レジスタA</td><td>(8←) 3</td><td>4</td><td class="blue">STOP</td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td>演算装置</td><td>+</td><td>10</td><td class="blue">3</td></tr>
+                            <tr><td></td><td></td><td>11</td><td class="yellow">5</td></tr>
+                            <tr><td></td><td></td><td>12</td><td class="blue"></td></tr>
+                        </table>
+                    </div>
+
+                    <li>手順3：3番地の命令を解読する</li>
+                    <p>①番地指定：プログラムカウンタのデータ「3」が指定する番地となる</p>
+                    <p>②命令の取り出し：指定された番地に格納されている命令を命令レジスタに読み込む</p>
+                    <p>③命令の解読：解読器で命令を解読する</p>
+                    <p>④番地指定：読み込んだ命令から、指定される番地は12となる</p>
+                    <p>⑤データの読み出し(命令の実行)：レジスタAの内容「8」を12番地に書き込み、プログラムカウンタを4番地にする</p>
+                    <div class="table-wrapper">
+                        <table>
+                            <tr><td></td><td></td><td>番地</td><td>主記憶装置</td></tr>
+                            <tr><td>プログラムカウンタ</td><td>3</td><td>1</td><td class="blue">READ A,(10)</td></tr>
+                            <tr><td>命令レジスタ</td><td>WRITE(12),A</td><td>2</td><td class="blue">ADD A,(11)</td></tr>
+                            <tr><td>命令解読器</td><td>レジスタAから12番地へ書き込み</td><td>3</td><td class="yellow">WRITE (12),A</td></tr>
+                            <tr><td>レジスタA</td><td>(8←) 3</td><td>4</td><td class="blue">STOP</td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td></td><td></td><td>・</td><td></td></tr>
+                            <tr><td>演算装置</td><td>+</td><td>10</td><td class="blue">3</td></tr>
+                            <tr><td></td><td></td><td>11</td><td class="blue">5</td></tr>
+                            <tr><td></td><td></td><td>12</td><td class="yellow">8</td></tr>
+                        </table>
+                    </div>    
+                    
+                    <li>手順4：4番地の命令を解読する</li>
+                    <p>プログラムを停止する</p>
+                </ul>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="program.html" class="show-button">計算を可視化する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

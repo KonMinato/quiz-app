@@ -1,0 +1,8 @@
+    <section class="topic">
+	<h2></h2>
+        <p class="description"></p>
+        <button class="toggle-button" onclick="toggleDetails(this)">詳しく見る</button>
+        <div class="details">
+            <p></p>
+        </div>
+    </section>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>成績ダッシュボード</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <h1>成績ダッシュボード</h1>
+        <p>これまでの単元ごとの学習記録です。</p>
+
+        <div class="table-header-container">
+            <h2 class="table-title">知識問題</h2>
+            <div class="sort-container">
+                <label for="knowledgeSort">並び順:</label>
+                <select id="knowledgeSort" class="sort-select">
+                    <option value="default">単元順</option>
+                    <option value="accuracy-asc">正答率 (低い順)</option>
+                    <option value="accuracy-desc">正答率 (高い順)</option>
+                    <option value="accuracy-by-chapter-asc">章内の正答率 (低い順)</option>
+                    <option value="accuracy-by-chapter-desc">章内の正答率 (高い順)</option>
+                </select>
+            </div>
+        </div>
+        <table id="knowledgeScoreTable">
+            <thead>
+                <tr>
+                    <th>章</th>
+                    <th>単元名</th>
+                    <th>正解数 / 総問題数</th>
+                    <th>正答率</th>
+                </tr>
+            </thead>
+            <tbody id="knowledgeScoreTableBody"></tbody>
+        </table>
+
+        <div class="table-header-container">
+            <h2 class="table-title">プログラム作成問題</h2>
+            <div class="sort-container">
+                <label for="programmingSort">並び順:</label>
+                <select id="programmingSort" class="sort-select">
+                    <option value="default">単元順</option>
+                    <option value="accuracy-asc">正答率 (低い順)</option>
+                    <option value="accuracy-desc">正答率 (高い順)</option>
+                </select>
+            </div>
+        </div>
+        <table id="programmingScoreTable">
+            <thead>
+                <tr>
+                    <th>章</th>
+                    <th>単元名</th>
+                    <th>正解数 / 総問題数</th>
+                    <th>正答率</th>
+                </tr>
+            </thead>
+            <tbody id="programmingScoreTableBody"></tbody>
+        </table>
+        
+        <div class="table-header-container">
+            <h2 class="table-title">計算・進数問題</h2>
+            <div class="sort-container">
+                <label for="calcSort">並び順:</label>
+                <select id="calcSort" class="sort-select">
+                    <option value="default">単元順</option>
+                    <option value="accuracy-asc">正答率 (低い順)</option>
+                    <option value="accuracy-desc">正答率 (高い順)</option>
+                </select>
+            </div>
+        </div>
+        <table id="calcScoreTable">
+            <thead>
+                <tr>
+                    <th>章</th>
+                    <th>単元名</th>
+                    <th>正解数 / 総問題数</th>
+                    <th>正答率</th>
+                </tr>
+            </thead>
+            <tbody id="calcScoreTableBody"></tbody>
+        </table>
+        <div class="actions">
+            <button id="resetButton">学習記録をリセット</button>
+            <a href="index.html" class="back-link">問題作成ページに戻る</a>
+            <a href="saved.html" class="back-link" style="background-color: #27ae60;">保存した問題を見る</a>
+        </div>
+    </div>
+
+    <a href="../toppage.html" class="return">トップへ戻る</a>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

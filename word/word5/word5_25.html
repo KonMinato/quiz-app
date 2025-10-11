@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word5.css">
+    <title>問題解決＿データの収集と整理</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２５　データの収集と整理</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>ICTを活用した問題解決</h2>
+            </div>
+            <div class="details">
+                <p>問題を解決するためには、多くのデータを収集し、そこから有益な情報を取り出して解決策を作成し、実行していく必要がある。
+                    近年、情報機器やネットワークの発達によって多くのデータがオープンデータとして公開され、統計学や情報技術を用いたデータ分析に
+                    よって、客観的で信頼できる情報を取り出す技術の開発が進んでいる。また、模擬環境で検証を行うシミュレーションが一般化し、
+                    解決策の効果の検証に役立てられている。これらのICTを活用した問題解決手法を身に付けることは、これからの社会に必要な資質となっている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データの収集</h2>
+            </div>
+            <div class="details">
+                <p>例えば、台風などの自然災害から身を守るには、台風の進路、雨量、風速、洪水や土砂崩れの危険度など、様々なデータが必要になる。
+                    最近では、地域ごとの降水量や川の水位データ、画像、ハザードマップなど、公的機関などから詳細な情報が提供されるようになり、
+                    防災に役立てられている。公開されている情報には、表計算ソフトウェアのファイル形式であるxlsx形式や各データを「,」で区切って
+                    保存したCSV形式、情報の種類を示すタグでデータをはさんで記録したXML形式などがある。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データの結合</h2>
+            </div>
+            <div class="details">
+                <p>多くのデータを組み合わせることで新しい情報が生まれ、さらに有効な解決策が見つかることがある。データを結合するには、
+                    結合キーという共通した項目が必要である。以下の表では時刻を結合キーとした次のような関係(リレーションシップ)がある。
+                    その関係をもとに必要な項目を結合した新たな表が作成できる。
+                </p>
+                
+                <p>川の水位(A点)　雨量(A点)　雨量(B点)</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>時刻</td><td>水位</td>
+                                <td></td>
+                                <td>時刻</td><td>雨量</td><td>合計</td>
+                                <td></td>
+                                <td>時刻</td><td>雨量</td><td>合計</td>
+                            </tr>
+                            <tr>
+                                <td>7:00<br>7:10<br>7:20<br>7:30<br>7:40<br>7:50<br>8:00</td>
+                                <td>1.57<br>1.62<br>1.66<br>1.67<br>1.67<br>1.73<br>1.76</td>
+                                <td></td>
+                                <td>7:00<br>7:10<br>7:20<br>7:30<br>7:40<br>7:50<br>8:00</td>
+                                <td>3.0<br>3.0<br>2.0<br>5.0<br>9.0<br>1.0<br>1.0</td>
+                                <td>73<br>76<br>78<br>83<br>92<br>93<br>94</td>
+                                <td></td>
+                                <td>7:00<br>7:10<br>7:20<br>7:30<br>7:40<br>7:50<br>8:00</td>
+                                <td>2.0<br>5.0<br>4.0<br>12.0<br>7.0<br>1.0<br>0.0</td>
+                                <td>66<br>67<br>69<br>70<br>73<br>75<br>80</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>リレーションシップ</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>川の水位(A点)</td><td></td>
+                                <td>雨量(A点)</td><td></td>
+                                <td>雨量(B点)</td><td></td>
+                            </tr>
+                            <tr>
+                                <td class="pink">時刻</td><td></td>
+                                <td class="pink">時刻</td><td></td>
+                                <td class="pink">時刻</td><td></td>
+                            </tr>
+                            <tr>
+                                <td>水位</td><td></td>
+                                <td>雨量</td><td></td>
+                                <td>雨量</td><td></td>
+                            </tr>
+                            <tr>
+                                <td>警戒レベル</td><td></td>
+                                <td>合計</td><td></td>
+                                <td>合計</td><td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>データの結合</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>時刻</th><th>川の水位(A点).水位</th><th>雨量(A点).雨量</th><th>雨量(B点).雨量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>7:00</td><td>1.57</td><td>3.0</td><td>2.0</td>
+                            </tr>
+                            <tr>
+                                <td>7:10</td><td>1.62</td><td>3.0</td><td>5.0</td>
+                            </tr>
+                            <tr>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>数値データの整理</h2>
+            </div>
+            <div class="details">
+                <p>①：精密さと正確さ</p>
+                <p>誤差：観測・実験・調査などによって得られた測定値と真の値との間に生じるずれ
+                    <br>例えば、使用する機器の制度や操作する人の熟練度などにより、測定値にばらつきが生じる。測定値のばらつきが小さいほど
+                    精密である(精度が高い)という。
+                    <br>また、環境や構造的な理由などの影響により、測定値と真の値との間にずれが生じる。測定値の平均と真の値の差が小さいほど
+                    正確であるという。
+                </p>
+                <p>②：外れ値</p>
+                <p>外れ値：ほかのものから大きく異なった特徴を示す、一部の測定値
+                    <br>一般に統計処理を行う場合は外れ値を除いて処理することが多い。ただし、外れ値がミスなどによる異常値か、ある条件が
+                    重なったときに現れる値かは、実験を繰り返し、結果を比較した上で判断する必要がある。
+                </p>
+                <p>③：欠損値</p>
+                <p>欠損値：災害情報で、一時的な停電や観測機器の故障などで取得できなかったデータ
+                    <br>アンケート調査などの一般的な情報収集でも、記入漏れや回答者が答えたくなかったなどの理由で欠損値を生じることが多い。
+                    前述の外れ値を取り除いた部分も欠損値として扱う。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題2：データの補完</h2>
+                <h3>下の表の欠損値を、前後のデータから類推して補いなさい。</h3>
+            </div>
+            <div class="details">
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tr><td class="pink">時刻</td><td class="pink">気温℃</td></tr>
+                        <tr><td>12</td><td>13.2</td></tr>
+                        <tr><td>13</td><td>12.9</td></tr>
+                        <tr><td>14</td><td>12.7</td></tr>
+                        <tr><td>15</td><td></td></tr>
+                        <tr><td>16</td><td>12.1</td></tr>
+                        <tr><td>17</td><td>11.6</td></tr>
+                        <tr><td>18</td><td>11.3</td></tr>
+                    </table>
+                </div>
+                <p style="color: red;">解答例</p>
+                <p>14時と16時のデータから(12.7 + 12.1) ÷ 2 = 12.4</p>
+                <p  style="color: blue;">解説</p>
+                <p>欠損しているデータを補うことをデータの補完という。補完法には、前後のデータの平均値を使う方法や、
+                    近隣のデータを関数で表現して求める方法などがある。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>文字データ・画像データの整理</h2>
+            </div>
+            <div class="details">
+                <p>データの中には、文字や画像などで表現されたデータもある。例えば、報告書やアンケートなど、文章や写真で表現されたデータ
+                    には、災害の危険性や避難所生活の問題点など、数値だけでは表現できない細かな情報が含まれている。これらのデータは、
+                    含まれる情報が膨大であったり表現が複雑であったりするため、これまでは活用が難しかった。しかし、近年、情報機器の発達
+                    や人工知能などによる解析技術の向上によって有用な情報を取り出せるようになってきた。
+                </p>
+                <p>テキストマイニング：文章を解析して単語や文節などの要素を取り出し、これらの出現頻度や関係性などから情報を読み解く技術
+                    <br>文章の集約だけでなく、音声解析技術や人工知能と合わせることで、コンピュータが人の要求に従って適切な行動を行う仕組みが作られている。
+                </p>
+                <p>画像認識：画像データから情報を読み取る技術
+                    <br>人は視覚によって取り込んだ画像や映像から多くの情報を得ているが、画像データは単に色情報の集合体であり、画像データそのもの
+                    には意味がない。そこで、大量の色情報のパターンとその意味の組み合わせを学習させた人工知能などを用いて画像の意味を類推している。
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="process.html" class="show-button">データの結合と補完を確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

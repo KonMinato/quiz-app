@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word5.css">
+    <title>問題解決＿ソフトウェアを利用したデータの処理</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２６　ソフトウェアを利用したデータの処理</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>関数の利用</h2>
+            </div>
+            <div class="details">
+                <p>表計算ソフトウェアには、加減乗除の四則演算以外にも、関数など多様な計算方法が用意されている。関数とは、関数名の後に続く()内に
+                    並べられたデータ(引数)をもとに、あらかじめ定義された計算を行うものである。関数の中には、条件によって異なる結果(戻り値)を返すものもある。
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="pink">関数</th><th class="pink">書式</th><th class="pink">説明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SUM関数</td><td>=SUM(範囲)</td><td>範囲中の数値の合計を返す</td>
+                            </tr>
+                            <tr>
+                                <td>COUNT関数</td><td>=COUNT(範囲)</td><td>範囲中の数値の個数を返す</td>
+                            </tr>
+                            <tr>
+                                <td>AVERAGE関数</td><td>=AVERAGE(範囲)</td><td>範囲中の数値の平均を返す</td>
+                            </tr>
+                            <tr>
+                                <td>IF関数</td><td>=IF(論理式,真の場合,偽の場合)</td><td>論理式が真の場合は「真の場合」の値を、論理式が偽の場合は「偽の場合」の値を返す</td>
+                            </tr>
+                            <tr>
+                                <td>COUNTIF関数</td><td>=COUNTIF(範囲,検索条件)</td><td>範囲中で検索条件が真となるセルの個数を返す</td>
+                            </tr>
+                            <tr>
+                                <td>SUMIF関数</td><td>=SUMIF(範囲,検索条件,合計範囲)</td><td>範囲中で検索条件が真となるセルに対応する合計範囲のセルについて、数値の合計を返す</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>グラフの利用</h2>
+            </div>
+            <div class="details">
+                <p>可視化：収集したデータを表やグラフにまとめて視覚的に表現し、その特徴や傾向を把握しやすくすること
+                    <br>グラフから情報を読み取るには、全体的な傾向を捉えるとともに、グラフの周期性や大きく変化した部分などの特徴に注目する。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>並べ替えと抽出</h2>
+            </div>
+            <div class="details">
+                <p>データを一定のルールで並べ替えることによって、目的の値を検索しやすくしたり、データの傾向をつかんだりすることができる。
+                    並べ替えるルールには、昇順や降順、五十音順、文字コード順などがあるが、表中のデータを並べ替える時は、表計算ソフトウェアの機能を使うとよい。この機能は、条件に合ったデータだけを抽出することもできる。
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="spreadsheet.html" class="show-button">表計算シミュレーター</a>
+            <a href="sortfilter.html" class="show-button">並べ替え、抽出シミュレーター</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

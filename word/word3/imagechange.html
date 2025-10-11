@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>解像度・階調 体験シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8; color: #333; font-size: 16px;
+        }
+        .container {
+            max-width: 1200px; margin: 20px auto; padding: 20px;
+            background-color: #fff; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; text-align: center; }
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .controls-panel { flex: 1; }
+        .image-panel {
+            flex: 2;
+            display: flex;
+            gap: 20px;
+        }
+        .image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .control-group { margin-bottom: 25px; }
+        .control-group input[type="range"] { width: 100%; margin-top: 5px; }
+        
+        /* ▼▼▼【変更点1】ここからスライダーボタン用のスタイルを追加 ▼▼▼ */
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .slider-btn {
+            width: 28px;
+            height: 28px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: 1px solid #bdc3c7;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            line-height: 26px; /* 中央寄せ */
+        }
+        .value-display {
+            font-weight: bold;
+            color: #3498db;
+            min-width: 40px;
+            text-align: center;
+        }
+        /* ▲▲▲ ここまで ▲▲▲ */
+        
+        canvas, #original-image {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .image-container h3 { text-align: center; margin-bottom: 10px; }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>解像度・階調 体験</h1>
+    <div class="main-content">
+        <div class="controls-panel">
+            <h2>コントロール</h2>
+            <div class="control-group">
+                <label for="image-upload">画像ファイルを選択</label>
+                <input type="file" id="image-upload" accept="image/*">
+            </div>
+
+            <div class="control-group">
+                <div class="slider-label">
+                    <span>ピクセルサイズ</span>
+                    <div class="slider-controls">
+                        <button class="slider-btn" data-target="resolution-slider" data-step="-1">-</button>
+                        <span class="value-display" id="resolution-value">1</span>
+                        <button class="slider-btn" data-target="resolution-slider" data-step="1">+</button>
+                    </div>
+                </div>
+                <input type="range" id="resolution-slider" min="1" max="30" value="1">
+            </div>
+            <div class="control-group">
+                <div class="slider-label">
+                    <span>階調（1チャンネルあたり）</span>
+                    <div class="slider-controls">
+                        <button class="slider-btn" data-target="color-depth-slider" data-step="-1">-</button>
+                        <span class="value-display" id="color-depth-value">256</span>
+                        <button class="slider-btn" data-target="color-depth-slider" data-step="1">+</button>
+                    </div>
+                </div>
+                <input type="range" id="color-depth-slider" min="1" max="8" value="8">
+            </div>
+            <button id="reset-btn">リセット</button>
+        </div>
+        
+        <div class="image-panel">
+            <div class="image-container">
+                <h3>元の画像</h3>
+                <img id="original-image" alt="元の画像">
+            </div>
+             <div class="image-container">
+                <h3>処理後の画像</h3>
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <a href="word3_14.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM要素
+    const imageUpload = document.getElementById('image-upload');
+    const originalImage = document.getElementById('original-image');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    const resolutionSlider = document.getElementById('resolution-slider');
+    const resolutionValue = document.getElementById('resolution-value');
+    const colorDepthSlider = document.getElementById('color-depth-slider');
+    const colorDepthValue = document.getElementById('color-depth-value');
+    const resetBtn = document.getElementById('reset-btn');
+    const controlsPanel = document.querySelector('.controls-panel');
+
+    let sourceImage = new Image();
+    sourceImage.crossOrigin = "Anonymous";
+
+    function loadImage(src) {
+        sourceImage.src = src;
+        sourceImage.onload = () => {
+            originalImage.src = sourceImage.src;
+            const aspectRatio = sourceImage.width / sourceImage.height;
+            const displayWidth = 400;
+            canvas.width = displayWidth;
+            canvas.height = displayWidth / aspectRatio;
+            originalImage.style.height = `${canvas.height}px`;
+            processImage();
+        };
+    }
+
+    function processImage() {
+        const pixelSize = parseInt(resolutionSlider.value, 10);
+        const colorSteps = parseInt(colorDepthSlider.value, 10);
+        const colorLevels = Math.pow(2, colorSteps);
+
+        resolutionValue.textContent = pixelSize;
+        colorDepthValue.textContent = colorLevels;
+
+        const offscreenCanvas = document.createElement('canvas');
+        offscreenCanvas.width = canvas.width;
+        offscreenCanvas.height = canvas.height;
+        const offscreenCtx = offscreenCanvas.getContext('2d');
+        offscreenCtx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let y = 0; y < canvas.height; y += pixelSize) {
+            for (let x = 0; x < canvas.width; x += pixelSize) {
+                const imageData = offscreenCtx.getImageData(x, y, pixelSize, pixelSize);
+                const data = imageData.data;
+                let r = 0, g = 0, b = 0, count = 0;
+
+                for (let i = 0; i < data.length; i += 4) {
+                    if(data[i+3] > 0) {
+                        r += data[i]; g += data[i + 1]; b += data[i + 2];
+                        count++;
+                    }
+                }
+                if (count === 0) continue;
+
+                r = Math.floor(r / count); g = Math.floor(g / count); b = Math.floor(b / count);
+
+                const step = 256 / colorLevels;
+                r = Math.round(Math.floor(r / step) * step);
+                g = Math.round(Math.floor(g / step) * step);
+                b = Math.round(Math.floor(b / step) * step);
+
+                ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                ctx.fillRect(x, y, pixelSize, pixelSize);
+            }
+        }
+    }
+
+    imageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => { loadImage(event.target.result); };
+        reader.readAsDataURL(file);
+    });
+
+    resolutionSlider.addEventListener('input', processImage);
+    colorDepthSlider.addEventListener('input', processImage);
+    
+    resetBtn.addEventListener('click', () => {
+        resolutionSlider.value = 1;
+        colorDepthSlider.value = 8;
+        processImage();
+    });
+
+    // ▼▼▼【変更点3】スライダーボタンのクリックイベントを追加 ▼▼▼
+    controlsPanel.addEventListener('click', (e) => {
+        if (e.target.classList.contains('slider-btn')) {
+            const targetSliderId = e.target.dataset.target;
+            const step = parseInt(e.target.dataset.step, 10);
+            const slider = document.getElementById(targetSliderId);
+            
+            if (slider) {
+                const newValue = parseInt(slider.value, 10) + step;
+                // スライダーのmin/maxの範囲内に収める
+                const min = parseInt(slider.min, 10);
+                const max = parseInt(slider.max, 10);
+                if (newValue >= min && newValue <= max) {
+                    slider.value = newValue;
+                    // inputイベントを強制的に発生させて、画像処理を実行させる
+                    slider.dispatchEvent(new Event('input'));
+                }
+            }
+        }
+    });
+
+    loadImage('https://storage.googleapis.com/gemini-prod-us-west1-assets/images/photorealistic_flower.jpeg');
+});
+</script>
+</body>
+</html>

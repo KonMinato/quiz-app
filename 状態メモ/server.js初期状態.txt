@@ -1,0 +1,79 @@
+server.js初期状態
+
+require('dotenv').config(); // .envファイルの内容をprocess.envにロード
+
+const express = require('express');
+const cors = require('cors');
+const fetch = require('node-fetch'); // Node.jsでfetchを使うためのpolyfill
+
+const app = express();
+const PORT = process.env.PORT || 3000; // 環境変数からポートを取得、なければ3000
+
+// CORSを有効にする (フロントエンドが異なるオリジンからアクセスできるようにする)
+app.use(cors());
+
+// JSONリクエストボディをパースするためのミドルウェア
+app.use(express.json());
+
+
+// 静的ファイル（HTML, CSS, JSなど）を配信するための設定
+// index.htmlファイルがserver.jsと同じ階層にある場合、
+// server.jsと同じディレクトリを静的ファイルとして公開します。
+app.use(express.static(__dirname));
+
+// ルートパス (/) へのGETリクエストに対するハンドラ
+// 通常は上記express.staticの設定があれば不要ですが、
+// 明示的にindex.htmlを返すこともできます。
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+
+// Gemini APIへのプロキシエンドポイント
+app.post('/api/gemini', async (req, res) => {
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    const userPrompt = req.body.prompt; // フロントエンドから送られてくるプロンプト
+
+    if (!geminiApiKey) {
+        return res.status(500).json({ error: 'Gemini APIキーがサーバーに設定されていません。' });
+    }
+    if (!userPrompt) {
+        return res.status(400).json({ error: 'プロンプトが提供されていません。' });
+    }
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+    const body = {
+        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
+        generationConfig: { temperature: 0.3, maxOutputTokens: 2056 }
+    };
+
+    try {
+        const geminiResponse = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+
+        if (!geminiResponse.ok) {
+            const errorData = await geminiResponse.json();
+            console.error('Gemini API Error:', errorData);
+            return res.status(geminiResponse.status).json({
+                error: `Gemini API エラー: ${geminiResponse.status} - ${errorData.error?.message || geminiResponse.statusText}`
+            });
+        }
+
+        const data = await geminiResponse.json();
+        // Geminiからの応答をそのままクライアントに返す
+        res.json(data.candidates?.[0]?.content?.parts?.[0]?.text || "");
+
+    } catch (err) {
+        console.error('Proxy Server Error:', err);
+        res.status(500).json({ error: 'プロキシサーバーでエラーが発生しました。' });
+    }
+});
+
+// サーバーを起動
+app.listen(PORT, () => {
+    console.log(`プロキシサーバーがポート ${PORT} で起動しました。`);
+    console.log(`アクセス: http://localhost:${PORT}`);
+});

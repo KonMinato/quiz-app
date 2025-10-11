@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データ結合・外れ値処理シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8; color: #333; font-size: 14px; padding: 20px;
+        }
+        .container {
+            background-color: #ffffff; padding: 30px; border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 100%;
+            max-width: 1000px;
+            margin: auto;
+        }
+        h1, h2, h3 { color: #2c3e50; }
+        h1 { text-align: center; }
+        p.intro { text-align: center; font-size: 1.1em; max-width: 800px; margin: 0 auto 20px auto; }
+
+        .data-sources {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; margin-bottom: 20px;
+        }
+        .data-source h3 { text-align: center; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; transition: background-color 0.4s ease; }
+        th { background-color: #f2f2f2; }
+        .key-column { background-color: #fff2c4; font-weight: bold; }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .control-step { flex: 1; }
+        .control-step p { font-weight: bold; margin: 0 0 10px 0; }
+        .controls button {
+            padding: 12px 25px; font-size: 1.2em; border: none; border-radius: 8px;
+            color: white; cursor: pointer; width: 100%;
+        }
+        #join-btn { background-color: #3498db; }
+        #remove-btn { background-color: #e74c3c; }
+        #impute-btn { background-color: #2ecc71; }
+        .controls button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        
+        #result-area h2 { text-align: center; }
+        .status-panel {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e8f8f5;
+            border-left: 5px solid #1abc9c;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .outlier-value { background-color: #f5b7b1; color: #c0392b; font-weight: bold; }
+        .missing-value { background-color: #f7dc6f; color: #b7950b; font-weight: bold; }
+        .imputed-value { background-color: #a3e4d7; color: #1e8449; font-weight: bold; animation: flash 0.8s; }
+        .highlight-source { background-color: #d9f7e6 !important; }
+        .formula-display { font-size: 0.9em !important; color: #34495e !important; }
+        @keyframes flash { from { opacity: 0.5; } to { opacity: 1; } }
+
+        /* ▼▼▼【変更点1】ここから戻るボタンのスタイルを追加 ▼▼▼ */
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53;
+        }
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53;
+        }
+        /* ▲▲▲ ここまで ▲▲▲ */
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>データ結合・外れ値処理・補完シミュレーター</h1>
+    <p class="intro">
+        防災のため、川の水位と雨量の関係を分析します。<br>
+        しかし、データは3つのファイルに分かれており、一部に異常な値（外れ値）が含まれています。<br>
+        ボタンを順番に押して、データを分析できる形に整えましょう。
+    </p>
+    
+    <h2>1. 元のデータ</h2>
+    <div class="data-sources">
+        <div class="data-source" id="table1-container"></div>
+        <div class="data-source" id="table2-container"></div>
+        <div class="data-source" id="table3-container"></div>
+    </div>
+
+    <div class="controls">
+        <div class="control-step">
+            <p>Step 1</p>
+            <button id="join-btn">データを結合する</button>
+        </div>
+        <div class="control-step">
+            <p>Step 2</p>
+            <button id="remove-btn" disabled>外れ値を除去する</button>
+        </div>
+        <div class="control-step">
+            <p>Step 3</p>
+            <button id="impute-btn" disabled>欠損値を補完する</button>
+        </div>
+    </div>
+
+    <div id="result-area" style="display: none;">
+        <h2>2. 処理後のデータ</h2>
+        <div class="status-panel" id="status-panel"></div>
+        <div id="result-table-container"></div>
+    </div>
+</div>
+
+<a href="word5_25.html" class="return">説明ページへ戻る</a>
+<a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const outlierValue = 50.0;
+    const dataWaterLevel = {
+        title: '川の水位 (A地点)',
+        headers: ['時刻', '水位(m)'],
+        rows: [ ['7:00', 1.57], ['7:10', 1.62], ['7:20', 1.66], ['7:30', 1.67], ['7:40', 1.67], ['7:50', 1.73], ['8:00', 1.76] ]
+    };
+    const dataRainfallA = {
+        title: '雨量 (A地点)',
+        headers: ['時刻', '雨量(mm)'],
+        rows: [ ['7:00', 3.0], ['7:10', 3.0], ['7:20', 2.0], ['7:30', 5.0], ['7:40', 9.0], ['7:50', outlierValue], ['8:00', 1.0] ]
+    };
+    const dataRainfallB = {
+        title: '雨量 (B地点)',
+        headers: ['時刻', '雨量(mm)'],
+        rows: [ ['7:00', 2.0], ['7:10', 5.0], ['7:20', 4.0], ['7:30', 12.0], ['7:40', 7.0], ['7:50', 1.0], ['8:00', 0.0] ]
+    };
+
+    const joinBtn = document.getElementById('join-btn');
+    const removeBtn = document.getElementById('remove-btn');
+    const imputeBtn = document.getElementById('impute-btn');
+    const resultArea = document.getElementById('result-area');
+    const resultTableContainer = document.getElementById('result-table-container');
+    const statusPanel = document.getElementById('status-panel');
+    
+    function renderTable(container, tableData, highlightKey=false) {
+        container.innerHTML = `<h3>${tableData.title}</h3>`;
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const tbody = document.createElement('tbody');
+        
+        thead.innerHTML = `<tr>${tableData.headers.map((h, i) => `<th class="${(i===0 && highlightKey) ? 'key-column' : ''}">${h}</th>`).join('')}</tr>`;
+        
+        tableData.rows.forEach((rowData, rowIndex) => {
+            const row = tbody.insertRow();
+            rowData.forEach((cellData, colIndex) => {
+                const cell = row.insertCell();
+                cell.dataset.row = rowIndex;
+                cell.dataset.col = colIndex;
+
+                const isOutlier = cellData === outlierValue;
+                const isMissing = cellData === null;
+                cell.textContent = isMissing ? '?' : cellData;
+                
+                let className = '';
+                if (isOutlier) className = 'outlier-value';
+                if (isMissing) className = 'missing-value';
+                if (colIndex===0 && highlightKey) className += ' key-column';
+                cell.className = className;
+            });
+        });
+        
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        container.appendChild(table);
+    }
+    
+    renderTable(document.getElementById('table1-container'), dataWaterLevel, true);
+    renderTable(document.getElementById('table2-container'), dataRainfallA, true);
+    renderTable(document.getElementById('table3-container'), dataRainfallB, true);
+    
+    let joinedData = [];
+
+    joinBtn.addEventListener('click', () => {
+        joinedData = dataWaterLevel.rows.map((row, index) => [
+            row[0], row[1], dataRainfallA.rows[index][1], dataRainfallB.rows[index][1]
+        ]);
+        const resultData = { title: '結合データ', headers: ['時刻', '水位(m)', '雨量A(mm)', '雨量B(mm)'], rows: joinedData };
+        renderTable(resultTableContainer, resultData, true);
+        resultArea.style.display = 'block';
+        statusPanel.textContent = '共通の「時刻」をキーにして、3つのテーブルを1つに結合しました。しかし、雨量Aのデータに異常な値（外れ値）があります。';
+        
+        removeBtn.disabled = false;
+        joinBtn.disabled = true;
+        resultArea.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    removeBtn.addEventListener('click', () => {
+        joinedData = joinedData.map(row => row.map(cell => (cell === outlierValue) ? null : cell));
+        const resultData = { title: '外れ値除去後データ', headers: ['時刻', '水位(m)', '雨量A(mm)', '雨量B(mm)'], rows: joinedData };
+        renderTable(resultTableContainer, resultData, true);
+        statusPanel.textContent = '外れ値を除去しました。このままでは分析できないため、空になった部分（欠損値）を補完します。';
+        
+        imputeBtn.disabled = false;
+        removeBtn.disabled = true;
+    });
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    imputeBtn.addEventListener('click', async () => {
+        imputeBtn.disabled = true;
+        let imputedCoords = null;
+
+        for (let i = 0; i < joinedData.length; i++) {
+            const j = joinedData[i].indexOf(null);
+            if (j !== -1) {
+                imputedCoords = { row: i, col: j };
+                break;
+            }
+        }
+
+        if (imputedCoords) {
+            const { row, col } = imputedCoords;
+            const prevData = joinedData[row - 1] ? joinedData[row - 1][col] : 0;
+            const nextData = joinedData[row + 1] ? joinedData[row + 1][col] : 0;
+
+            const prevCell = document.querySelector(`#result-table-container [data-row="${row - 1}"][data-col="${col}"]`);
+            const nextCell = document.querySelector(`#result-table-container [data-row="${row + 1}"][data-col="${col}"]`);
+            const targetCell = document.querySelector(`#result-table-container [data-row="${row}"][data-col="${col}"]`);
+            
+            statusPanel.textContent = '欠損値の前後にあるデータを使って、平均値を計算します。';
+            if (prevCell) prevCell.classList.add('highlight-source');
+            if (nextCell) nextCell.classList.add('highlight-source');
+            await sleep(1200);
+
+            const formulaString = `(${prevData} + ${nextData}) / 2`;
+            targetCell.classList.add('formula-display');
+            targetCell.textContent = formulaString;
+            statusPanel.textContent = '計算式はこのようになります。';
+            await sleep(2000);
+
+            const imputedValue = ((prevData + nextData) / 2).toFixed(1);
+            joinedData[row][col] = parseFloat(imputedValue);
+            targetCell.classList.remove('missing-value', 'formula-display');
+            targetCell.classList.add('imputed-value');
+            targetCell.textContent = imputedValue;
+            statusPanel.textContent = '計算結果で値を補い、データが整いました！';
+            
+            await sleep(1000);
+            if (prevCell) prevCell.classList.remove('highlight-source');
+            if (nextCell) nextCell.classList.remove('highlight-source');
+        }
+    });
+
+    // 初期化用にダミーのdivを作成
+    if (!document.getElementById('result-table-container')) {
+        const dummyDiv = document.createElement('div');
+        dummyDiv.id = 'result-table-container';
+        resultArea.appendChild(dummyDiv);
+    }
+});
+</script>
+</body>
+</html>

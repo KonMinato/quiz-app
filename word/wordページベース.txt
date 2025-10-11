@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="word.css">
+    <title>＿</title>
+</head>
+<body>
+
+    <h1>１　問</h1>
+
+
+    <script src="../word.js"></script>
+</body>
+</html>

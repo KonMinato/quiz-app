@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初級機器の並び替え</title>
+    <link rel="stylesheet" href="1page.css">
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div class="main">
+            <h2 class="question">家のパソコンからWebサーバまで通信を行う場合の機器の配置が適切になるように機器を黒い四角🔲の部分に並び替えてください</h2>
+            <div class="line">
+                <h2>緑の線:無線LAN</h2>
+                <h2>赤の線:LANケーブル</h2>
+                <h2>黄色の線:光ファイバ</h2>
+            </div>
+            <div class="shiro">
+                <img src="img/shiro.png" id="img05" draggable="true" />
+                <img src="img/shiro.png" id="img06" draggable="true" />
+                <img src="img/shiro.png" id="img07" draggable="true" />
+                <img src="img/internet.png" />
+                <img src="img/shiro.png" id="img08" draggable="true" />
+            </div>
+
+            <div class="device">
+                <img src="img/pc0.png" id="img01" draggable="true" />
+                <img src="img/server0.png" id="img02" draggable="true" />
+                <img src="img/onu0.png" id="img03" draggable="true" />
+                <img src="img/wi-fi0.png" id="img04" draggable="true" />
+            </div>
+            <div class="main_contents">
+                <div class="box">
+                    <h3>パソコン</h3>
+                    <p>クリックで説明表示</p>
+                    <div class="box_content">
+                        ソフトウェアを導入することで様々な用途に利用できる
+                        <img src="img/pc.svg">
+                    </div>
+                </div>
+                <div class="box">
+                    <h3>Webサーバ</h3>
+                    <p>クリックで説明表示</p>
+                    <div class="box_content">
+                        ホームページやWebサービスが置いていてそれらを提供するコンピュータ
+                        <img src="img/server.svg">
+                    </div>
+                </div>
+                <div class="box">
+                    <h3>ONU</h3>
+                    <p>クリックで説明表示</p>
+                    <div class="box_content">
+                        光信号をデジタル信号に変換する装置
+                        <img src="img/onu.svg">
+                    </div>
+                </div>
+                <div class="box">
+                    <h3>Wi-Fiルータ</h3>
+                    <p>クリックで説明表示</p>
+                    <div class="box_content">
+                        スマートフォンやPCなどの端末と接続してインターネットを利用できる
+                        <img src="img/wi-fi.svg">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn1" type="button" id="btn01">答え合わせ</button>
+        </div>
+    </div>
+
+    <div id="modal-backdrop" class="hidden"></div>
+
+    <div id="correct" class="hidden modal-window">
+        <div class="modal-content">
+            <div class="next">正解</div>
+            <div class="explanation">
+                <h2>解説</h2>
+                <h3>
+                    今回は家のパソコンでWebサイトにアクセスするときの通信の状況である。つまりパソコンとWebサーバの間で通信が発生するためネットワークの一番端に来る機器はパソコンとWebサーバとなる。<br>
+                    問題文に家のパソコンと書いてあるためパソコンは家の中の一番左端に配置するのが正解である。Webサーバは家の中にはないので一番右のところに配置するのが正解である。<br>
+                    パソコンと無線LANで通信を行うのはWi-Fi機能を持っているWi-Fiルータである。ONUは電気信号と光信号を変化する役割があるためLANケーブルと光ファイバの間に配置される。<br>
+                    よってWi-Fiルータは左から2番目,ONUは左から3番目に配置するのが正解である。<br><br>
+                    補足事項<br>
+                    パソコン一台だけを有線で通信を行うのであればパソコンとONUを直接LANケーブルで接続すればインターネットにつながります。<br>
+                    ただしその場合Wi-FiルータをONUに接続することができないため他の端末をインターネットに接続することはできません。
+                </h3>
+            </div>
+            <a href="2page.html" class="btn1" target="_blank">次：通信の様子を見る</a>
+        </div>
+    </div>
+
+    <div id="incorrect" class="hidden modal-window">
+        <div class="modal-content">
+            <div class="miss">不正解</div>
+            <div class="tip">
+                <div id="hint" class="hidden">ヒント</div>
+                <div id="hintpc" class="hidden">パソコンは端末であるためネットワークの一番端にあります。</div>
+                <div id="hintserver" class="hidden">Webサーバは端末であるためネットワークの一番端にあります。</div>
+                <div id="hintonu" class="hidden">ONUは光信号と電気信号間の変換を行います。</div>
+                <div id="hintwifi" class="hidden">Wi-Fiルータは端末と通信をし、またONUと有線で通信します。</div>
+            </div>
+            <button class="btn1" type="button" id="btn02">もう一度挑戦する</button>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        <a href="word4_18.html" class="btn-nav">説明ページへ戻る</a>
+        <a href="../../../chapter4.html" class="btn-nav">章の目次へ戻る</a>
+    </footer>
+
+    <script src="1page.js"></script>
+</body>
+</html>

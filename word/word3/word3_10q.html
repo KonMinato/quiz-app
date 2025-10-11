@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>デジタル＿デジタル情報の特徴</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１０　デジタル情報の特徴</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>アナログとデジタル</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">アナログ</strong>：<span class="hide-me">連続的に変化する量を、水銀柱の長さのような他の連続的な量で表現する方法です。</span></p>
+                
+                <p>＜例＞</p>
+                <p>容器に水と水銀温度計を入れて熱すると、温度は連続的に上昇し、それに伴って水銀柱の長さも滑らかに変化します。水銀温度計は、目盛りと目盛りの間の微妙な温度であっても、大まかに読み取ることができます。</p>
+                <p><strong class="term">デジタル</strong>：<span class="hide-me">連続的に変化する量を、時間や空間で区切り、段階的な数値（離散的な量）で表現する方法です。</span></p>
+                
+                
+
+                <p>＜例＞</p>
+                <p>デジタル温度計は温度を数値で表現します。最小単位が0.1℃の温度計では、22.5℃の次に高い温度は22.6℃になり、22.53℃のような中間の温度は表現できません。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>コンピュータのデジタル表現</h2>
+            </div>
+            <div class="details">
+                <p>コンピュータは、文字、数値、画像、音などの情報をすべて「0」と「1」の組み合わせだけで表現します。この<span class="hide-me">「0」と「1」で数を表す</span>方法を<strong class="term">2進法</strong>といい、<span class="hide-me">2進法で表された数値</span>を<strong class="term">2進数</strong>といいます。</p>
+                <ul>
+                    <li>コンピュータ内部では、電圧の<span class="hide-me">「高い/低い」</span>を「1/0」に対応させます。</li>
+                    <li>ハードディスクでは、磁気の<span class="hide-me">「N極/S極」</span>を「1/0」に対応させます。</li>
+                    <li>CDなどの光学ディスクでは、<span class="hide-me">記録面の凹凸（ピットとランド）の変化</span>を「1/0」に対応させています。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>情報量とその単位</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">ビット (bit)</strong>：<span class="hide-me">情報量の最小単位で、2進数の1桁に相当します。「0」か「1」のいずれかを表します。</span></p>
+                <p><strong class="term">バイト (Byte)</strong>：<span class="hide-me">8ビットを1つにまとめた単位です。コンピュータで情報を扱う基本的な単位として使われます。</span></p>
+                <p>より大きな情報量の単位は、基本的に<span class="hide-me">1024倍（$2^{10}$）</span>ごとに変わります。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>種類</th><th>読み方</th><th>関係</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="term">bit</td><td class="term">ビット</td><td>—</td></tr>
+                            <tr><td class="term">B</td><td class="term">バイト</td><td><span class="hide-me">1 B = 8 bit</span></td></tr>
+                            <tr><td class="term">KB</td><td class="term">キロバイト</td><td><span class="hide-me">1 KB = 1024 B</span></td></tr>
+                            <tr><td class="term">MB</td><td class="term">メガバイト</td><td><span class="hide-me">1 MB = 1024 KB</span></td></tr>
+                            <tr><td class="term">GB</td><td class="term">ギガバイト</td><td><span class="hide-me">1 GB = 1024 MB</span></td></tr>
+                            <tr><td class="term">TB</td><td class="term">テラバイト</td><td><span class="hide-me">1 TB = 1024 GB</span></td></tr>
+                            <tr><td class="term">PB</td><td class="term">ペタバイト</td><td><span class="hide-me">1 PB = 1024 TB</span></td></tr>
+                            <tr><td class="term">EB</td><td class="term">エクサバイト</td><td><span class="hide-me">1 EB = 1024 PB</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>ネットワーク＿ネットワークとプロトコル</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１７　ネットワークとプロトコル</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>情報通信ネットワークの進展</h2>
+            </div>
+            <div class="details">
+                <p>遠方の人に対して、より早くより多くの情報を伝える手段として、電信や電話が発明され、情報通信ネットワークが急速に拡大していった。
+                        近年ではコンピュータが通信機器の普及により、コンピュータどうしを接続するネットワークが一般に使われるようになっている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>LANとWAN</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">LAN</strong>：<span class="hide-me">会社や工場、学校など同一の建物や敷地内など比較的狭い範囲の中で構築されるローカルエリアネットワーク</span></p>
+                <p><strong class="term">WAN</strong>：<span class="hide-me">企業の支店や学校などの離れたLANどうしを通信事業会社の回線を利用して結合し、より広域のネットワークを構築する広域ネットワーク</span></p>
+                
+
+                <p><strong class="term">インターネット</strong>：<span class="hide-me">上記のネットワークがさらに相互に接続され、世界的に発展していったもの</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>集中処理と分散処理</h2>
+            </div>
+            <div class="details">
+                <p>ネットワークを利用したコンピュータのシステム形態</p>
+                <ul>
+                    <li><strong class="term">集中処理システム</strong>：<span class="hide-me">大型コンピュータ(ホストコンピュータ)に複数台の端末を接続して、すべての処理をホストコンピュータで行うシステム</span></li>
+                    <li>
+                        <strong class="term">分散処理システム</strong>：<span class="hide-me">ネットワークを利用してそれぞれの端末で処理を分担するシステム</span>
+                        <ul>
+                            <li><strong class="term">クライアントサーバシステム</strong>：<span class="hide-me">サービスを提供する側(サーバ)と要求する側(クライアント)が明確に分かれているシステム</span></li>
+                            <li><strong class="term">ピアツーピアシステム</strong>：<span class="hide-me">コンピュータがすべて対等な関係のシステム</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>サーバの利用</h2>
+            </div>
+            <div class="details">
+                <p>サーバは提供するサービスの種類によって分けられる。</p>
+                <ul>
+                    <li><strong class="term">ファイルサーバ</strong>：<span class="hide-me">ファイルを共有するサーバ</span></li>
+                    <li><strong class="term">プリントサーバ</strong>：<span class="hide-me">印刷の要求をプリンタに渡しプリンタを共有するサーバ</span></li>
+                    <li><strong class="term">データベースサーバ</strong>：<span class="hide-me">データベースの情報を提供するサーバ</span></li>
+                    <li><strong class="term">プロキシサーバ</strong>：<span class="hide-me">クライアントの代わりにWebサーバに接続するサーバ</span></li>
+                    <li><strong class="term">アプリケーションサーバ</strong>：<span class="hide-me">業務処理などの要求を処理するサーバ</span></li>
+                    <p>インターネット上に存在するサーバ</p>
+                    <li><strong class="term">Webサーバ</strong>：<span class="hide-me">Webページの閲覧を提供するサーバ</span></li>
+                    <li><strong class="term">メールサーバ</strong>：<span class="hide-me">メールの送受信を提供するサーバ</span></li>
+                    <li><strong class="term">ストリーミングサーバ</strong>：<span class="hide-me">動画や音楽を配信するサーバ</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プロトコル</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">通信プロトコル</strong>：<span class="hide-me">異なるコンピュータどうしをネットワークに接続してデータをやり取りする場合の通信に関する取り決め
+                        　プロトコルには情報を伝達し処理するための手順や形式が定められている</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>インターネットのプロトコル</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">TCP/IP</strong>：<span class="hide-me">OSやアプリケーションソフトウェアの異なるコンピュータがインターネット上のサービスを利用できるようにするための統一されたプロトコル</span></p>
+                <p><strong class="term">OSI参照モデル</strong>：<span class="hide-me">異なるコンピュータどうしを通信できるように体系的にまとめた国際標準プロトコル</span></p>
+                <p>多くのプロトコルは階層モデル化され、インターネットで利用されるサービスも標準プロトコルであるTCP/IPを利用し、次の4階層に分けられて効率的に制御されている。</p>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>層</th><th>階層の名称</th><th>階層の機能</th><th>例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4層</td><td class="term">アプリケーション層</td><td><span class="hide-me">WWWやファイル転送、電子メールなどが動作できるようにデータの処理を行う</span></td><td><span class="hide-me">HTTP,HTTPS,SMTP,POP,IMAP,SSH,SMBなど</span></td>
+                            </tr>
+                            <tr>
+                                <td>3層</td><td class="term">トランスポート層</td><td><span class="hide-me">通信されたデータが確実に効率よくやり取りするための処理を行う</span></td><td><span class="hide-me">TCP,UDPなど</span></td>
+                            </tr>
+                            <tr>
+                                <td>2層</td><td class="term">インターネット層</td><td><span class="hide-me">送信先のコンピュータのアドレスをもとに、データの通信経路の選択などを行う</span></td><td><span class="hide-me">IPなど</span></td>
+                            </tr>
+                            <tr>
+                                <td>1層</td><td class="term">ネットワークインタフェース層</td><td><span class="hide-me">データを通信媒体に適合した電気信号や光信号に変換し送受信を行う</span></td><td><span class="hide-me">イーサネット(Ethernet),無線LAN(Wi-Fi)など</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>第4層のアプリケーション層は、TCP/IPの仕組みで提供されているのではなく、サービス特有のプロトコルである。</p>
+                <ul>
+                    <li><strong class="term">HTTP</strong>：<span class="hide-me">Webページの閲覧時に利用する</span></li>
+                    <li><strong class="term">HTTPS</strong>：<span class="hide-me">同上</span></li>
+                    <li><strong class="term">SMTP</strong>：<span class="hide-me">メールを送信(転送)する時に利用する</span></li>
+                    <li><strong class="term">POP</strong>：<span class="hide-me">受信に利用する</span></li>
+                    <li><strong class="term">IMAP</strong>：<span class="hide-me">同上</span></li>
+                    <li><strong class="term">SSH</strong>：<span class="hide-me">リモート接続で利用する</span></li>
+                    <li><strong class="term">SMB</strong>：<span class="hide-me">ファイルを共有する時に利用する</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>データの伝送とプロトコル</h2>
+            </div>
+            <div class="details">
+                <p>相手のコンピュータにデータを送信する場合、データの発信者側では階層の<span class="hide-me">上から下</span>に、受信者側では<span class="hide-me">下から上</span>に向かってデータが受け渡される。
+                        この時、送信されるデータには、プロトコルの各層で行われた処理を示すデータ<span class="term">(ヘッダ情報)</span>が次々と付加されて相手に送信され、
+                        受信されたデータは、各階層で付加されたデータ<span class="term">(ヘッダ情報)</span>を確認しながら処理し、取り除かれ次の階層に渡される。
+                        このように、受信されたデータは、最終的に<span class="hide-me">アプリケーション</span>層に渡される。
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

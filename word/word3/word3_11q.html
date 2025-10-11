@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>デジタル＿数値と文字の表現</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１１　数値と文字の表現</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>数値の表現</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">10進数</strong>：<span class="hide-me">0から9までの10種類の数字を用いる　日常的に利用される数値</span></p>
+                <p><strong class="term">2進数</strong>：<span class="hide-me">0と1の2種類の数字を用いる</span></p>
+                <p><strong class="term">16進数</strong>：<span class="hide-me">0から9までの10種類とAからFまでの6種類を組み合わせる</span></p>
+                <p>コンピュータでは、主に2進法による2進数が利用されるが、桁数が多くなるため、2進数の4桁を1桁で表現できる16進数も利用される。</p>
+                <p>10進数から2進数への変換、2進数から10進数への変換は、それぞれ次の方法で求められる。</p>
+                <ul>
+                    <li>13(₁₀)の2進数への変換</li>
+                        <p>2)<u>13</u>　余り</p>
+                        <p>2)<u>6</u>　1⃣　下の桁</p>
+                        <p>2)<u>3</u>　0⃣</p>
+                        <p>2)<u>1⃣</u>　1⃣</p>
+                        <p>　上の桁</p>
+                        <p>1101(₂)となる</p>
+                    <li>1101(₂)の10進数への変換</li>
+                        <p>1101(₂)=1×2³+1×2²+0×2¹+1×2⁰</p>
+                        <p>=1×8+1×4+0×2+1×1</p>
+                        <p>=8+4+0+1</p>
+                        <p>=13</p>
+                        <p>13(₁₀)となる。</p>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>補数による負の数の表現</h2>
+            </div>
+            <div class="details">
+                <p>コンピュータでは、負の数を表現する場合、<strong class="term">補数</strong>を利用する。
+                        補数とは、ある自然数に対して、足すと1桁増える最も小さな数のことである。</p>
+                <p>2進数3桁の011(₂)は、次のように求められる。</p>
+                <p>　０１１
+<u>＋　補数</u>
+１０００
+　↓
+　１０００
+<u>ー　０１１</u>
+　　　補数
+　↓
+　１０００
+<u>ー　０１１</u>
+　　１０１</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>コンピュータでの実数の表現</h2>
+            </div>
+            <div class="details">
+                <p>小数部分を含む実数を表す場合には、次のような形の<strong class="term">浮動小数点数</strong>がよく使われる。</p>
+                <ul>
+                    <li>10進法での浮動小数点数の表し方</li>
+                        <div class="table-wrapper">
+                            <table>
+                                <tbody><tr><td></td><td>符号</td><td>仮数</td><td></td><td>10(指数)</td></tr>
+                                <tr><td><span class="hide-me">-432=</span></td><td class="pink"><span class="hide-me">-</span></td><td class="yellow"><span class="hide-me">4.32</span></td><td><span class="hide-me">×</span></td><td class="green"><span class="hide-me">10²</span></td></tr>
+                                <tr><td><span class="hide-me">0.719=</span></td><td class="pink"><span class="hide-me">+</span></td><td class="yellow"><span class="hide-me">7.19</span></td><td><span class="hide-me">×</span></td><td class="green"><span class="hide-me">10⁻¹</span></td></tr>
+                                <tr><td><span class="hide-me">1531.9=</span></td><td class="pink"><span class="hide-me">+</span></td><td class="yellow"><span class="hide-me">1.5319</span></td><td><span class="hide-me">×</span></td><td class="green"><span class="hide-me">10³</span></td></tr>
+                            </tbody></table>
+                        </div>
+                    <li>2進数での浮動小数点数の表し方</li>
+                        <p><strong class="term">符号部</strong>：左端1ビットを符号部とし、0を正、1を負とする</p>
+                        <p><strong class="term">指数部</strong>：1.XXXX×2^Yの形で表現し、小数点を動かした桁数を表すYの部分を指数部とする</p>
+                        <p><strong class="term">仮数部</strong>：最上位の桁は常に1桁として、1.XXXXの形で表現し、2番目の桁からを仮数部とする</p>
+                        <p>例えば、32ビットの2進数の場合、一番左の1ビットを符号とし、次からの8ビットを指数とするため、残りの23ビットで仮数を表す。</p>
+                        <div class="table-wrapper">
+                            <table>
+                                <tbody><tr>
+                                    <td class="pink">　</td>
+                                    <td class="green">　</td><td class="green">　</td><td class="green">　</td><td class="green">　</td>
+                                    <td class="green">　</td><td class="green">　</td><td class="green">　</td><td class="green">　</td>
+                                    <td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td>
+                                    <td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td>
+                                    <td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td>
+                                    <td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td>
+                                    <td class="yellow">　</td><td class="yellow">　</td><td class="yellow">_</td><td class="yellow">　</td>
+                                    <td class="yellow">　</td><td class="yellow">　</td><td class="yellow">　</td>
+                                </tr>
+                            </tbody></table>
+                        </div>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>文字の表現</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">文字コード</strong>：<span class="hide-me">文字や記号を2進数でどのように表すか取り決めたもの</span></p>
+                <p>英数字や記号などは<span class="hide-me">1バイト</span>、漢字など文字種が多いものは<span class="hide-me">2バイト</span>以上で表す。したがって、1バイトでは<span class="hide-me">256</span>種類、2バイトでは<span class="hide-me">65536</span>種類、3バイトでは<span class="hide-me">165536</span>種類の文字を表現できる。</p>
+                <p><strong class="term">JISコード</strong>：<span class="hide-me">半角英数字や半角カタカナ、半角記号などを8ビット分のコードにしたもの</span></p>
+                <p>文字コードには、他にも<span class="hide-me">シフトJISコード</span>、<span class="hide-me">EUC</span>、<span class="hide-me">UTF-8</span>などがある。</p>
+                <p><strong class="term">UTF-8</strong>：<span class="hide-me">様々な言語の文字を扱えるUnicodeの一種で、1文字を1~6バイトの可変長で表現するのが特徴</span></p>
+                <p><strong class="term">Unicode</strong>：<span class="hide-me">世界中の文字に対して、番号が割り当てられ管理されている集合体</span></p>
+                <p>ASCIIコードで規定される7ビットの範囲の文字は、そのコードをそのまま用いる。
+                        つまり、ASCIIコードに収録された英数字や記号のコードはASCIIコードと同一のものになり、1バイトで表現できる。
+                        残りの2から6バイトでそのほかの部分を表現する符号化方式である。</p>
+            </div>
+        </section>
+
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

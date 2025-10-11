@@ -1,0 +1,107 @@
+:root {
+    --main-blue: #3498db; --light-blue: #ecf5ff; --dark-blue: #2980b9;
+    --orange: #f39c12; --green: #2ecc71; --red: #e74c3c;
+    --text-dark: #34495e; --text-light: #7f8c8d; --border-color: #dcdfe6;
+}
+
+html, body {
+    margin: 0; padding: 0; font-family: 'Noto Sans JP', sans-serif, system-ui;
+    background-color: #f4f7f9; color: var(--text-dark); box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+.container { max-width: 1400px; margin: 0 auto; padding: 1rem; }
+.intro { text-align: center; }
+.intro h3 { margin: 0 0 1rem 0; font-size: 1.2rem; font-weight: normal; }
+
+/* --- PC用 2カラムレイアウト --- */
+.main-layout { display: grid; grid-template-columns: 1.5fr 1fr; align-items: start; gap: 2rem; }
+
+/* --- アニメーション --- */
+.animation-stage {
+    position: relative; display: flex; justify-content: space-between; align-items: center;
+    min-height: 500px; background-color: #fff; border-radius: 8px;
+    padding: 2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.dns-lines-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+.node { text-align: center; transition: all 0.3s ease; position: relative; z-index: 1; }
+.node-image { width: 80px; height: auto; }
+.node-info-box { margin-top: 0.5rem; font-size: 0.9rem; border-radius: 4px; padding: 0.5rem; border: 3px solid skyblue; }
+.node-label { margin-top: 0.5rem; font-weight: bold; }
+.node-label.circle { display: inline-block; border: 2px solid black; border-radius: 20px; padding: 5px 15px; background-color: #fff; }
+.node.highlight .node-label.circle { background-color: #fffbe6; transform: scale(1.1); border-color: var(--orange); }
+.dns-tree { display: flex; flex-direction: column; gap: 2.5rem; align-items: center; }
+.dns-level { display: flex; gap: 4rem; justify-content: center; width: 100%; }
+.packet {
+    position: absolute; display: flex; justify-content: center; align-items: center;
+    width: 120px; padding: 1rem; background: linear-gradient(45deg, var(--orange), #d35400);
+    color: white; font-weight: bold; text-align: center; border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; z-index: 10;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+/* --- 情報・操作エリア --- */
+.sidebar { position: sticky; top: 1rem; }
+.info-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.info-box { background-color: #fff; border-radius: 8px; padding: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.status-box { border-top: 4px solid var(--main-blue); text-align: center; }
+.status-box h2 { margin: 0 0 0.5rem 0; font-size: 1.2rem; }
+#step-number { font-size: 2rem; font-weight: bold; color: var(--main-blue); margin: 0; }
+.description-box { border-top: 4px solid var(--orange); }
+#step-description { margin: 0; font-size: 1.1rem; line-height: 1.7; }
+.controls { margin-top: 1.5rem; text-align: center; }
+.buttons { margin-bottom: 1rem; display: flex; justify-content: center; gap: 1rem; }
+.btn { flex-grow: 1; padding: 0.8em 1em; border: none; border-radius: 25px; background-color: var(--dark-blue); color: #fff; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.2s ease; }
+.btn:hover { opacity: 0.8; }
+.btn:disabled { background-color: #ccc; cursor: not-allowed; }
+.return-link { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+.return-link a { color: var(--text-light); text-decoration: none; }
+.btn-nav { padding: 0.6em 1.5em; border-radius: 20px; border: 1px solid var(--text-light); font-weight: bold; transition: all 0.2s ease; }
+.btn-nav:hover { background-color: var(--text-light); color: #fff; }
+
+
+/* --- ▼▼▼ スマートフォン対応の修正 ▼▼▼ --- */
+@media (max-width: 900px) {
+    /* bodyの高さを画面に固定し、メインコンテンツがスクロールできるように */
+    body { height: 100vh; display: flex; flex-direction: column; }
+    .main-content { flex-grow: 1; display: flex; flex-direction: column; min-height: 0; }
+
+    /* PC用の2カラムレイアウトを解除 */
+    .main-layout {
+        grid-template-columns: 1fr;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+    
+    /* アニメーションステージを可変領域に */
+    .animation-stage {
+        flex-grow: 1;
+        min-height: 300px;
+    }
+    .node-image { width: 50px; }
+    .dns-tree { transform: scale(0.8); gap: 1.5rem; }
+    .dns-level { gap: 2rem; }
+
+    /* サイドバー（説明・操作エリア）を画面下部に固定 */
+    .sidebar {
+        position: static;
+        width: 100%;
+        background-color: #fff;
+        padding: 1rem;
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        margin-top: auto; /* 一番下に配置 */
+    }
+
+    .info-grid { gap: 0.5rem; }
+    .info-box { padding: 0.8rem; box-shadow: none; }
+    #step-number { font-size: 1.5rem; }
+    #step-description { font-size: 0.9rem; line-height: 1.5; }
+    .controls { margin-top: 1rem; }
+    .buttons { margin-bottom: 0.5rem; }
+    .btn { font-size: 0.9rem; padding: 0.6em 1em; }
+    .return-link { display: none; } /* スマホではナビゲーションボタンを非表示 */
+}

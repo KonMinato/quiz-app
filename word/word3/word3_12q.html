@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>デジタル＿演算の仕組み</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１２　演算の仕組み</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>数値(2進数)の計算</h2>
+            </div>
+            <div class="details">
+                <ul>
+                    <li>2進数の複数桁の加算と減算
+                        <p>2進数の複数桁の加算や減算は、桁ごとに計算を行う。</p>
+                    </li>
+                    <li>補数を使った減算
+                        <p>補数を使って計算することで、コンピュータの内部では減算もすべて加算で行うことができる。
+                                減算用の回路を用意しなくてもよいため、減算回路が簡単になるというメリットがある。</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>コンピュータが計算する仕組み</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">論理回路</strong>：<span class="hide-me">コンピュータで「0」、「1」の2つの信号で演算や制御を行う回路</span></p>
+                <p>基本的なものに、<span class="hide-me">論理積回路(AND)</span>、<span class="hide-me">論理和回路(OR)</span>、<span class="hide-me">否定回路(NOT)</span>がある。</span></p>
+                <p><strong class="term">真理値表</strong>：<span class="hide-me">入力と出力の関係を示す表</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>AND回路</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">AND回路</strong>：<span class="hide-me">2つの入力と1つの出力をもつ回路で、2つの入力がともに1の時だけ、出力信号が1になる回路</span></p>
+                <p>AND回路の真理値表</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>入力A</th><th>入力B</th><th>出力L</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="hide-me">0</span></td><td><span class="hide-me">0</span></td><td><span class="hide-me">0</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">0</span></td><td><span class="hide-me">1</span></td><td><span class="hide-me">0</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">1</span></td><td><span class="hide-me">0</span></td><td><span class="hide-me">0</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">1</span></td><td><span class="hide-me">1</span></td><td><span class="hide-me">1</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>OR回路</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">OR回路</strong>：<span class="hide-me">2つの入力と1つの出力をもつ回路で、入力のいずれか一方が1であれば、1を出力する回路</span></p>
+                <p>OR回路の真理値表</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>入力A</th><th>入力B</th><th>出力L</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="hide-me">0</span></td><td><span class="hide-me">0</span></td><td><span class="hide-me">0</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">0</span></td><td><span class="hide-me">1</span></td><td><span class="hide-me">1</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">1</span></td><td><span class="hide-me">0</span></td><td><span class="hide-me">1</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">1</span></td><td><span class="hide-me">1</span></td><td><span class="hide-me">1</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>NOT回路</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">NOT回路</strong>：<span class="hide-me">1つの入力と1つの出力をもつ回路で、入力した信号を反転した値(入力が0なら出力が1)を出力する回路</span></p>
+                <p>NOT回路の真理値表</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>入力A</th><th>出力L</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="hide-me">1</span></td><td><span class="hide-me">0</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="hide-me">0</span></td><td><span class="hide-me">1</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

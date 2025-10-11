@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word2.css">
+    <title>情報デザイン＿Webページと情報デザイン</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">０９　Webページと情報デザイン</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの特徴</h2>
+            </div>
+            <div class="details">
+                <p>Webページ：ブラウザなどで表示されるデータのまとまりで、文字や図表、画像、音声、動画、プログラムなどさまざまな要素を
+                    組み合わせて構成することができる。
+                    <br>また、ブラウザさえあればコンピュータやタブレット、スマートフォンなどの端末やOSの種類などプラットフォームを選ばず
+                    表示させることができるため、今日ではインターネット上に膨大な情報がWebページとして蓄積されている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの公開</h2>
+            </div>
+            <div class="details">
+                <p>Webページをインターネットに公開するには、これまではパソコンなどで、テキストエディタやWebページ作成ソフトウェアなどを
+                    利用してWebページを作成し、ファイル転送ソフトウェアなどを使ってWebサーバに転送する方法が一般的であった。しかし、現在
+                    では、特別な知識を必要とせず、ブラウザ上でテキストや画像、レイアウト情報などを入力してサーバに送り、サーバ側でWebページを
+                    作成するシステムであるCMSが多く利用されている。CMSによって、スマートフォンなどを使ってどこからでも容易にWebページの更新
+                    が可能になった。個人で発信するWebページの一つであるブログも、CMSの一例である。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webサイトの設計</h2>
+            </div>
+            <div class="details">
+                <p>Webサイト：同一の管理者が管理する複数のページで構成されたページの全体</p>
+                <p>Webサイトの入り口にあたるWebページをトップページといい、Webサイト内の各ページへハイパーリンクでつながれている。また、
+                    各ページは、表示されるイラストや写真などの画像や動画、音声など複数のファイルで構成されており、これらはWebサーバで管理されている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの構成</h2>
+            </div>
+            <div class="details">
+                <p>Webページは、効果的に情報を提供するためにさまざまな工夫がされている。Webページの多くは、以下のような領域などで構成されている。</p>
+                <ul>
+                    <li>ヘッダ領域</li>
+                    <p>一般的にはロゴやサイト名などを載せる。サイト内検索やお問い合わせページへのリンクを載せることもある。</p>
+                    <li>ナビゲーション領域</li>
+                    <p>Webサイト内でページ間移動できるようにメニューボタンを載せる。</p>
+                    <li>メイン領域</li>
+                    <p>Webページが表示されて最初に表示される部分(ファーストビュー)。Webサイト訪問者を引き付けるイメージ画像やキャッチコピー、
+                        ページの内容を紹介するリード文などを載せる。
+                    </p>
+                    <li>コンテンツ領域</li>
+                    <p>Webページの主となる情報を載せる。見出しと内容をセットにして構成するとわかりやすい。</p>
+                    <li>フッタ領域</li>
+                    <p>一般的にはCopyrightや問い合わせ先などを載せる。</p>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>HTMLの基礎</h2>
+            </div>
+            <div class="details">
+                <p>WebページはHTMLという言語で記述されている。これは、表示する内容を文字の装飾やリンク、画像の挿入などの役割を表すタグと
+                    呼ばれる特殊な文字列で囲んで記述されている。
+                </p>
+                <p>おもなタグ</p>
+
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tr><td>&lt;html&gt;～&lt;/html&gt;</td><td>HTML文書であることを宣言</td></tr>
+                        <tr><td>&lt;head&gt;～&lt;/head&gt;</td><td>ヘッダ情報を示す</td></tr>
+                        <tr><td>&lt;body&gt;～&lt;/body&gt;</td><td>文書の本体を示す</td></tr>
+                        <tr><td>&lt;title&gt;～&lt;/title&gt;</td><td>タイトルを示す</td></tr>
+                        <tr><td>&lt;hn&gt;～&lt;/hn&gt; (n=1~6)</td><td>見出し(数字が小さいほど文字は大きい)</td></tr>
+                        <tr><td>&lt;br&gt;</td><td>改行</td></tr>
+                        <tr><td>&lt;p&gt;～&lt;/p&gt;</td><td>段落</td></tr>
+                        <tr><td>&lt;a href="リンク先ファイル名"&gt;～&lt;/a&gt;</td><td>ハイパーリンクなどを指定</td></tr>
+                        <tr><td>&lt;img src="画像ファイル名"&gt;</td><td>画像の表示</td></tr>
+                        <tr><td>&lt;table&gt;～&lt;/table&gt;</td><td>表(テーブル)を示す</td></tr>
+                        <tr><td>&lt;tr&gt;～&lt;/tr&gt;</td><td>表内の一行を示す</td></tr>
+                        <tr><td>&lt;td&gt;～&lt;/td&gt;,&lt;th&gt;～&lt;/th&gt;</td><td>表内のデータのセル、見出しのセルを示す</td></tr>
+                        <tr><td>&lt;video&gt;～&lt;/video&gt;</td><td>ビデオを表示</td></tr>
+                        <tr><td>&lt;span&gt;～&lt;/span&gt;,&lt;div&gt;～&lt;/div&gt;,</td><td>書式などを設定する際の要素範囲を指定</td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの作成</h2>
+            </div>
+            <div class="details">
+                <p>①Webページの情報を記述</p>
+                <p>まず、&lt;head&gt;～&lt;/head&gt;の間にWebページの文字コードとタイトルなどを指定する。文字コードを指定しないと、
+                    ブラウザで表示された際に文字化けを起こす場合がある。&lt;title&gt;～&lt;/title&gt;の間に記述された文字列は、
+                    ブラウザのタブに表示されたり、ブックマークに登録された際のタイトルに利用される。なお、タグは必ず半角文字で入力する。
+                </p>
+                <p>②テキストの表示</p>
+                <p>Webページの表示タイトルとリード文を記述する。表示タイトルと各見出しは、見出しタグ&lt;hn&gt;(nは1~6)で指定する。
+                    リード文と内容の文章は、段落タグ&lt;p&gt;で指定する。テキストエディタ内で改行してもブラウザ上では改行されないため、
+                    改行位置に&lt;br&gt;を指定する。
+                </p>
+                <p>③表の作成</p>
+                <p>表は、&lt;table&gt;～&lt;/table&gt;タグで指定する。行は&lt;tr&gt;～&lt;/tr&gt;、見出しは&lt;th&gt;値&lt;/th&gt;
+                    、表の値はセル&lt;td&gt;値&lt;/td&gt;で指定する。
+                </p>
+                <p>④画像の表示</p>
+                <p>画像は別ファイルとして準備しておき、表示したい位置に&lt;img src="画像ファイル名"&gt;で指定する。この時、alt属性によって
+                    代替テキストも指定する。また、画像はWebページの表示に最適化されたサイズにする必要がある。
+                </p>
+                <p>⑤他ページへのリンク</p>
+                <p>Webページでは、閲覧者がクリックすると関連する別のWebページや特定の場所にジャンプできる。この機能をもつ文書をハイパーテキスト
+                    と呼び、関連付けることをリンクという。リンクは、文字列や画像などに&lt;a href="リンク先ファイル名"&gt;～&lt;/a&gt;で設定する。
+                </p>
+                <p>⑥外部サービスの埋め込み</p>
+                <p>インターネット上にはさまざまなサービスが展開されており、中には自分のWebページにそのサービスの内容を埋め込む仕組みを提供
+                    しているものがある。例えば、地図提供サイトの地図や動画共有サイトで公開されている動画などは、サイトが指定するHTMLの記述
+                    を貼り付けるだけで自分のWebページに埋め込むことができる。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>CSSの活用</h2>
+            </div>
+            <div class="details">
+                <p>①CSSの目的</p>
+                <p>CSS(カスケーディング スタイル シート)とはHTML文書を装飾するための技術で、文字や背景の色、文字や画像の大きさおよび表示
+                    位置を指定するなどWebページのスタイルを適用するために利用される。これによって、文書の構造とスタイルを分離して管理することができる。
+                </p>
+                <p>スタイル設定の方法</p>
+                <p>CSSを要素に適用するためには、セレクタと呼ばれる識別子を使う。CSSは以下のような書式で指定する。</p>
+                <p>セレクタ{
+                    <br>プロパティ1:値1;
+                    <br>プロパティ2:値2;
+                    <br>}
+                </p>
+                <p>セレクタにはおもに三つの種類があり、目的によって適切に使い分ける。</p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tr>
+                            <td class="green" rowspan="2">セレクタの種類</td><td class="yellow">記述方法</td><td class="pink">適用方法</td>
+                        </tr>
+                        <tr>
+                            <td class="gray">記述例</td><td class="green">適用例</td>
+                        </tr>
+                        <tr>
+                            <td class="greenyellow" rowspan="2">要素セレクタ</td><td class="yellow">タグ{　　}</td><td class="pink">&lt;タグ&gt;～&lt;/タグ&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="gray">p{color:red}</td><td class="green">&lt;p&gt;~&lt;/p&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="greenyellow" rowspan="4">IDセレクタ</td><td class="yellow">#ID{　　}</td><td class="pink">&lt;タグ id="ID"&gt;~&lt;/タグ&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="gray">#msg{color:red}</td><td class="green">&lt;div id="msg"&gt;~&lt;/div&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="yellow">タグ#ID{　　}</td><td class="pink">&lt;タグ id="ID"&gt;~&lt;/タグ&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="gray">p#msg{color:red}</td><td class="green">&lt;p id="msg"&gt;~&lt;/p&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="greenyellow" rowspan="4">クラスセレクタ</td><td class="yellow">.クラス名{　　}</td><td class="pink">&lt;タグ class="sample"&gt;~&lt;/タグ&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="gray">.sample{color:red}</td><td class="green">&lt;div class="sample"&gt;~&lt;/div&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="yellow">タグ.クラス名{　　}</td><td class="pink">&lt;タグ class="sample"&gt;~&lt;/タグ&gt;</td>
+                        </tr>
+                        <tr>
+                            <td class="gray">p.sample{color:red}</td><td class="green">&lt;p class="sample"&gt;~&lt;/p&gt;</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>CSSの要素は、タグのstyle属性として指定することもできるが、&lt;head&gt;~&lt;/head&gt;内の&lt;style&gt;~&lt;/style&gt;
+                    にまとめて記述することもできる。head要素の中に記述することによって、そのHTML文書の全体を通して共通のスタイルを設定
+                    することが可能になる。
+                </p>
+                <p>③CSSの共有</p>
+                <p>HTML文書とは別にスタイルシート用のファイルを作り、そこへスタイルの設定をまとめて記述することによって、複数の文書でスタイルを
+                    共有することができる。これによって、統一されたスタイルのWebサイトを構築することができるだけでなく、メンテナンスも容易になる。
+                    外部のCSSファイルを参照するためには、参照元の各HTML文書の&lt;head&gt;~&lt;/head&gt;内に外部ファイルを参照する次の内容を記述する。
+                </p>
+                <p>&lt;link rel="stylesheet" type="text/css" href~"style.css"&gt;</p>
+                <p>④CSSの適用</p>
+                <p>ここでは、背景と見出しおよび表に要素セレクタを設定する。要素セレクタは、指定したすべての要素にスタイルが適用される。ここでは、タグ
+                    &lt;body&gt;、&lt;h1&gt;、&lt;h2&gt;、&lt;table&gt;、&lt;th&gt;、&lt;td&gt;にそれぞれスタイルを設定する。
+                </p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tr>
+                            <td class="green">プロパティ(属性)</td><td class="green">内容</td><td class="green">値</td>
+                        </tr>
+                        <tr>
+                            <td>background-color</td><td>背景色</td><td>例：#fffcdb 色をRGBで指定する</td>
+                        </tr>
+                        <tr>
+                            <td>padding</td><td>要素の周りの余白</td><td>例：0.5em フォントサイズを1として0.5を指定する</td>
+                        </tr>
+                        <tr>
+                            <td>color</td><td>文字色</td><td>例：#494949 色をRGBで指定する</td>
+                        </tr>
+                        <tr>
+                            <td>background</td><td>背景</td><td>例：#fffaf4 色をRGBで指定する</td>
+                        </tr>
+                        <tr>
+                            <td>border-left</td><td>左線</td><td>例：solid 5px #ffaf58 solid：実線5ピクセル</td>
+                        </tr>
+                        <tr>
+                            <td>border-bottom</td><td>下の枠線</td><td>例：double 5px #ffc778 double：二重線5ピクセル</td>
+                        </tr>
+                        <tr>
+                            <td>border-collapse</td><td>セルの線の表示</td><td>例：collapse 重ねる</td>
+                        </tr>
+                        <tr>
+                            <td>border</td><td>枠線</td><td>例：solid 1px 実線1ピクセル</td>
+                        </tr>
+                        <tr>
+                            <td>background</td><td>linear-gradient(方向、色 始点の位置、色 終点の位置)</td><td>linear-gradient(to bottom,transparent 60%,#FFFF66 60%) 領域内を下へ向かう線形グラデーション(透明から黄色)</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>次に、強調したい文字にマーカーを付ける。ここでは、yellow_markerというクラスセレクタを作成し、タグ
+                    &lt;span&gt;~&lt;/span&gt;を利用し、設定する文字列の範囲を指定する。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>より多くの人に閲覧してもらう工夫</h2>
+            </div>
+            <div class="details">
+                <p>より多くの人にWebページを閲覧してもらうためには、掲載する情報がこまめに更新され、より多くの人が関心をもっている情報である
+                    必要がある。また、さまざまな端末からのアクセスを考え、誰が見ても見やすいWebページを作る必要がある。
+                    <br>企業では、自社のWebサイトをより多くの人々に閲覧してもらうようさまざまな工夫を凝らしている。検索サイトで上位に表示
+                    されるようSEO対策(検索エンジン最適化)が行われていることが多い。例えば、キーワードの入った内容をタイトルに入れたりする
+                    などの内部対策や、外部サイトからリンクを増やすなどの外部対策がある。
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="htmlcss.html" class="show-button">html、cssを確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter2.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // テーブル要素の取得
+    const knowledgeListBody = document.getElementById('knowledgeListBody');
+    const programmingListBody = document.getElementById('programmingListBody');
+    const calcListBody = document.getElementById('calcListBody');
+    const questionDisplayArea = document.getElementById('questionDisplayArea');
+    const deleteAllButton = document.getElementById('deleteAllButton');
+
+    let savedQuestions = [];
+
+    // メインのリスト表示関数
+    function renderQuestionLists() {
+        knowledgeListBody.innerHTML = '';
+        programmingListBody.innerHTML = '';
+        calcListBody.innerHTML = '';
+        
+        savedQuestions.forEach((q, index) => {
+            let tableBody;
+            // 問題種別に応じて、どのテーブルに追加するかを決定
+            if (q.type === '知識問題') {
+                tableBody = knowledgeListBody;
+            } else if (q.type === 'プログラム作成問題') {
+                tableBody = programmingListBody;
+            } else if (q.type === '進数問題' || q.type === '計算問題') {
+                tableBody = calcListBody;
+            } else {
+                return; // 該当しない場合はスキップ
+            }
+
+            const row = tableBody.insertRow();
+            
+            row.insertCell().textContent = q.chapter;
+            row.insertCell().textContent = q.tangen;
+
+            const previewCell = row.insertCell();
+            // コードブロックの記号や改行を取り除いて見やすくする
+            const cleanQuestionText = q.question.replace(/```(?:\w*\n)?([\s\S]+)```/g, '$1').replace(/\n/g, ' ');
+            // 30文字に短縮して「...」を付ける
+            const previewText = cleanQuestionText.length > 30 ? cleanQuestionText.substring(0, 30) + '...' : cleanQuestionText;
+            previewCell.textContent = previewText;
+
+            const resultCell = row.insertCell();
+            resultCell.textContent = q.wasCorrect ? '正解' : '不正解';
+            resultCell.className = q.wasCorrect ? 'result-correct' : 'result-incorrect';
+
+            // 行がクリックされたら、その問題を右側に表示する
+            row.addEventListener('click', () => {
+                displayQuestionForRetake(q, index);
+            });
+        });
+
+        // テーブルが空の場合のメッセージ処理
+        if (knowledgeListBody.rows.length === 0) {
+            const row = knowledgeListBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 4;
+            cell.textContent = '保存された知識問題はありません。';
+            cell.style.textAlign = 'center';
+        }
+        if (programmingListBody.rows.length === 0) {
+            const row = programmingListBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 4;
+            cell.textContent = '保存されたプログラム問題はありません。';
+            cell.style.textAlign = 'center';
+        }
+        if (calcListBody.rows.length === 0) {
+            const row = calcListBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 4;
+            cell.textContent = '保存された計算・進数問題はありません。';
+            cell.style.textAlign = 'center';
+        }
+    }
+
+    // 選択された問題を右側に表示して再挑戦させる関数
+    function displayQuestionForRetake(q, index) {
+        questionDisplayArea.innerHTML = ''; 
+
+        const questionBlock = document.createElement('div');
+        questionBlock.className = 'question-block';
+
+        let questionHtml = `<p class="question-text"><b>問題:</b> ${escapeHtml(q.question)}</p>`;
+        if (q.question.includes('```')) {
+            const codeContent = q.question.replace(/^```(?:\w*\n)?/g, '').replace(/```$/g, '').trim();
+            questionHtml = `<p class="question-text"><b>問題:</b></p><pre><code>${escapeHtml(codeContent)}</code></pre>`;
+        }
+        
+        const choices = [q.correctAnswer, ...q.distractors].sort(() => Math.random() - 0.5);
+        const choicesHtml = choices.map(choice => `<label><input type="radio" name="retake-q" value="${escapeHtml(choice)}"><code>${escapeHtml(choice)}</code></label>`).join('');
+
+        const controlsHtml = `
+            <button id="retakeSubmitBtn" class="btn btn-primary">解答する</button>
+            <button id="retakeDeleteBtn" class="btn btn-danger" style="margin-left:10px;">この問題をリストから削除</button>
+            <div class="result-area"></div>
+        `;
+
+        questionBlock.innerHTML = questionHtml + `<div class="choices">${choicesHtml}</div>` + controlsHtml;
+        questionDisplayArea.appendChild(questionBlock);
+
+        document.getElementById('retakeSubmitBtn').addEventListener('click', () => {
+            const userAnswer = document.querySelector('input[name="retake-q"]:checked')?.value;
+            const resultArea = questionBlock.querySelector('.result-area');
+            
+            if (userAnswer === q.correctAnswer) {
+                resultArea.innerHTML = `<p class="correct">正解！</p>`;
+            } else {
+                resultArea.innerHTML = `<p class="incorrect">不正解... 正しい答えは「<b>${escapeHtml(q.correctAnswer)}</b>」です。</p>`;
+            }
+            resultArea.innerHTML += `<div class="explanation"><h4>解説</h4><p>${escapeHtml(q.explanation)}</p></div>`;
+        });
+
+        document.getElementById('retakeDeleteBtn').addEventListener('click', () => {
+            if (confirm('この問題をリストから削除しますか？')) {
+                savedQuestions.splice(index, 1);
+                localStorage.setItem('savedQuestions', JSON.stringify(savedQuestions));
+                questionDisplayArea.innerHTML = '<p class="placeholder">リストから問題を選択して再挑戦できます。</p>';
+                renderQuestionLists();
+            }
+        });
+    }
+
+    // すべて削除ボタンの処理
+    deleteAllButton.addEventListener('click', () => {
+        if (confirm('保存した問題をすべて削除しますか？この操作は元に戻せません。')) {
+            localStorage.removeItem('savedQuestions');
+            savedQuestions = [];
+            questionDisplayArea.innerHTML = '<p class="placeholder">リストから問題を選択して再挑戦できます。</p>';
+            renderQuestionLists();
+        }
+    });
+    
+    function escapeHtml(str) {
+        if (typeof str !== 'string') return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+
+    // --- 初期データの読み込みと表示 ---
+    savedQuestions = JSON.parse(localStorage.getItem('savedQuestions')) || [];
+    renderQuestionLists();
+});

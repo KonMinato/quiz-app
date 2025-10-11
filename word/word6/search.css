@@ -1,0 +1,154 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f0f4f8; 
+    color: #333; 
+    font-size: 16px;
+    padding: 15px 0;
+}
+
+.container {
+    background-color: #ffffff; 
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); 
+    width: 95%; 
+    max-width: 800px; 
+    margin: auto;
+}
+
+h1 { 
+    color: #2c3e50; 
+    text-align: center; 
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+h2 { 
+    color: #2c3e50; 
+    text-align: center; 
+}
+
+.main-controls {
+    text-align: center; margin: 20px 0; display: flex;
+    flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;
+}
+.main-controls input {
+    padding: 10px; font-size: 1.2em; width: 80px; text-align: center;
+    border: 1px solid #ccc; border-radius: 5px;
+}
+.main-controls button {
+    padding: 10px 20px; font-size: 1.1em; border: none; border-radius: 5px;
+    color: white; cursor: pointer;
+}
+#linear-btn { background-color: #3498db; }
+#binary-btn { background-color: #2ecc71; }
+#reset-btn { background-color: #95a5a6; }
+.main-controls button:disabled { background-color: #bdc3c7; }
+
+.simulator { margin-top: 20px; }
+
+/* ▼▼▼【変更点】ここから情報パネルのスタイル ▼▼▼ */
+.info-panel {
+    margin-bottom: 15px;
+}
+.title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.info-panel h3 {
+    margin: 0;
+    text-align: left;
+}
+.info-panel .status-panel {
+    margin: 0;
+    text-align: right;
+}
+.info-panel .explanation-panel {
+    margin: 0;
+    padding: 10px;
+    min-height: 2.5em; /* 2行分程度の高さを確保 */
+}
+/* ▲▲▲ ここまで ▲▲▲ */
+
+
+.locker-area {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    background-color: #ecf0f1; padding: 10px; border-radius: 5px;
+}
+.locker {
+    background-color: #bdc3c7; color: white;
+    aspect-ratio: 1 / 1;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 0.9em; font-weight: bold; border-radius: 4px;
+    transition: all 0.3s;
+}
+.locker.boundary { background-color: #3498db; box-shadow: 0 0 8px #3498db; }
+.locker.checking { background-color: #f1c40f; transform: scale(1.1); }
+.locker.found { background-color: #2ecc71; transform: scale(1.2); }
+.locker.discarded { background-color: #ecf0f1; border: 1px dashed #bdc3c7; color: #bdc3c7;}
+
+.status-panel {
+    font-size: 1.2em; font-weight: 500;
+}
+.status-panel .count { color: #e74c3c; }
+
+.explanation-panel {
+    padding: 15px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    line-height: 1.6;
+    text-align: center;
+    font-size: 1.1em;
+    color: #34495e;
+}
+
+.return-button, .return {
+    position: fixed;
+    bottom: 20px;
+    padding: 12px 25px;
+    background-color: #5a6268;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.return-button { right: 20px; }
+.return { left: 15px; }
+.return-button:hover, .return:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background-color: #494e53;
+}
+
+@media (max-width: 768px) {
+    body { padding: 0; }
+    .container {
+        padding: 20px; margin: 0; border-radius: 0;
+        box-shadow: none; min-height: 100%;
+    }
+    h1 { font-size: 1.5rem; }
+    .main-controls { gap: 8px; }
+    .main-controls button { padding: 10px 15px; font-size: 1em; }
+    .main-controls input { font-size: 1.1em; }
+    .locker-area { gap: 4px; padding: 8px; }
+    .locker { font-size: 0.85em; }
+    .return, .return-button { padding: 10px 18px; font-size: 0.9rem; }
+}

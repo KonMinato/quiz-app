@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>保存した問題</title>
+    <link rel="stylesheet" href="saved.css">
+</head>
+<body>
+    <div class="saved-container">
+        <div class="list-panel">
+            <header class="app-header">
+                <h1>保存リスト</h1>
+                <div class="actions">
+                    <button id="deleteAllButton">すべて削除</button>
+                    <a href="index.html" class="back-link">問題作成へ</a>
+                    <a href="dashboard.html" class="back-link">成績ボードへ</a>
+                </div>
+            </header>
+
+            <h2 class="table-title">知識問題</h2>
+            <table id="knowledgeListTable">
+                <thead>
+                    <tr>
+                        <th>章</th>
+                        <th>単元</th>
+                        <th>問題プレビュー</th>
+                        <th>前回の結果</th>
+                    </tr>
+                </thead>
+                <tbody id="knowledgeListBody"></tbody>
+            </table>
+
+            <h2 class="table-title">プログラム作成問題</h2>
+            <table id="programmingListTable">
+                <thead>
+                    <tr>
+                        <th>章</th>
+                        <th>単元</th>
+                        <th>問題プレビュー</th>
+                        <th>前回の結果</th>
+                    </tr>
+                </thead>
+                <tbody id="programmingListBody"></tbody>
+            </table>
+            
+            <h2 class="table-title">計算・進数問題</h2>
+            <table id="calcListTable">
+                <thead>
+                    <tr>
+                        <th>章</th>
+                        <th>単元</th>
+                        <th>問題プレビュー</th>
+                        <th>前回の結果</th>
+                    </tr>
+                </thead>
+                <tbody id="calcListBody"></tbody>
+            </table>
+            </div>
+
+        <div class="question-panel" id="questionDisplayArea">
+            <p class="placeholder">リストから問題を選択して再挑戦できます。</p>
+        </div>
+    </div>
+
+    <a href="../toppage.html" class="return">トップへ戻る</a>
+    <script src="saved.js"></script>
+</body>
+</html>

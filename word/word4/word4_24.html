@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word4.css">
+    <title>ネットワーク＿安全のための情報技術</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２４　安全のための情報技術</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>有害情報への対処</h2>
+            </div>
+            <div class="details">
+                <p>コンテンツフィルタリング：誹謗・中傷を含む情報や、暴力など犯罪につながる情報などの有害情報に対処するために、情報の受信の際に必要な情報のみを選別する方法</p>
+                <p>ブラックリスト方式：不適切なWebページのリストを作成し、それを閲覧できなくする方式</p>
+                <p>ホワイトリスト方式：有益なWebページのリストを作成し、それだけが閲覧できる方式</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>電子すかし</h2>
+            </div>
+            <div class="details">
+                <p>電子すかし：画像ファイルに著作者名などのすかし情報を埋め込んでおくもの</p>
+                
+                <p>Webページに掲載された画像などのデータを不正にコピーされても、すかし情報も一緒にコピーされるため、これを検出することで不正にコピーしたことがわかり、権利者の了解なく流用される恐れがなくなる。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>ブロックチェーン</h2>
+            </div>
+            <div class="details">
+                <p>ブロックチェーン(分散型台帳)：暗号資産の決済や送金の際の取引データを管理するために使われている基盤技術</p>
+                
+                <p>ブロック：取引履歴(トランザクション)を記録した通帳のようなもので、これらを分散・共有し監視しあうことで取引の正当性を担保している</p>
+                <p>中央にサーバを立てなくても取引データを正しく管理できるので、管理コストが低い。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>VPN</h2>
+            </div>
+            <div class="details">
+                <p>VPN：誰もが利用できるインターネットなどを使い、拠点間の接続や社員が出先から社内ネットワークへ接続する場合など、インターネットを仮想的な専用ネットワークとして利用する仕組み</p>
+                <p>データの内容は暗号化されているなどセキュリティを確保している。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>誤り検出符号</h2>
+            </div>
+            <div class="details">
+                <p>誤り検出符号(チェックディジット)：データを送受信する際に、送ったデータと受け取ったデータの0と1が反転して
+                    変わっていないかを検出するための、各ビットの変化を確認するための情報を送信データに加えることで誤りを検出する方法</p>
+                <p>例：7ビットの送信データに1ビット追加して、合計8ビットとして送信するとする。この8ビットのデータの中にある「1」の
+                    個数を偶数個にするか奇数個にするかをあらかじめ決めておき、「1」または「0」を1ビット付加する。この1ビットをパリティビットという。
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>の場合</td><td></td>
+                            </tr>
+                            <tr>
+                                <td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td class="pink">1</td><td>1の個数が偶数個になる</td>
+                            </tr>
+                            <tr>
+                                <td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>の場合</td><td></td>
+                            </tr>
+                            <tr>
+                                <td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td class="pink">0</td><td>1の個数は偶数個のまま</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>ただし、この方法では、1ビットの反転は検出できるが、2ビットの反転を検出することはできない。また誤りを検出しても訂正することまではできないので、データの再送を要求する。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>暗号化</h2>
+            </div>
+            <div class="details">
+                <ul>
+                    <li>
+                        共通鍵暗号方式
+                        <p>共通かぎ暗号方式は1つの鍵でデータの暗号化と復号を行う。簡単な共通鍵暗号方式の例に、文字を任意の文字数分
+                            ずらすシーザー暗号がある。
+                        </p>
+                        <p>例えば「3文字後にずらす」を鍵とすれば、平文「ANGOU」を暗号化すると、暗号文は「DQJRX」となる。</p>
+                    </li>
+                    <li>
+                        公開鍵暗号方式
+                        <p>公開鍵暗号方式は、対になっている異なる2つの鍵を利用する。この2つの鍵は、どちらの鍵でも暗号化できるが、暗号化に利用
+                            しなかった方の鍵でしか復号できない。また片方の鍵からもう一方の鍵を算出することはできない。このため、一方の鍵を
+                            暗号化用として公開し(公開鍵)、もう一方を復号するための鍵(秘密鍵)として受信者だけがもつ。このようにすると、一対の
+                            鍵だけで多数を対象に暗号化されたデータを受け取れ、公開鍵を厳重に管理しなくてよいため、インターネットを利用して
+                            不特定多数とやり取りする場合に向いている。
+                        </p>
+                        <p>実際の手順は、まず送信者はあらかじめ受信者が送った公開鍵で平文を暗号化する。次に、その暗号文は受信者に送った後、
+                            暗号文を受け取った受信者は自分しかもっていない秘密鍵で復号してもとの平文に戻す。
+                        </p>
+                    </li>
+                    <li>
+                        SSL/TLS
+                        <p>共通鍵暗号方式は、公開鍵暗号方式に比べて処理時間が短いという利点はあるが、相手に鍵を安全に送らなければならない
+                            という問題もある。そこで、Webページで用いられているSSL/TLSでは、共通鍵暗号方式を使って平文の暗号化・復号を
+                            行い、平文に比べてサイズの小さい共通鍵自体は、公開鍵暗号方式または鍵共有方式で共有する方法をとっている。
+                            このプロトコルをHTTPSといい、SSL/TLSで暗号化されたWebページのURLは「https://」で始まっている。
+                        </p>
+                        <p>手順</p>
+                            <p>①：平文を共通鍵で暗号化する</p>
+                            <p>②：共通鍵を受信者の公開鍵で暗号化する</p>
+                            <p>③：暗号文と暗号化された共通鍵を送る</p>
+                            <p>④：受信者の秘密鍵で復号する</p>
+                            <p>⑤：暗号された共通鍵で暗号文を復号する</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>デジタル署名</h2>
+            </div>
+            <div class="details">
+                <p>デジタル署名：平文からプログラムを利用して作った要約文(ダイジェスト)を送信者の秘密鍵で暗号化したもので、送信者の本人確認ができる</p>
+                
+                <p>要約文を平文に付加して受信者に送る。受信者は、送信者から送られてきた公開鍵を使ってデジタル署名を復号する。こうして
+                    得られた要約文と平文から作成した要約文を比較して一致すれば、これらは送信者本人から送られてきたものであることを確認できる
+                    と同時に、途中で平文が改竄されていないこともわかる。
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="check.html" class="show-button">チェックディジットを確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

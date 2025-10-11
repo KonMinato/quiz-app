@@ -1,0 +1,73 @@
+require('dotenv').config();
+
+const express = require('express');
+const cors = require('cors');
+const fetch = require('node-fetch');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+
+app.use(express.static(__dirname));
+app.use('/word', express.static(path.join(__dirname, '../word')));
+app.use(express.static(path.join(__dirname, '..')));
+
+// 問題生成用のAPIエンドポイント
+app.post('/api/gemini', async (req, res) => {
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    if (!geminiApiKey) {
+        return res.status(500).json({ error: 'APIキーがサーバーに設定されていません。' });
+    }
+    
+    const userPrompt = req.body.prompt;
+    if (!userPrompt) {
+        return res.status(400).json({ error: 'プロンプトが提供されていません。' });
+    }
+
+    // ▼▼▼【ここが修正箇所】リストにあった正しいモデル名に変更 ▼▼▼
+    const modelName = 'models/gemini-flash-latest';
+    const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${geminiApiKey}`;
+    
+    const body = {
+        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
+        generationConfig: { temperature: 0.5, maxOutputTokens: 4096 }
+    };
+
+    try {
+        const geminiResponse = await fetch(url, {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!geminiResponse.ok) {
+            const errorText = await geminiResponse.text();
+            try {
+                const errorJson = JSON.parse(errorText);
+                const message = errorJson.error?.message || 'Gemini APIからエラーが返されました。';
+                throw new Error(message);
+            } catch (e) {
+                throw new Error(`Gemini APIから予期しない形式(HTML等)のエラーが返されました。ステータス: ${geminiResponse.status}`);
+            }
+        }
+
+        const data = await geminiResponse.json();
+        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        
+        res.json(responseText);
+
+    } catch (err) {
+        console.error('プロキシサーバーでエラーが発生:', err);
+        res.status(500).json({ error: err.message || 'プロキシサーバーで不明なエラーが発生しました。' });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`プロキシサーバーがポート ${PORT} で起動しました。`);
+    console.log(`アクセス: http://localhost:${PORT}`);
+});

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word6.css">
+    <title>プログラミング＿プログラミングの基本</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３１　プログラミングの基本</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラミングの基本構造</h2>
+            </div>
+            <div class="details">
+                <p>すべてのプログラムは、順次構造、選択構造、反復構造の3つの基本構造の組み合わせで記述することができる</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>順次</td><td>処理1<br>処理2</td><td>上から下へ記述された順に処理を実行する</td>
+                            </tr>
+                            <tr>
+                                <td>選択</td><td>if 条件:<br>処理1<br>else:<br>処理2</td><td>条件が真の時は処理1を実行し、偽の時は処理2を実行する</td>
+                            </tr>
+                            <tr>
+                                <td>反復①</td><td>for 変数 in range(回数):<br>処理</td><td>変数の値を0から[回数-1]の範囲まで1つずつ変化させながら処理を繰り返す。範囲外になるとループを抜ける。</td>
+                            </tr>
+                            <tr>
+                                <td>反復②</td><td>for 変数 in range(値1,値2,増減値):<br>処理</td><td>変数の値を値1から値2までの範囲(値2は含まない)で、増減値の幅で変化させながら処理を繰り返す。範囲外になるとループを抜ける。</td>
+                            </tr>
+                            <tr>
+                                <td>反復③</td><td>for 変数 in 配列:<br>処理</td><td>変数に配列(リスト)の要素を一つずつ取り出しながら処理を繰り返す。要素を全て取り出すとループから抜ける。</td>
+                            </tr>
+                            <tr>
+                                <td>反復④</td><td>初期設定<br>while 条件:<br>処理<br>再設定</td><td>条件が真の間、ループの始端と終端の間にある処理を繰り返し、偽になるとループから抜け出す。初期設定では、反復処理の中で使用するループ変数に初期値を設定する。再設定では、ループ変数の値を増減する。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラム作成上の基本ルール</h2>
+            </div>
+            <div class="details">
+                <ul>
+                    <li>原則半角英数字で記述する。大文字と小文字は区別される。</li>
+                    <li>文の終わりで改行する。1行の中に複数の文を記述する場合は、文を「;」で区切る。文の途中で改行する場合は半角「\」を付けて改行するが、単語の途中で改行するとエラーになる。</li>
+                    <li>文字列は半角の「'」または「"」どうしで囲む。</li>
+                    <li>ifやelse、for、whileなどの後に「:」を記述して改行し、その後の処理は必ず半角スペース4文字分の字下げを行う。</li>
+                    <li>コメント文は、1行の場合は「#」を先頭に置く。複数行に渡る場合は、半角の「'」または、「"」を3つつなげた「'''」や「"""」で囲む。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>演算子</h2>
+            </div>
+            <div class="details">
+                <p>Pythonでよく使われる演算子の例</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr><td>算術・結合演算子</td><td>+</td><td>数値の足し算<br>文字列の結合</td><td>-</td><td>引き算</td></tr>
+                            <tr><td></td><td>*</td><td>掛け算</td><td>/</td><td>割り算</td></tr>
+                            <tr><td></td><td>%</td><td>割り算の余り</td></tr>
+                            <tr><td>比較演算子</td><td>==</td><td>等しい</td><td>!=</td><td>等しくない</td></tr>
+                            <tr><td></td><td>&lt;</td><td>未満</td><td>&gt;</td><td>超過</td></tr>
+                            <tr><td></td><td>&lt;=</td><td>以下</td><td>&gt;=</td><td>以上</td></tr>
+                            <tr><td>代入演算子</td><td>=</td><td>代入</td></tr>
+                            <tr><td>論理演算子</td><td>and</td><td>かつ</td><td>or</td><td>または</td></tr>
+                            <tr><td></td><td>not</td><td>ではない</td></tr>
+                            <tr><td>ドット演算子</td><td>.</td><td>～の</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>変数</h2>
+            </div>
+            <div class="details">
+                <p>変数：値や文字列を保管する箱のようなもの</p>
+                <p>代入演算子「=」を使って最初に変数に値を代入した時点で変数の宣言が行われる</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>プログラミング言語に組み込まれた機能の利用</h2>
+            </div>
+            <div class="details">
+                <p>組み込み関数：プログラミング言語の仕様にあらかじめ用意されたひとまとまりの処理　「関数名(引数)」として呼び出す</p>
+                <p>モジュール：関数をファイルとしてまとめたもの　「import モジュール名」としてモジュールをインポートしてから「モジュール名.関数名(引数)」として呼び出す</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題1：順次構造</h2>
+                <h3>名前を入力すると、「こんにちは～さん」と表示するプログラムを作成しなさい。</h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　a=input('名前　')
+                    <br>②　b='こんにちは'+a+'さん'
+                    <br>③　print(b)
+                </p>
+                <p>
+                    ①　キーボードから入力した文字列を変数aに代入
+                    <br>②　変数aに別の文字列を結合して変数bに代入
+                    <br>③　変数bの値を表示
+                </p>
+                <p>実行結果</p>
+                <p>名前　鈴木　→　こんにちは鈴木さん</p>
+                <p style="color: rgba(40, 238, 245, 0.683);">考察</p>
+                <p>プログラムにある命令文は、上から①→②→③の順に実行される。「print('こんにちは',input('名前　'),'さん')」のように
+                    カンマで区切っても解答例と同様の結果となる。
+                </p>
+            </div>
+        </section>
+        
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題2：選択構造</h2>
+                <h3>0～99の範囲の整数の乱数が50未満の場合は「50未満」を表示し、50以上の場合は「50以上」を表示するプログラムを作成しなさい。</h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　import random
+                    <br>②　x=random.randint(0,99)
+                    <br>③　if x<50:
+                    <br>④　　print(x,'は50未満です')
+                    <br>⑤　else:
+                    <br>⑥　　print(x,'は50以上です')
+                </p>
+                <p>実行例</p>
+                <p>34　は50未満です　78は50以上です</p>
+                <p style="color: rgba(40, 238, 245, 0.683);">考察</p>
+                <p>整数の乱数を発生する関数は組み込み関数にはないため、randomモジュールをインポートし、その中のrandint関数を使って発生させる。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題3：反復構造</h2>
+                <h3>1から5までの整数の和を表示するプログラムを作成しなさい。</h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　s=0
+                    <br>②　for i in range(1,6,1):
+                    <br>③　　s=<s>
+                    <br>④　print(s)
+                </p>
+                <p>
+                    ①　変数sの宣言とsに0を代入
+                    <br>②　変数iを1から1ずつ増やしていき6になったら繰り返しをやめる
+                    <br>③　右辺のsに1を足した値を左辺のsに代入
+                    <br>④　変数sを表示
+                </p>
+                <p>または</p>
+                <p>
+                    ①　s=0; i=1
+                    <br>② while i<=5:
+                    <br>③　　s=s+i
+                    <br>④　　i=i+1
+                    <br>⑤　print(s)
+                </p>
+                <p>
+                    ①　変数sの宣言とsに0を代入
+                    <br>　　変数iの宣言とiに1を代入
+                    <br>②　iが5以下の間、繰り返し
+                    <br>③　右辺のsにiを足した値を左辺のsに代入
+                    <br>④　iを1増やす
+                    <br>⑤　変数sを表示
+                </p>
+                <p style="color: rgba(40, 238, 245, 0.683);">考察</p>
+                <p>最初にs=0、i=1の時、「s=s+i」の右辺は(0)+1となり、それが左辺のsに代入される。次にiが1つ増えて2になり、sは(0+1)+2となる。
+                    これをiが5まで繰り返して、最終的にsは0+1+2+3+4+5になり、実行結果のようになる。
+                </p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="enzan.html" class="show-button">演算子を体験する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>デジタル＿音の表現</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１３　音の表現</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>音</h2>
+            </div>
+            <div class="details">
+                <p>音は空気の振動が伝わっていく波の現象である。</p>
+                
+                <p><strong class="term">周波数</strong>：<span class="hide-me">1秒間に含まれる波の数であり、単位をヘルツ[Hz]で表す</span></p>
+                <p><strong class="term">周期</strong>：<span class="hide-me">1個の波が伝わる時間であり、単位を秒[s]で表す</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>標本化</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">標本化(サンプリング)</strong>：<span class="hide-me">音のアナログ信号を一定の時間で区切り、この時間ごとに音の振れの値(電圧)を取り出す操作</span></p>
+                
+                <p><strong class="term">標本点</strong>：<span class="hide-me">この操作で取り出した点</span></p>
+                <p><strong class="term">標本化周期</strong>：<span class="hide-me">標本化の際区切る間隔であり、短いほどもとのアナログ波形に近くなる</span></p>
+                <p><strong class="term">標本化周波数</strong>：<span class="hide-me">標本化周期の逆数であり、1秒間に標本化する回数</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>量子化</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">量子化</strong>：<span class="hide-me">電圧を一定の間隔で区切って段階値を決めておき、標本点の値を最も近い段階値にそろえる操作</span></p>
+                
+                <p><strong class="term">量子化ビット数</strong>：<span class="hide-me">量子化の段階値を決めるものであり、一般的にnビットで2^n段階となる</span></p>
+                <p>量子化の場合も、区切る間隔が短いほどもとの波形に近くなる。</p>
+                <p><strong class="term">量子化誤差</strong>：<span class="hide-me">量子化の際のもとのアナログ値との差</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>符号化</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">符号化</strong>：<span class="hide-me">量子化した値を2進数で表現すること</span></p>
+                <p><strong class="term">PCM(パルス符号変調)</strong>：<span class="hide-me">2進数にした数値を高低2種類の電圧に置き換えるなど、音などの情報を2進数の符号に変換す方式</span></p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

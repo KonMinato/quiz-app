@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>問題解決＿モデル化とシミュレーション</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２９　モデル化とシミュレーション</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>モデル化とシミュレーション</h2>
+            </div>
+            <div class="details">
+                <p>現実の問題にはさまざまな要素が含まれており、それらをすべて考慮すると解決が容易でない場合がある。
+                        その際、<span class="hide-me">問題の本質的な部分を残して問題を単純化・抽象化する</span>ことを<strong class="term">モデル化</strong>という。
+                        また、<span class="hide-me">問題解決の結果を予測するために同様の条件で模擬動作させてみる</span>ことを<strong class="term">シミュレーション</strong>という。
+                        安全性・費用・効率などの点から、実際と同じ条件で行うことが困難な場合は、<span class="hide-me">単純化されたモデル</span>で代替することもある。
+                        問題解決のためには、どのようなモデルを選択してシミュレーションするかが重要なポイントになる。
+                        <br>モデルには対象や表現方法などによっていろいろなものがある。
+                </p>
+                
+                <ul>
+                    <li>
+                        <strong class="term">物理モデルと論理モデル</strong>
+                        <ul>
+                            <li>
+                                <strong class="term">物理モデル</strong>：<span class="hide-me">実物を模したモデル</span>
+                                <p>例：<span class="hide-me">モデルルームなどの実物モデル</span>、<span class="hide-me">分子模型などの拡大モデル</span>、<span class="hide-me">ミニカーなどの縮尺モデル</span>　など</p>
+                            </li>
+                            <li>
+                                <strong class="term">論理モデル</strong>：<span class="hide-me">現象や手続きなどを表現したモデル</span>
+                                <p>例：<span class="hide-me">現象や法則などを数学的に表した数式モデル</span>、<span class="hide-me">列車の路線図や試合のトーナメント表などの図的モデル</span>　など</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="term">静的モデルと動的モデル</strong>
+                        <ul>
+                            <li>
+                                <strong class="term">静的モデル</strong>：<span class="hide-me">時間の経過がほかの要素に影響を与えないモデル</span>
+                                <p>例：<span class="hide-me">円の半径と面積の関係</span>　など</p>
+                            </li>
+                            <li>
+                                <strong class="term">動的モデル</strong>：<span class="hide-me">時間の経過がほかの要素に影響を与えるモデル</span>
+                                <p>例：<span class="hide-me">落下する物体の運動</span>　など</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong class="term">確定的モデルと確率的モデル</strong>
+                        <ul>
+                            <li>
+                                <strong class="term">確定的モデル</strong>：<span class="hide-me">変動する要素がなく、結果が1つに定まるモデル</span>
+                                <p>例：<span class="hide-me">等速度で走る車の時間と移動距離</span>　など</p>
+                            </li>
+                            <li>
+                                <strong class="term">確率的モデル</strong>：<span class="hide-me">変動する要素があり、結果が1つにならないモデル</span>
+                                <p>例：<span class="hide-me">2つのサイコロを振って出る目の数の合計</span>　など</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>確率的モデル</h2>
+            </div>
+            <div class="details">
+                <p>私たちの身の回りには、サイコロを振った時に出る目のように、不確定な要素を含んだ現象がある。
+                        <span class="hide-me">このような現象を確率的な考え方を用いてモデル化した</span>ものを<strong class="term">確率的モデル</strong>という。
+                        <span class="hide-me">この確率的モデルの中で乱数を用いて問題を解決する</span>手法を<strong class="term">モンテカルロ法</strong>という。
+                        <strong class="term">乱数</strong>とは、<span class="hide-me">値が一定の範囲内で不規則かつ等確率で現れる数字の列</span>である。
+                        例えば、表計算ソフトウェアで使われるRAND関数は、0以上で1未満の実数をランダムに発生させる。
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

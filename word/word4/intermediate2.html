@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="intermediate2.css">
+    <title>中級パケットの動き</title>
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <header class="intro">
+                <h3>2台のPCから通信する際のパケットの変化をアニメーションで確認</h3>
+            </header>
+
+            <div class="main-layout">
+                <section class="animation-container">
+                    <div class="animation-stage">
+                        <div class="device-row top-row">
+                            <div class="node" id="node-pc1"><img src="img/pc.png" class="node-image"><p>PC 1</p></div>
+                            <div class="node" id="node-wifi"><img src="img/wi-fi.png" class="node-image"><p>Wi-Fiルータ</p></div>
+                            <div class="node" id="node-onu"><img src="img/onu.png" class="node-image"><p>ONU</p></div>
+                            <div class="node" id="node-internet"><img src="img/internet.svg" class="node-image internet-img"></div>
+                            <div class="node" id="node-server"><img src="img/server2.png" class="node-image"><p>Webサーバ</p></div>
+                        <div class="packet" id="packet1"><p>パケット</p></div>
+                        <div class="packet" id="packet2"><p>パケット</p></div>
+                        </div>
+                        <div class="device-row bottom-row">
+                             <div class="node" id="node-pc2"><img src="img/pc2.png" class="node-image"><p>PC 2</p></div>
+                        </div>
+                    </div>
+                    <div class="napt-table-container">
+                        <h3>NAPT テーブル</h3>
+                        <div class="table-wrapper">
+                            <table id="napt-table">
+                                <thead>
+                                    <tr>
+                                        <th>プライベートIP:ポート</th>
+                                        <th>グローバルIP:ポート</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="napt-row-1"><td>192.168.1.1:50000</td><td>1.2.3.4:51000</td></tr>
+                                    <tr id="napt-row-2"><td>192.168.1.2:50000</td><td>1.2.3.4:52000</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="btn" id="btn-pc1">PC1から再生</button>
+                        <button class="btn" id="btn-pc2">PC2から再生</button>
+                        <button class="btn" id="btn-stop">停止</button>
+                    </div>
+                </section>
+
+                <aside class="sidebar">
+                    <section class="info-grid">
+                        <div class="info-box packet-info">
+                            <h3>パケット内容</h3>
+                            <div>
+                                <p><strong>送信元IP:</strong> <span id="ip-source">-</span></p>
+                                <p><strong>送信先IP:</strong> <span id="ip-dest">-</span></p><hr>
+                                <p><strong>送信元MAC:</strong> <span id="mac-source">-</span></p>
+                                <p><strong>送信先MAC:</strong> <span id="mac-dest">-</span></p><hr>
+                                <p><strong>送信元ポート:</strong> <span id="port-source">-</span></p>
+                                <p><strong>送信先ポート:</strong> <span id="port-dest">-</span></p>
+                            </div>
+                        </div>
+                        <div class="info-box description-box">
+                            <h3>説明</h3>
+                            <p id="description">再生ボタンを押してください。</p>
+                        </div>
+                    </section>
+                    <footer class="controls">
+                        <div class="return-link">
+                            <a href="word4_18.html" class="btn-nav">説明ページへ戻る</a>
+                            <a href="../../../Chapter4.html" class="btn-nav">章の目次へ戻る</a>
+                        </div>
+                    </footer>
+                </aside>
+            </div>
+        </main>
+    </div>
+    <script src="intermediate2.js"></script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>コンピュータ計算手順シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8; color: #333; font-size: 14px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            height: calc(100vh - 40px);
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .column-left { flex: 1; }
+        .column-middle { flex: 1.2; }
+        .column-right { flex: 1; }
+
+        .panel {
+            border: 1px solid #dce4ec; border-radius: 8px; padding: 15px;
+            background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column;
+        }
+        .panel h3 {
+            margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 1px solid #e6ebf1; color: #2c3e50;
+            flex-shrink: 0;
+        }
+        
+        #program-list {
+            list-style-type: decimal-leading-zero; padding-left: 30px; margin: 0;
+            background: #fafafa; border-radius: 5px;
+            min-height: 200px;
+            overflow-y: auto; flex-grow: 1;
+        }
+        .program-builder { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+        .program-builder select, .program-builder input { padding: 8px; font-size: 1em; border: 1px solid #ccc; border-radius: 5px; }
+        .program-builder button { padding: 8px 12px; font-size: 1em; border: none; border-radius: 5px; background-color: #27ae60; color: white; cursor: pointer; }
+        #program-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #eee; font-family: 'Courier New', monospace; font-size: 1.1em; }
+        #program-list li .remove-btn { background: #e74c3c; color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-weight: bold; }
+
+        .spacer {
+            flex-grow: 1;
+        }
+        
+        .navigation-buttons { display: flex; gap: 10px; }
+        .nav-button {
+            flex: 1; padding: 10px; font-size: 1em; text-align: center; text-decoration: none;
+            color: white; background-color: #7f8c8d; border-radius: 5px; transition: background-color 0.2s;
+        }
+        .nav-button:hover { background-color: #95a5a6; }
+
+        .controls-buttons { display: flex; gap: 10px; }
+        .controls button { flex: 1; padding: 10px; font-size: 1em; border: none; border-radius: 5px; cursor: pointer; color: white; transition: background-color 0.2s; }
+        #load-btn { background-color: #3498db; }
+        #step-btn { background-color: #f1c40f; color: #333; }
+        #run-btn { background-color: #2ecc71; }
+        #reset-btn { background-color: #95a5a6; }
+        .controls button:disabled {
+            background-color: #e0e0e0;
+            opacity: 0.6;
+            cursor: not-allowed;
+            color: #aaa;
+        }
+
+        .cpu-grid-simple { display: flex; flex-direction: column; gap: 10px; }
+        .cpu-reg { flex: 1; background-color: #fafcfe; border: 1px solid #e6ebf1; padding: 8px; border-radius: 5px; }
+        .cpu-reg label { font-weight: bold; color: #596a7a; display: block; margin-bottom: 5px; }
+        .cpu-reg div { font-family: 'Courier New', Courier, monospace; font-size: 1.4em; min-height: 24px; color: #e74c3c; font-weight: bold; }
+        
+        .memory-table-container { overflow-y: auto; flex-grow: 1; }
+        #memory-table { width: 100%; border-collapse: collapse; }
+        #memory-table th, #memory-table td { border: 1px solid #e0e0e0; padding: 4px 8px; text-align: center; font-family: 'Courier New', Courier, monospace; }
+        #memory-table th { background-color: #ecf0f1; font-size: 0.9em; position: sticky; top: 0; }
+        #memory-table td:first-child { font-weight: bold; color: #7f8c8d; background-color: #fafafa; }
+        .value-input { font-size: 1.1em; font-weight: bold; width: 100%; border: none; text-align: center; background-color: transparent; box-sizing: border-box; }
+        #memory-table tr.highlight-pc { background-color: #f1c40f44 !important; }
+        #memory-table tr.highlight-active { outline: 2px solid #3498db; outline-offset: -2px; }
+        
+        #status-panel { flex-grow: 1; font-size: 1.1em; color: #2980b9; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="column column-left">
+        <div class="panel">
+            <h3>プログラムビルダー</h3>
+            <div class="program-builder">
+                <select id="instr-select">
+                    <option value="READ">READ</option><option value="ADD">ADD</option>
+                    <option value="WRITE">WRITE</option><option value="STOP">STOP</option>
+                </select>
+                <input type="number" id="addr-input" min="0" max="15" value="8">
+                <button id="add-instr-btn">+</button>
+            </div>
+            <ol id="program-list"></ol>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="panel controls">
+            <h3>コントロール</h3>
+            <div class="controls-buttons">
+                <button id="load-btn">ロード</button><button id="step-btn" disabled>ステップ</button>
+                <button id="run-btn" disabled>自動実行</button><button id="reset-btn">リセット</button>
+            </div>
+        </div>
+
+        <div class="panel panel-nav">
+            <div class="navigation-buttons">
+                <a href="word3_15.html" class="nav-button">説明ページへ戻る</a>
+                <a href="../../../chapter3.html" class="nav-button">章の目次へ戻る</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="column column-middle">
+        <div class="panel">
+            <h3>CPU</h3>
+            <div class="cpu-grid-simple">
+                <div class="cpu-reg"><label>プログラムカウンタ (PC)</label><div id="pc-val">0</div></div>
+                <div class="cpu-reg"><label>命令レジスタ (IR)</label><div id="ir-val">-</div></div>
+                <div class="cpu-reg"><label>レジスタ</label><div id="ac-val">0</div></div>
+            </div>
+        </div>
+        <div class="panel" style="flex-grow: 1;">
+            <h3>ステータス</h3>
+            <div id="status-panel"></div>
+        </div>
+    </div>
+
+    <div class="column column-right">
+        <div class="panel" style="flex-grow: 1;">
+            <h3>メモリ</h3>
+            <div class="memory-table-container">
+                <table id="memory-table">
+                    <thead>
+                        <tr><th>番地</th><th>数値</th></tr>
+                    </thead>
+                    <tbody id="memory-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const memoryTbody = document.getElementById('memory-tbody');
+    const instrSelect = document.getElementById('instr-select');
+    const addrInput = document.getElementById('addr-input');
+    const addInstrBtn = document.getElementById('add-instr-btn');
+    const programList = document.getElementById('program-list');
+    const loadBtn = document.getElementById('load-btn');
+    const stepBtn = document.getElementById('step-btn');
+    const runBtn = document.getElementById('run-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const pcVal = document.getElementById('pc-val');
+    const acVal = document.getElementById('ac-val');
+    const irVal = document.getElementById('ir-val');
+    const statusPanel = document.getElementById('status-panel');
+
+    const MEMORY_SIZE = 16;
+    let memory = new Array(MEMORY_SIZE).fill(0);
+    let program = [];
+    let registerValue = 0;
+    let programCounter = 0;
+    let isRunning = false;
+    
+    function initialize() {
+        memory.fill(0);
+        // ▼▼▼【変更点1】初期状態でSTOP命令をプログラムに追加 ▼▼▼
+        program = [{ instr: 'STOP', addr: null }];
+        registerValue = 0;
+        programCounter = 0;
+        isRunning = false;
+        
+        memoryTbody.innerHTML = '';
+        for (let i = 0; i < MEMORY_SIZE; i++) {
+            const tr = document.createElement('tr');
+            tr.id = `mem-row-${i}`;
+            const addrTd = document.createElement('td');
+            addrTd.textContent = String(i).padStart(2, '0');
+            const valueTd = document.createElement('td');
+            const valueInput = document.createElement('input');
+            valueInput.type = 'text';
+            valueInput.className = 'value-input';
+            valueInput.dataset.addr = i;
+            valueInput.value = '0';
+            valueInput.addEventListener('focus', (e) => { e.target.select(); });
+            valueInput.addEventListener('blur', (e) => { if (e.target.value === '') { e.target.value = '0'; } });
+            valueTd.appendChild(valueInput);
+            tr.appendChild(addrTd);
+            tr.appendChild(valueTd);
+            memoryTbody.appendChild(tr);
+        }
+        
+        renderProgramList();
+        pcVal.textContent = '0';
+        acVal.textContent = '0';
+        irVal.textContent = '-';
+        statusPanel.textContent = 'まずメモリに計算したい数値を入力し、プログラムを作成してから「ロード」ボタンを押してください。';
+        
+        loadBtn.disabled = false;
+        stepBtn.disabled = true;
+        runBtn.disabled = true;
+        addInstrBtn.disabled = false;
+        clearHighlights();
+    }
+
+    // ▼▼▼【変更点2】最後のSTOP命令には削除ボタンを表示しないように修正 ▼▼▼
+    function renderProgramList() {
+        programList.innerHTML = '';
+        program.forEach((line, index) => {
+            const li = document.createElement('li');
+            const addr = line.instr === 'STOP' ? '' : String(line.addr).padStart(2, '0');
+            const removeBtnHtml = (index === program.length - 1 && line.instr === 'STOP') 
+                ? '' 
+                : `<button class="remove-btn" data-index="${index}">-</button>`;
+            
+            li.innerHTML = `<span>${line.instr} ${addr}</span>${removeBtnHtml}`;
+            programList.appendChild(li);
+        });
+    }
+
+    // ▼▼▼【変更点3】命令を末尾ではなく、STOPの一つ手前に追加するように修正 ▼▼▼
+    function addInstruction() {
+        if (program.length >= MEMORY_SIZE) { alert('これ以上命令を追加できません。'); return; }
+        const instr = instrSelect.value;
+        const addr = (instr === 'STOP') ? null : parseInt(addrInput.value);
+
+        // 配列の末尾（STOP）の一つ手前に新しい命令を挿入
+        program.splice(program.length - 1, 0, { instr, addr });
+
+        renderProgramList();
+    }
+
+    function clearHighlights() {
+        document.querySelectorAll('#memory-table tr').forEach(row => row.classList.remove('highlight-pc', 'highlight-active'));
+    }
+
+    function loadProgram() {
+        document.querySelectorAll('.value-input').forEach(input => {
+            memory[parseInt(input.dataset.addr)] = parseInt(input.value) || 0;
+        });
+
+        statusPanel.textContent = 'プログラムをメモリにロード中...';
+        program.forEach((line, index) => {
+            let memValue = 0;
+            const operand = line.addr || 0;
+            switch (line.instr) {
+                case 'READ':  memValue = 100 + operand; break;
+                case 'ADD':   memValue = 300 + operand; break;
+                case 'WRITE': memValue = 200 + operand; break;
+                case 'STOP':  memValue = 999; break;
+            }
+            memory[index] = memValue;
+            document.querySelector(`.value-input[data-addr="${index}"]`).value = memValue;
+        });
+        statusPanel.textContent = 'ロード完了。「ステップ実行」または「自動実行」を開始してください。';
+        stepBtn.disabled = false;
+        runBtn.disabled = false;
+        loadBtn.disabled = true;
+        addInstrBtn.disabled = true;
+    }
+
+    async function step() {
+        stepBtn.disabled = true;
+        runBtn.disabled = true;
+
+        if (programCounter >= program.length) {
+            isRunning = false;
+            stepBtn.disabled = true;
+            runBtn.disabled = true;
+            return;
+        }
+        clearHighlights();
+
+        const instruction = memory[programCounter];
+        document.getElementById(`mem-row-${programCounter}`).classList.add('highlight-pc');
+        pcVal.textContent = programCounter;
+        irVal.textContent = instruction;
+        statusPanel.textContent = `[PC:${programCounter}] から命令 (${instruction}) をフェッチしました。`;
+        await sleep(1000);
+
+        const opcode = Math.floor(instruction / 100);
+        const operand = instruction % 100;
+        let targetRow = operand < MEMORY_SIZE ? document.getElementById(`mem-row-${operand}`) : null;
+        let isStop = false;
+
+        switch (opcode) {
+            case 1: // READ
+                targetRow.classList.add('highlight-active');
+                registerValue = memory[operand];
+                acVal.textContent = registerValue;
+                statusPanel.textContent = `READ命令: アドレス ${operand} の値 (${memory[operand]}) をレジスタに読み込みました。`;
+                break;
+            case 2: // WRITE
+                memory[operand] = registerValue;
+                targetRow.querySelector('.value-input').value = registerValue;
+                targetRow.classList.add('highlight-active');
+                statusPanel.textContent = `WRITE命令: レジスタの値 (${registerValue}) をアドレス ${operand} に書き込みました。`;
+                break;
+            case 3: // ADD
+                targetRow.classList.add('highlight-active');
+                registerValue += memory[operand];
+                acVal.textContent = registerValue;
+                statusPanel.textContent = `ADD命令: レジスタにアドレス ${operand} の値 (${memory[operand]}) を加算しました。結果: ${registerValue}`;
+                break;
+            case 9: // STOP
+                statusPanel.textContent = `STOP命令: プログラムを停止しました。`;
+                isRunning = false;
+                isStop = true;
+                break;
+        }
+        
+        await sleep(1000);
+        programCounter++;
+
+        if (!isStop && !isRunning) {
+            stepBtn.disabled = false;
+            runBtn.disabled = false;
+        }
+    }
+
+    async function run() {
+        isRunning = true;
+        stepBtn.disabled = true;
+        runBtn.disabled = true;
+        loadBtn.disabled = true;
+        while (isRunning) {
+            await step();
+            if(isRunning) await sleep(1200);
+        }
+        stepBtn.disabled = true;
+        runBtn.disabled = true;
+    }
+
+    function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+    addInstrBtn.addEventListener('click', addInstruction);
+    programList.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-btn')) {
+            const index = parseInt(e.target.dataset.index);
+            program.splice(index, 1);
+            renderProgramList();
+        }
+    });
+    instrSelect.addEventListener('change', () => {
+        addrInput.disabled = (instrSelect.value === 'STOP');
+    });
+    loadBtn.addEventListener('click', loadProgram);
+    stepBtn.addEventListener('click', step);
+    runBtn.addEventListener('click', run);
+    resetBtn.addEventListener('click', initialize);
+
+    initialize();
+});
+</script>
+
+</body>
+</html>

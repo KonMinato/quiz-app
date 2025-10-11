@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word4.css">
+    <title>ネットワーク＿インターネットの仕組み</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１８　インターネットの仕組み</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>IPアドレス</h2>
+            </div>
+            <div class="details">
+                <p>IPアドレス：TCP/IPを利用して通信しているコンピュータが持つ個別の番号で、互いに識別されている</p>
+                <p>IPv4：現在広く利用されている、IPアドレスを32ビットで表す規格</p>
+                <p>IPアドレス(IPv4)の表記</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr><td>2進数で表記</td><td>11000000 10101000 00000000 01100101</td></tr>
+                            <tr><td>10進数で表記</td><td>192.168.0.101</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>グローバルアドレス：インターネットに直接接続されているコンピュータに割り当てられているIPアドレス</p>
+                <p>IPv6：インターネットの普及とコンピュータ機器の増大に伴うIPアドレスの枯渇問題により、128ビットで表すようにした規格</p>
+                <p>IPアドレス(IPv6)の表記</p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr><td>2進数で表記</td><td>0010000000000001 0000110110111000 ~ 0000000000000000</td></tr>
+                            <tr><td>16進数で表記</td><td>2001:0db8:0000:3456:308c:0000:0000:0000</td></tr>
+                            <tr><td>省略後</td><td>2001:db8:0:3456:308c::</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>IPアドレスの設定</h2>
+            </div>
+            <div class="details">
+                <p>IPアドレスは、同一のネットワーク上では重複することは許されない。巨大なネットワークであるインターネットに直接接続する機器に割り当てる
+                    グローバルアドレスは、インターネットレジストリと呼ばれるIPアドレスの管理を委任されている組織によって重複なく割り当てられている。
+                </p>
+                <p>プライベートアドレス：学校や企業、家庭など限定されたLANに接続されたコンピュータに割り当てられた、それぞれのネットワーク独自のIPアドレス
+                    　通常LANを管理するネットワーク管理者が一元管理している
+                </p>
+                <p>NAT：グローバルアドレスとプライベートアドレスを相互に変換する仕組み　LANに接続している、グローバルアドレスを持たないコンピュータがインターネットに接続できようになる</p>
+                <p>NAPT：IPアドレスにポート番号も加えて変換し、1つのグローバルアドレスで複数の端末が同時にインターネット接続できるようにする仕組み。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>DHCP</h2>
+            </div>
+            <div class="details">
+                <p>DHCP：自動的にネットワーク設定を行う仕組みであり、新しくネットワークに接続された機器がネットワークの一員として正しく機能できるようにするための最小のやり取りを担う、重要なプロトコル</p>
+                <p>DHCPの通信の基本的な流れ</p>
+                <p>1.IPアドレスを保持していないクライアント（パソコンやスマートフォン）がネットワークに接続されるとDHCP Discoverをブロードキャストで送信する</p>
+                <p>2.それに対し、DHCPサーバがDHCP Offerを返す</p>
+                <p>3.このOfferに対してクライアントはDHCP Requestを送り、最終的にDHCPサーバがDHCP ACKを送ることで確定する</p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tr>
+                            <td><strong>送信元</strong></td> <td><strong>パケット</strong></td> <td><strong>内容</strong></td> <td><strong>宛先</strong></td>
+                        </tr>
+                        <tr>    
+                            <td>クライアント</td> <td>DHCP Discover</td> <td>IPが欲しい</td> <td>IP:255.255.255.255/MAC:FF:FF:FF:FF:FF:FF</td>
+                        </tr>
+                        <tr>    
+                            <td>DHCPサーバ</td> <td>DHCP Offer</td> <td>IPの提案</td> <td>IP:255.255.255.255/MAC:クライアントのMAC</td>
+                        </tr>
+                        <tr>    
+                            <td>クライアント</td> <td>DHCP Request</td> <td>提案されたIPを承諾</td> <td>IP:255.255.255.255/MAC:FF:FF:FF:FF:FF:FF</td>
+                        </tr>
+                        <tr>    
+                            <td>DHCPサーバ</td> <td>DHCP ACK</td> <td>承諾されたことを確認</td> <td>IP:255.255.255.255/MAC:クライアントのMAC</td>
+                        </tr>
+                    </table>
+                </div>
+                <p>各通信の詳細な役割</p>
+                <ul>
+                    <li>DHCP Discover</li>
+                    <p>IPアドレスを持たないクライアントが、LAN内にいるDHCPサーバに向けて「IPアドレスが欲しい」とブロードキャストを送信する。</p>
+                    <p>クライアントには自分のIPアドレスがないため、送信元IPには「0.0.0.0」を、宛先IPには「255.255.255.255(ブロードキャスト)」を使用する。</p>
+                    <p>ブロードキャストなので、このパケットは同じLAN内のすべてのデバイスに届くが、実際に応答するのは固有のMACアドレスに対応したDHCPサーバだけ。</p>
+                    <li>DHCP Offer</li>
+                    <p>Discoverを受信したDHCPサーバは「このIPアドレスはどう？」という提案(Offer)を返す。</p>
+                    <p>あくまで提案なので、IPアドレスはまだ確定していない。</p>
+                    <p>このパケットには宛先IPにブロードキャスト(255.255.255.255)が使われ、宛先MACには上記で受け取ったクライアントのMACが指定される。</p>
+                    <li>DHCP Request</li>
+                    <p>クライアントがOfferで提案されたIPアドレスを使いたいと示す。</p>
+                    <p>この段階では複数のDHCPサーバが存在する可能性があるため、Requestパケットには「どのサーバからのOfferを受け入れるか」が識別子として明示される。</p>
+                    <p>宛先IP、MAC共にブロードキャストを指定して送信することで、選ばれなかったサーバは自身が提案したIPアドレスの割り当てをキャンセルできる。</p>
+                    <li>DHCP ACK</li>
+                    <p>Requestを受け取ったDHCPサーバは、そのIPアドレスを正式に割り当てたことをクライアントに知らせるACK(Acknowledgement)を送る。</p>
+                    <p>このACKには、IPアドレスの有効期間や、ネットワーク設定が改めて含まれる。</h4>
+                    <p>このパケットは、すでに提案されたIPが一時的に有効になっているため、宛先IPとしてそのアドレスが使用されることもある。</p>
+                    <p>こうして、クライアントはDHCPを通じて自動的にIPアドレスなどの情報を取得し、ネットワークへのアクセスが可能になる。</p>
+                    </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>ドメイン名とホスト名</h2>
+            </div>
+            <div class="details">
+                <p>
+                    人間にとっては、IPアドレスのような数字の列は覚えにくく、それ自体には意味はない。そこで、IPアドレスの代わりにホスト名も含めた
+                    ドメイン名を用いてコンピュータを識別する仕組みが作られ、URLやメールアドレスで利用されている。</p>
+                <p>
+                    ドメイン名：インターネットに接続している組織に名前で、一般に右側から国名、組織区分、組織名という階層構造になっており(.)で区切られている
+                    ホスト名：組織内にあるコンピュータに付けられた名前
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><u>https</u></td><td>://</td>
+                                <td><u>www</u></td><td>.</td><td><u>jma</u></td><td>.</td><td><u>go</u></td><td>.</td><td><u>jp</u></td><td>/</td>
+                                <td><u>jma</u></td><td>/</td>
+                                <td><u>index.html</u></td>
+                            </tr>
+                            <tr>
+                                <td>スキーム名(プロトコル名)</td><td></td>
+                                <td>ホスト名</td><td></td><td>組織名</td><td></td><td>組織区分</td><td></td><td>国名</td><td></td>
+                                <td>ディレクトリ名</td><td></td>
+                                <td>ファイル名</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>名前解決の仕組み</h2>
+            </div>
+            <div class="details">
+                <p>名前解決：ドメイン名をIPアドレスに変換すること</p>
+                <p>DNS：名前解決をサービスする仕組み</p>
+                
+                <p>DNSサーバ：各ドメインに設置され、そこに属するドメイン名とIPアドレスの関係を管理して、クライアントの要求に応じてIPアドレスなどを返すサーバ</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>インターネットでのデータ通信</h2>
+            </div>
+            <div class="details">
+                <p>回線交換方式：従来の電話で採用されていた、通話する二点間を直接接続して回線を確立してから通信を行う方式
+                    　確立された回線はほかの利用者に影響されないが、情報が流れていない時でも回線を占有するため、他人がその回線を利用することができず利用効率が悪い
+                </p>
+                <p>パケット交換方式：インターネットで採用されている、データを小さな単位に分割して、それぞれに宛先や送信元のIPアドレス、
+                    分割した順序などのヘッダ情報を付けたパケットにして、同じ回線に異なる宛先のパケットを混在させてネットワークに送り出す方式
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>インターネットの経路</h2>
+            </div>
+            <div class="details">
+                <p>インターネットでは、ネットワークどうしがルータという通信機器によって網の目のように接続されている。
+                    このルータには隣接するネットワークなどの経路情報が登録されていて、パケットを目的の宛先までルーティング(経路選択)して導いてくれる。
+                    <br>インターネットに送り出されたパケットは、さまざまな経路を通って宛先に送られる。
+                    途中、パケットに遅延が起きたり、順番が入れ替わって伝送されても、すべてのパケットにヘッダ情報が付けられているので、
+                    元のデータに復元することができる。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>インターネットへの接続</h2>
+            </div>
+            <div class="details">
+                <p>家庭や企業などではLANが構築され、コンピュータや多様な情報機器がインターネットサービスプロバイダ(ISP)を介してインターネットに接続している。
+                    また、スマートフォンやタブレットなどは、SIMカードを使い、携帯電話網を利用してインターネットを利用することができる。
+                    さらに、現在ではIPv6の進展によってテレビや冷蔵庫、エアコン、自動車などさまざまなモノがインターネットに接続するようになり、
+                    デジタル社会の発展が私たちの生活やビジネスを大きく変えてきている。
+                </p>
+                <p>スマートフォンをインターネットに接続する方法</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="green">接続方法</th><th class="green">長所</th><th class="green">短所</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>携帯電話網経由</td>
+                                <td>・サービスエリア内ならどこでもインターネットに接続できる。</td>
+                                <td>・料金が比較的高い。
+                                    <br>・通信が混み合う時間帯は速度が遅くなる。
+                                    <br>・通信容量が決まっている場合、制限を超えると料金が高くなったり速度が遅くなったりする場合がある。
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>無線LAN経由</td>
+                                <td>・LANに接続するため特別に通信量が発生しない。
+                                    <br>・通信速度が比較的こうそくである。
+                                    <br>・通信が安定している。
+                                </td>
+                                <td>・電波が届く範囲に場所が限定される。
+                                    <br>・セキュリティ対策を施さないと悪用される可能性がある。
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>公衆無線LAN経由</td>
+                                <td>・無料で利用できるものがある・
+                                    <br>・回線の契約なしでだれでも利用することができる。
+                                </td>
+                                <td>・電波が届く範囲に場所が限定される。
+                                    <br>・通信が不安定になる場合がある。
+                                    <br>・通信速度が遅くなることがある。
+                                    <br>・盗聴、ウイルス感染、乗っ取りなどの危険性がある。
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="show-button-container">
+            <a href="1page.html" class="show-button">通信の様子を確認する(1)</a>
+            <a href="intermediate1.html" class="show-button">通信の様子を確認する(2)</a>
+            <a href="advanced.html" class="show-button">DHCP通信の様子を確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word3.css">
+    <title>デジタル＿コンピュータの性能</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">１６　コンピュータの性能</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>コンピュータの処理速度</h2>
+            </div>
+            <div class="details">
+                <p>コンピュータは、CPUが主記憶装置に格納されている命令やデータにアクセスしながら、処理を進めていく。
+                    したがって、CPUと主記憶装置間の情報のやり取りや、CPUの処理の速さなどが、コンピュータの性能(処理能力)に大きく関係する。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>CPUの処理能力</h2>
+            </div>
+            <div class="details">
+                <p>コンピュータの処理速度は、CPUの性能によって大きく左右される。
+                    一度に処理するデータ量の違いによって、「16ビットCPU」、「32ビットCPU」、「64ビットCPU」などに分類される。
+                    ビット数が大きいものほど処理能力が高く、性能がよいCPUといえる。
+                </p>
+                
+                <p>クロック信号：コンピュータを構成する複数の装置の間でデータをやり取りする際に、動作のタイミングを合わせるために用いられる信号</p>
+                <p>クロック周波数：1秒間の信号の回数</p>
+                <p>クロック周波数はCPUの性能を表す尺度の1つとして用いられる。
+                    例えば、1GHzのクロック周波数で動作するCPUの場合、1クロックは10億分の1秒(1ナノ秒)となり、1秒間に10億回動作する。
+                    ほかの条件が同じであれば、CPUのクロック周波数が高いものほど単位時間当たりの計算回数が多いため、処理速度が速いといえる。</p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>コンピュータによる演算誤差</h2>
+            </div>
+            <div class="details">
+                <p>数値をコンピュータで扱う場合、コンピュータ内部の表現(ビット列)に変換されて取り扱われる。
+                    したがって、その表現に収まらなければ、誤差が生じる。
+                    例えば、少数の多くは正確に2進数に変換できない。そこで、コンピュータで行われる数値計算では、こうした2進数をある一定の桁で丸めて端数処理する。
+                    その丸め処理によって誤差が生じる。なお、演算のたびに丸め処理による誤差が生じるので、演算が進むに従って誤差は伝播していく。
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter3.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

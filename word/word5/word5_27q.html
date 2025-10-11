@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>問題解決＿統計量とデータの尺度</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">２７　統計量とデータの尺度</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>おもな統計量</h2>
+            </div>
+            <div class="details">
+                <p>合計や平均などの<strong class="term">統計量</strong>は、同種のほかのデータと比較検討する際に、特に必要な情報となる。データの特徴を表すおもな統計量としては、次のようなものがある。</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特徴</th><th>統計量</th><th>関数名</th><th>書式</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">全体的な大きさ</td><td class="term">(データ数)</td><td><span class="hide-me">COUNT関数</span></td><td><span class="hide-me">=COUNT(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">合計値</td><td><span class="hide-me">SUM関数</span></td><td><span class="hide-me">=SUM(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="7">分布の概況</td><td class="term">最大値</td><td><span class="hide-me">MAX関数</span></td><td><span class="hide-me">=MAX(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">最小値</td><td><span class="hide-me">MIN関数</span></td><td><span class="hide-me">=MIN(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">平均値</td><td><span class="hide-me">AVERAGE関数</span></td><td><span class="hide-me">=AVERAGE(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">最頻値</td><td><span class="hide-me">MODE関数</span></td><td><span class="hide-me">=MODE(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">中央値</td><td><span class="hide-me">MEDIAN関数</span></td><td><span class="hide-me">=MEDIAN(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">第一四分位数</td><td><span class="hide-me">QUARTILE.INC関数</span></td><td><span class="hide-me">=QUARTILE.INC(範囲,1)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">第三四分位数</td><td><span class="hide-me">QUARTILE.INC関数</span></td><td><span class="hide-me">=QUARTILE.INC(範囲,3)</span></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">散らばり具合</td><td class="term">分散</td><td><span class="hide-me">VAR.P関数</span></td><td><span class="hide-me">=VAR.P(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">標準偏差</td><td><span class="hide-me">STDEV.P関数</span></td><td><span class="hide-me">=STDEV.P(範囲)</span></td>
+                            </tr>
+                            <tr>
+                                <td>変数間の関係</td><td class="term">相関係数</td><td><span class="hide-me">CORREL関数</span></td><td><span class="hide-me">=CORREL(範囲1,範囲2)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>度数分布表と箱ひげ図</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">度数分布表</strong>：<span class="hide-me">データの値または階級ごとにデータ数(度数)を整理したもの</span></p>
+                <p><strong class="term">ヒストグラム</strong>：<span class="hide-me">度数分布表を棒グラフで表したもの</span></p>
+                
+                <p>データを小さい順に並べた時に、下位から25%、50%、75%の位置にあるデータの値をそれぞれ、<strong class="term">第一四分位数</strong>、<strong class="term">第二四分位数</strong>、<strong class="term">第三四分位数</strong>という。なお、<span class="term">第二四分位数</span>は<span class="hide-me">中央値</span>である。</p>
+                <p><strong class="term">箱ひげ図</strong>：<span class="hide-me">四分位数を用いてヒストグラムの代わりに分布の概要を表した図</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>分散と標準偏差</h2>
+            </div>
+            <div class="details">
+                <p>データの散らばり具合を表すものとして、<span class="term">分散</span>と<span class="term">標準偏差</span>がある。</p>
+                <p><strong class="term">分散</strong>：<span class="hide-me">データの値から平均値を引いた値である<strong class="term">偏差</strong>の二乗の平均値</span></p>
+                <p><strong class="term">標準偏差</strong>：<span class="hide-me">分散の正の平方根</span></p>
+
+                <p>一般に<span class="hide-me">データの散らばり具合</span>は標準偏差で示されることが多く、標準偏差が小さいほど<span class="hide-me">データの散らばりは小さい。</span></p>
+                <p><span class="term">分散</span></p>
+                <p><span class="hide-me">σ²=<u>(x₁-<span style="text-decoration: overline">x</span>)²+(x₂-<span style="text-decoration: overline">x</span>)²+...+(xₙ-<span style="text-decoration: overline">x</span>)²</u></p>
+                <p>　　　　　n</span></p>
+                <p><span class="term">標準偏差</span></p>
+                <p><span class="hide-me">σ=√(σ²)=√<u>(x₁-<span style="text-decoration: overline">x</span>)²+(x₂-<span style="text-decoration: overline">x</span>)²+...+(xₙ-<span style="text-decoration: overline">x</span>)²</u></p>
+                <p>　　　　　√n</span></p>
+                <p>x₁~xₙはデータの値、<span style="text-decoration: overline">x</span>は平均値、nはデータ数</p>
+                <p>成績評価などでよく使われる<strong class="term">偏差値</strong>は、その人の得点、平均点、標準偏差を用いて次の式で表される。得点が平均点と同じ場合の偏差値は<span class="hide-me">50</span>、
+                        平均値より標準偏差分だけ高いと、偏差値は<span class="hide-me">60</span>である。
+                </p>
+                <p>偏差値=<span class="hide-me">50+(得点-平均点)/標準偏差*10</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>尺度水準</h2>
+            </div>
+            <div class="details">
+                <p>データ</p>
+                <ul>
+                    <li><strong class="term">量的データ</strong>：<span class="hide-me">数量的な意味があり計算が可能</span></li>
+                    <li><strong class="term">質的データ</strong>：<span class="hide-me">数量的な意味がなく分類として意味をもつ</span></li>
+                </ul>
+                <p>これは、データの値を決める際の基準である尺度の違いによって分けられている。</p>
+                <p><strong class="term">尺度水準</strong>：<span class="hide-me">データをその意味や性質に基づいて分類する基準のこと</span></p>
+                <ul>
+                    <li><strong class="term">名義尺度</strong>：<span class="hide-me">性別や血液型、好きな食べ物のように、異なる分類として区別することだけに意味を持つ</span>尺度である。
+                            名義尺度(名目尺度)のデータは、<span class="hide-me">数値としての意味をまったくもたない質的データ</span>である。
+                    </li>
+                    <li><strong class="term">順序尺度</strong>：<span class="hide-me">5段階の成績評価や、服のサイズ(S、M、L、LLなど)のように、分類の順序に意味を持つ</span>尺度である。
+                            ただし、<span class="hide-me">順序性はあるが間隔は一定でない</span>ことに注意する。例えば、SサイズとLサイズの平均はMサイズではなく、
+                            <span class="hide-me">加減乗除の計算</span>は意味をなさない。順序尺度のデータも<span class="hide-me">質的データである。</span>
+                    </li>
+                    <li><strong class="term">間隔尺度</strong>：<span class="hide-me">西暦や気温のように、数値の間隔(差)が数量としての意味をもつ</span>尺度である。例えば、西暦2030年は西暦2020年の
+                            10年後であるといった<span class="hide-me">加減の計算</span>ができる。そして、その平均値も求められる。しかし、20℃は-10℃の何倍かといった乗除の
+                            計算は意味をなさない。間隔尺度のデータは<span class="hide-me">量的データである。</span>
+                    </li>
+                    <li>
+                        <strong class="term">比率尺度</strong>：<span class="hide-me">長さや年収のように、数値の比にも数量としての意味をもつ</span>尺度である。例えば、年収が1000万円であれば、
+                            年収が500万円より2倍の収入があることを示している。比率尺度(比例尺度)のデータも<span class="hide-me">量的データ</span>である。
+                    </li>
+                </ul>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>データの種類</th><th>尺度</th><th>例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="term pink" rowspan="2">質的データ</td><td class="term">名義尺度</td>
+                                <td><span class="hide-me">性別、血液型、好きな食べ物、氏名</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">順序尺度</td>
+                                <td><span class="hide-me">5段階の成績評価、服のサイズ、警報(警戒レベルなど)</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term pink" rowspan="2">量的データ</td><td class="term">間隔尺度</td>
+                                <td><span class="hide-me">西暦、気温(摂氏)、学年</span></td>
+                            </tr>
+                            <tr>
+                                <td class="term">比率尺度</td>
+                                <td><span class="hide-me">距離、年収、家庭学習時間</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <a href="../../../chapter5.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

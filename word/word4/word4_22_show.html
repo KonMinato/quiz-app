@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データベース操作体験 (クエリビルダー)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            margin: 0;
+        }
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .left-column, .right-column {
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            flex-grow: 1; /* カラムの高さを埋める */
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        /* ▼▼▼【変更点1】統合後のセクション間のマージンを設定 ▼▼▼ */
+        .table-section, .result-section {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%; border-collapse: collapse; margin-top: 15px;
+        }
+        th, td {
+            padding: 12px 15px; border: 1px solid #e0e0e0; text-align: left;
+        }
+        thead th {
+            background-color: #34495e; color: #ffffff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .query-builder {
+            background-color: #fdfdfd; border: 1px solid #e0e0e0;
+            border-radius: 8px; padding: 20px; margin-top: 15px;
+        }
+        .builder-row {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 15px;
+        }
+        .builder-row label {
+            font-weight: bold; font-size: 1.1em; width: 80px;
+        }
+        .builder-row select, .builder-row input {
+            padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;
+        }
+        #add-condition-btn, .remove-condition-btn {
+            background-color: #3498db; color: white; border: none;
+            padding: 8px 12px; border-radius: 5px; cursor: pointer;
+        }
+        .remove-condition-btn { background-color: #e74c3c; }
+
+        #generated-sql {
+            background-color: #2d2d2d; color: #f8f8f2; font-family: 'Courier New', Courier, monospace;
+            padding: 15px; border-radius: 8px; margin-top: 15px; white-space: pre-wrap;
+        }
+        
+        #execute-button {
+            display: block; width: 100%; padding: 12px; font-size: 18px;
+            border: none; border-radius: 8px; cursor: pointer;
+            background-color: #27ae60; color: white; margin-top: 20px;
+        }
+        #execute-button:hover { background-color: #229954; }
+
+        #result-output {
+            min-height: 50px; background-color: #fafafa;
+            border: 1px solid #ecf0f1; padding: 20px; border-radius: 8px;
+            font-size: 1.1em;
+        }
+        #result-output p { margin: 0 0 10px 0; }
+        #result-output p strong {
+            display: inline-block; width: 80px; font-weight: bold; color: #34495e;
+        }
+
+        .return-button, .return {
+            position: fixed; bottom: 20px; padding: 12px 25px;
+            background-color: #5a6268; color: #fff; text-decoration: none;
+            border-radius: 50px; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .return-button { right: 20px; }
+        .return { left:15px; }
+        .return-button:hover, .return:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="left-column">
+        <div class="container">
+            <h1>データベース操作体験 (クエリビルダー)</h1>
+            <p>右のビルダーでクエリを組み立て、「実行」ボタンを押してください。</p>
+
+            <div class="table-section">
+                <h2>サンプルテーブル: `products`</h2>
+                <table id="sample-table"></table>
+            </div>
+
+            <div class="result-section">
+                <h2>実行結果</h2>
+                <div id="result-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-column">
+        <div class="container query-section">
+            <h2>クエリビルダー</h2>
+            <div class="query-builder">
+                <div class="builder-row">
+                    <label>SELECT</label>
+                    <select id="select-columns" multiple size="4"></select>
+                </div>
+                <div class="builder-row">
+                    <label>FROM</label>
+                    <span>products</span>
+                </div>
+                <div id="where-conditions">
+                    <div class="builder-row"><label>WHERE</label></div>
+                </div>
+                <div class="builder-row">
+                    <label></label>
+                    <button id="add-condition-btn">条件を追加 (+)</button>
+                </div>
+            </div>
+            <h2>生成されたSQL</h2>
+            <div id="generated-sql"></div>
+            <button id="execute-button">実行</button>
+        </div>
+    </div>
+</div>
+
+<a href="word4_22.html" class="return">説明ページへ戻る</a>
+<a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // JavaScript部分は変更ありません
+    const productsData = [
+        { id: 1, name: 'りんご', category: '果物', price: 120 },
+        { id: 2, name: 'みかん', category: '果物', price: 80 },
+        { id: 3, name: 'きゃべつ', category: '野菜', price: 150 },
+        { id: 4, name: '牛乳', category: '飲料', price: 210 },
+        { id: 5, name: 'パン', category: '食品', price: 180 },
+        { id: 6, name: 'にんじん', category: '野菜', price: 90 }
+    ];
+    const columns = Object.keys(productsData[0]);
+
+    const sampleTableElem = document.getElementById('sample-table');
+    const selectColumnsElem = document.getElementById('select-columns');
+    const whereConditionsElem = document.getElementById('where-conditions');
+    const addConditionBtn = document.getElementById('add-condition-btn');
+    const generatedSqlElem = document.getElementById('generated-sql');
+    const executeButton = document.getElementById('execute-button');
+    const resultOutputElem = document.getElementById('result-output');
+
+    let queryState = { select: ['*'], where: [] };
+
+    function renderSampleTable(element, data) {
+        const headers = Object.keys(data[0]);
+        element.innerHTML = `
+            <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+            <tbody>${data.map(row => `<tr>${headers.map(h => `<td>${row[h]}</td>`).join('')}</tr>`).join('')}</tbody>
+        `;
+    }
+
+    function renderResults(element, data) {
+        if (!data || data.length === 0) {
+            element.innerHTML = `<p>該当するデータがありません。</p>`;
+            return;
+        }
+        element.innerHTML = '';
+        const headers = Object.keys(data[0]);
+        headers.forEach(header => {
+            const values = data.map(row => row[header]).join(' ');
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${header}</strong> ${values}`;
+            element.appendChild(p);
+        });
+    }
+
+    function renderBuilder() {
+        whereConditionsElem.innerHTML = '<div class="builder-row"><label>WHERE</label></div>';
+        queryState.where.forEach((cond, index) => {
+            const row = document.createElement('div');
+            row.className = 'builder-row';
+            row.innerHTML = `
+                <label>${index > 0 ? 'AND' : ''}</label>
+                <select class="where-column" data-index="${index}">${columns.map(c => `<option value="${c}" ${cond.column === c ? 'selected' : ''}>${c}</option>`).join('')}</select>
+                <select class="where-operator" data-index="${index}"><option value="=" ${cond.operator === '=' ? 'selected' : ''}>=</option><option value=">" ${cond.operator === '>' ? 'selected' : ''}>&gt;</option><option value="<" ${cond.operator === '<' ? 'selected' : ''}>&lt;</option></select>
+                <input type="text" class="where-value" placeholder="値を入力" value="${cond.value}" data-index="${index}">
+                <button class="remove-condition-btn" data-index="${index}">-</button>
+            `;
+            whereConditionsElem.appendChild(row);
+        });
+        updateGeneratedSql();
+    }
+
+    function updateGeneratedSql() {
+        let sql = `SELECT ${queryState.select.join(', ')}\nFROM products`;
+        if (queryState.where.length > 0) {
+            sql += `\nWHERE ${queryState.where.map((cond, i) => {
+                const value = typeof cond.value === 'string' && isNaN(cond.value) ? `'${cond.value}'` : cond.value;
+                return `${i > 0 ? '  AND' : ''} ${cond.column} ${cond.operator} ${value}`;
+            }).join('\n')}`;
+        }
+        sql += ';';
+        generatedSqlElem.textContent = sql;
+    }
+
+    function executeQuery() {
+        let results = [...productsData];
+        queryState.where.forEach(cond => {
+            results = results.filter(row => {
+                const rowValue = row[cond.column];
+                const condValue = isNaN(cond.value) ? cond.value : parseFloat(cond.value);
+                switch (cond.operator) {
+                    case '=': return String(rowValue).toLowerCase() === String(condValue).toLowerCase();
+                    case '>': return rowValue > condValue;
+                    case '<': return rowValue < condValue;
+                    default: return true;
+                }
+            });
+        });
+        if (queryState.select[0] !== '*') {
+            results = results.map(row => {
+                const newRow = {};
+                queryState.select.forEach(col => { newRow[col] = row[col]; });
+                return newRow;
+            });
+        }
+        renderResults(resultOutputElem, results);
+    }
+
+    selectColumnsElem.addEventListener('change', () => {
+        const selected = Array.from(selectColumnsElem.selectedOptions).map(opt => opt.value);
+        if (selected.includes('*')) {
+            queryState.select = ['*'];
+            Array.from(selectColumnsElem.options).forEach(opt => opt.selected = (opt.value === '*'));
+        } else {
+            queryState.select = selected.length > 0 ? selected : ['*'];
+        }
+        updateGeneratedSql();
+    });
+
+    addConditionBtn.addEventListener('click', () => {
+        queryState.where.push({ column: 'id', operator: '=', value: '1' });
+        renderBuilder();
+    });
+
+    whereConditionsElem.addEventListener('change', (e) => {
+        const index = e.target.dataset.index;
+        if (index) {
+            const condition = queryState.where[index];
+            if (e.target.matches('.where-column')) condition.column = e.target.value;
+            if (e.target.matches('.where-operator')) condition.operator = e.target.value;
+            if (e.target.matches('.where-value')) condition.value = e.target.value;
+            updateGeneratedSql();
+        }
+    });
+    whereConditionsElem.addEventListener('click', (e) => {
+        if (e.target.matches('.remove-condition-btn')) {
+            const index = e.target.dataset.index;
+            queryState.where.splice(index, 1);
+            renderBuilder();
+        }
+    });
+
+    executeButton.addEventListener('click', executeQuery);
+
+    renderSampleTable(sampleTableElem, productsData);
+    selectColumnsElem.innerHTML = `<option value="*" selected>すべての列 (*)</option>` + 
+                                  columns.map(c => `<option value="${c}">${c}</option>`).join('');
+    renderBuilder();
+});
+</script>
+
+</body>
+</html>

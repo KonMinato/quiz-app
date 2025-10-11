@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>プログラミング＿関数</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３３　関数</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>関数</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">関数</strong>：<span class="hide-me">定められた一連の処理を定義し、それを呼び出すと一連の処理が実行される仕組み</span></p>
+                <p><strong class="term">組み込み関数</strong>：<span class="hide-me">プログラミング言語などの仕様にあらかじめ用意された関数 printやinputなど</span></p>
+                <p><strong class="term">ユーザ定義関数</strong>：<span class="hide-me">ユーザが作成する関数</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>関数の定義と呼び出す方法</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">引数</strong>：<span class="hide-me">関数に引き渡す値</span></p>
+                
+                <ul>
+                    <li><strong class="term">仮引数</strong>：<span class="hide-me">呼び出される側(関数の定義側)の引数</span></li>
+                    <li><strong class="term">実引数</strong>：<span class="hide-me">呼び出す側の引数</span></li>
+                </ul>
+                <p><strong class="term">戻り値(返り値)</strong>：<span class="hide-me">関数内で処理した結果を呼び出す側に戻す値</span></p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>変数の有効範囲</h2>
+            </div>
+            <div class="details">
+                <ul>
+                    <li><strong class="term">グローバル変数</strong>：<span class="hide-me">関数の外側で宣言した変数 有効範囲はプログラム全体</span></li>
+                    <li><strong class="term">ローカル変数</strong>：<span class="hide-me">関数内で宣言した変数 有効範囲はその関数の内側のみ</span></li>
+                    <p>関数の仮引数も<span class="hide-me">ローカル変数</span>になる</p>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>プログラミング＿探索のプログラム</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３４　探索のプログラム</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>線形探索</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">探索</strong>：<span class="hide-me">配列などから目的の値を見つけること</span></p>
+                <p><strong class="term">線形探索</strong>：<span class="hide-me">端から順に目的の値である探索値を探し出すアルゴリズム</span></p>
+                
+            </div>
+        </section>
+        
+        <section class="topic">
+            <div class="topic-header">
+                <h2>二分探索</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">二分探索</strong>：<span class="hide-me">データが昇順または降順に整列されている配列に対して、探索範囲を半分に狭めることを繰り返して探索値を絞り込んでいくアルゴリズム</span></p>
+                
+                <p>
+                        探索範囲を半分に狭めるには、まず<span class="hide-me">探索範囲の中央にある値(中央値)</span>と<span class="hide-me">探索値</span>を比較する。
+                        データは整列されているため、探索値が中央値より<span class="hide-me">小さい</span>場合は中央値から<span class="hide-me">大きい</span>部分を除外する。
+                        また、探索値が中央値より<span class="hide-me">大きい</span>場合は中央値から<span class="hide-me">小さい</span>部分を除外する。
+                        これを繰り返していき、探索値の候補を絞り込んでいく。
+                </p>
+                <p>＜例＞下の配列で「46」を探索値とすると、次のような処理を行う</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>a[0]</th><th>a[1]</th><th>a[2]</th><th>a[3]</th><th>a[4]</th><th>a[5]</th><th>a[6]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>>25</td><td>38</td><td>46</td><td>57</td><td>66</td><td>71</td><td>88</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul>
+                    <li>
+                        <strong>手順1：</strong>
+                        探索範囲の下限の添字は0、上限の添字は6である。
+                        下限の添字である0と上限の添字の6の<span class="hide-me">平均値である3</span>を中央値の添字とする。
+                        したがって中央値はa[3]の57になる。57は探索値ではない。
+                    </li>
+                    <li>
+                        <strong>手順2：</strong>
+                        探索値46＜中央値57なので、探索値は左半分にあるため、新たな上限の添字を中央値の添字の3より1つ減らして2にする。
+                        また、下限の添字は0で変わらないため、新たな探索範囲は<span class="hide-me">a[0]～a[2]</span>になる。
+                        下限の添字の0と上限の添字の2の<span class="hide-me">平均値1</span>を中央値の添字とする。
+                        したがって中央値はa[1]の38になる。38は探索値ではない。
+                    </li>
+                    <li>
+                        <strong>手順3：</strong>
+                        中央値38＜探索値46なので、探索値は右半分にあるため、新たな下限の添字を中央値の1より1つ増やして2にする。
+                        また、上限の添字は2で変わらないため、下限の添字の2と上限の添字の2の<span class="hide-me">平均値2</span>を中央値の添字とする。
+                        中央値は、<span class="hide-me">a[2]の46</span>となり、探索値を見つけることができた。
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>探索回数の比較</h2>
+            </div>
+            <div class="details">
+                <p>
+                    データ数がnの場合、線形探索では、最小探索回数は<span class="hide-me">1</span>回、最大探索回数は<span class="hide-me">n</span>回、したがって平均探索回数は<span class="hide-me">(n+1)/2</span>回になる。
+                    <br>一方、二分探索では<span class="hide-me">n=2^x</span>のようにデータ数nが2の自然数乗で表現できる場合、最後に探索データが見つかるとすると、
+                    探索するたびに探索範囲のデータ数は、2^x,2^(x-1),…,2^1,2^0と毎回半分ずつ減っていくため、最大探索回数は<span class="hide-me">(x+1)</span>回となり、
+                    <span class="hide-me">(log₂n)+1</span>回と表すことができる。
+                    <br>また平均探索回数は、全体の半分を探索する回数であると考えられるため、最大探索回数の1つ前の<span class="hide-me">log₂n</span>回探索すると半分程度探索したことになり、これが平均探索回数になる。
+                    ただし、n=10のようにnが2の自然数乗で表現できない場合を考慮して、最小探索回数<span class="hide-me">1</span>、最大探索回数は<span class="hide-me">[log₂n]+1</span>回、平均探索回数は<span class="hide-me">[log₂n]</span>になる。
+                    <br>線形探索はデータを整列しなくても探索できるというメリットがあるが、二分探索ではデータが整列してあることが条件になる。
+                    しかし、データの数が膨大になった時、線形探索より早く探索できるというメリットがある。
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>探索の種類</th><th>最小探索回数</th><th>最大探索回数</th><th>平均探索回数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>線形探索</td><td><span class="hide-me">1</span></td><td><span class="hide-me">n</span></td><td><span class="hide-me">(n+1)/2</span></td>
+                            </tr>
+                            <tr>
+                                <td>二分探索</td><td><span class="hide-me">1</span></td><td><span class="hide-me">[log₂n]+1</span></td><td><span class="hide-me">[log₂n]</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

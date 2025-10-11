@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>演算子シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+        
+        .calculator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .calculator input, .calculator select {
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .calculator input {
+            width: 80px;
+        }
+        .calculator select {
+            font-weight: bold;
+        }
+        .equals {
+            font-size: 2em;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+        
+        .result-panel {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .result-panel .label {
+            font-size: 1em;
+            color: #95a5a6;
+        }
+        .result-panel #result-output {
+            font-size: 2.5em;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 48px;
+            color: #2ecc71; /* true/false が見やすいように色を変更 */
+        }
+        
+        #explanation-area {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            min-height: 40px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>演算子シミュレーター</h1>
+    
+    <div class="calculator">
+        <input type="number" id="num1" value="10">
+        <select id="operator-select">
+            <optgroup label="算術演算子">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+                <option value="%">%</option>
+            </optgroup>
+            <optgroup label="比較演算子">
+                <option value="==">==</option>
+                <option value="!=">!=</option>
+                <option value=">">&gt;</option>
+                <option value="<">&lt;</option>
+                <option value=">=">&gt;=</option>
+                <option value="<=">&lt;=</option>
+            </optgroup>
+        </select>
+        <input type="number" id="num2" value="3">
+        <span class="equals">=</span>
+    </div>
+
+    <div class="result-panel">
+        <div class="label">結果</div>
+        <div id="result-output"></div>
+    </div>
+    
+    <div id="explanation-area"></div>
+
+    <a href="word6_31.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const num1Input = document.getElementById('num1');
+    const num2Input = document.getElementById('num2');
+    const operatorSelect = document.getElementById('operator-select');
+    const resultOutput = document.getElementById('result-output');
+    const explanationArea = document.getElementById('explanation-area');
+
+    // ▼▼▼【変更点2】説明文を追加 ▼▼▼
+    const explanations = {
+        '+': '`+` は、左右の数値を足し算します。',
+        '-': '`-` は、左の数値から右の数値を引き算します。',
+        '*': '`*` は、左右の数値を掛け算します。',
+        '/': '`/` は、左の数値を右の数値で割り算します。',
+        '%': '`%` は、左の数値を右の数値で割ったときの「余り」を計算します。',
+        '==': '`==` は、左右の値が等しい場合に true (真) を返します。',
+        '!=': '`!=` は、左右の値が等しくない場合に true (真) を返します。',
+        '>': '`>` は、左の値が右の値より大きい場合に true (真) を返します。',
+        '<': '`<` は、左の値が右の値より小さい場合に true (真) を返します。',
+        '>=': '`>=` は、左の値が右の値以上の場合に true (真) を返します。',
+        '<=': '`<=` は、左の値が右の値以下の場合に true (真) を返します。'
+    };
+
+    function calculate() {
+        const num1 = parseFloat(num1Input.value);
+        const num2 = parseFloat(num2Input.value);
+        const operator = operatorSelect.value;
+        let result;
+
+        if (isNaN(num1) || isNaN(num2)) {
+            resultOutput.textContent = '...';
+            return;
+        }
+
+        // ▼▼▼【変更点3】比較演算子の計算処理を追加 ▼▼▼
+        switch(operator) {
+            case '+': result = num1 + num2; break;
+            case '-': result = num1 - num2; break;
+            case '*': result = num1 * num2; break;
+            case '/':
+                result = (num2 === 0) ? 'エラー' : num1 / num2;
+                break;
+            case '%':
+                result = (num2 === 0) ? 'エラー' : num1 % num2;
+                break;
+            case '==': result = num1 == num2; break;
+            case '!=': result = num1 != num2; break;
+            case '>':  result = num1 > num2; break;
+            case '<':  result = num1 < num2; break;
+            case '>=': result = num1 >= num2; break;
+            case '<=': result = num1 <= num2; break;
+        }
+        
+        if (typeof result === 'number' && !Number.isInteger(result)) {
+            result = result.toFixed(2);
+        }
+
+        resultOutput.textContent = result;
+        explanationArea.textContent = explanations[operator];
+    }
+
+    // イベントリスナー
+    num1Input.addEventListener('input', calculate);
+    num2Input.addEventListener('input', calculate);
+    operatorSelect.addEventListener('change', calculate);
+
+    // 初期表示
+    calculate();
+});
+</script>
+</body>
+</html>

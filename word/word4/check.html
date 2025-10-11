@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>チェックディジット（パリティチェック）体験</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8; color: #333; font-size: 16px;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff; padding: 30px; border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 90%; max-width: 700px;
+        }
+        h1, h2 { color: #2c3e50; text-align: center; }
+        p { line-height: 1.7; color: #555; }
+
+        .panel {
+            background-color: #fafafa; border: 1px solid #e6ebf1;
+            padding: 20px; border-radius: 8px; margin-top: 25px;
+        }
+
+        .input-group label { font-weight: bold; display: block; margin-bottom: 10px; }
+        #binary-input {
+            width: 100%; font-family: 'Courier New', monospace; font-size: 1.8em;
+            padding: 10px; border: 1px solid #ccc; border-radius: 5px; text-align: center;
+            letter-spacing: 2px; box-sizing: border-box;
+        }
+
+        .parity-selector { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .parity-selector label {
+            padding: 10px 20px; border: 2px solid #ecf0f1; border-radius: 8px;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .parity-selector input[type="radio"] { display: none; }
+        .parity-selector input[type="radio"]:checked + label {
+            background-color: #3498db; color: white; border-color: #3498db;
+        }
+
+        .result-display {
+            margin-top: 20px; font-size: 1.8em; font-family: 'Courier New', monospace;
+            text-align: center; letter-spacing: 2px;
+        }
+        .check-digit {
+            color: #e74c3c; font-weight: bold; padding: 2px 5px;
+            background-color: #fcebea; border-radius: 4px;
+        }
+
+        /* ▼▼▼【変更点1】説明エリア用のスタイルを追加・調整 ▼▼▼ */
+        .explanation-area {
+            margin-top: 15px; padding: 10px; background-color: #ecf0f1;
+            border-radius: 5px; min-height: 40px; text-align: center; line-height: 1.5;
+        }
+
+        .error-simulation-bits { display: flex; justify-content: center; gap: 5px; margin-top: 10px; }
+        .sim-bit {
+            width: 35px; height: 35px; display: flex; justify-content: center; align-items: center;
+            border: 1px solid #bdc3c7; border-radius: 5px; cursor: pointer;
+            font-size: 1.2em; font-family: 'Courier New', monospace; user-select: none;
+        }
+        .sim-bit.flipped { background-color: #f39c12; color: white; }
+        #check-button {
+            display: block; width: 100%; padding: 12px; margin-top: 15px;
+            font-size: 1.1em; border: none; border-radius: 5px; color: white;
+            background-color: #27ae60; cursor: pointer;
+        }
+        #error-result {
+            margin-top: 15px; text-align: center; font-size: 1.2em; font-weight: bold;
+        }
+        .ok { color: #27ae60; }
+        .error { color: #e74c3c; }
+
+
+        .return-button, .return {
+            position: fixed; bottom: 20px; padding: 12px 25px;
+            background-color: #5a6268; color: #fff; text-decoration: none;
+            border-radius: 50px; font-weight: bold; z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .return-button { right: 20px; }
+        .return { left:15px; }
+        .return-button:hover, .return:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>チェックディジット体験</h1>
+    <p>
+        データが正しく送られたかを確認するために付与される検査用の数字が**チェックディジット**です。ここでは、二進数の「1」の数をもとにチェックディジット（パリティビット）を計算します。
+    </p>
+
+    <div class="panel">
+        <div class="input-group">
+            <label for="binary-input">7ビットの二進数を入力してください</label>
+            <input type="text" id="binary-input" maxlength="7" value="1011001">
+        </div>
+        <div class="parity-selector">
+            <input type="radio" id="even" name="parity" value="even" checked>
+            <label for="even">偶数パリティ</label>
+            
+            <input type="radio" id="odd" name="parity" value="odd">
+            <label for="odd">奇数パリティ</label>
+        </div>
+        <div class="result-display">
+            <span id="original-data"></span><span class="check-digit" id="check-digit"></span>
+        </div>
+        <div class="explanation-area" id="calc-explanation"></div>
+    </div>
+
+    <div class="panel">
+        <h2>エラー検出を体験</h2>
+        <p>完成した8ビットの数字をクリックすると、そのビットを反転させて擬似的にエラーを発生させられます。「検査」ボタンでエラーを検出できるか試してみましょう。</p>
+        <div class="error-simulation-bits" id="error-sim-bits"></div>
+        <button id="check-button">検査</button>
+        <div id="error-result"></div>
+        <div class="explanation-area" id="check-explanation" style="display: none;"></div>
+    </div>
+
+    <a href="word4_24.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter4.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script>
+// ▼▼▼【変更点4】JavaScript全体を修正 ▼▼▼
+document.addEventListener('DOMContentLoaded', () => {
+    const binaryInput = document.getElementById('binary-input');
+    const paritySelector = document.querySelector('.parity-selector');
+    const originalDataSpan = document.getElementById('original-data');
+    const checkDigitSpan = document.getElementById('check-digit');
+    const calcExplanation = document.getElementById('calc-explanation');
+    const errorSimBitsContainer = document.getElementById('error-sim-bits');
+    const checkButton = document.getElementById('check-button');
+    const errorResult = document.getElementById('error-result');
+    const checkExplanation = document.getElementById('check-explanation');
+
+    function calculateAndDisplay() {
+        let data = binaryInput.value.replace(/[^01]/g, '');
+        if (data.length > 7) data = data.substring(0, 7);
+        binaryInput.value = data;
+
+        const parityType = document.querySelector('input[name="parity"]:checked').value;
+        const onesCount = (data.match(/1/g) || []).length;
+        let checkDigit = 0;
+        let explanation = '';
+
+        if (parityType === 'even') {
+            // 偶数パリティ
+            if (onesCount % 2 === 0) {
+                checkDigit = 0;
+                explanation = `データ内の「1」の数は ${onesCount}個（偶数）です。全体の「1」の数を偶数にするため、チェックディジットは <strong>0</strong> になります。`;
+            } else {
+                checkDigit = 1;
+                explanation = `データ内の「1」の数は ${onesCount}個（奇数）です。全体の「1」の数を偶数にするため、チェックディジットは <strong>1</strong> になります。`;
+            }
+        } else {
+            // 奇数パリティ
+            if (onesCount % 2 === 0) {
+                checkDigit = 1;
+                explanation = `データ内の「1」の数は ${onesCount}個（偶数）です。全体の「1」の数を奇数にするため、チェックディジットは <strong>1</strong> になります。`;
+            } else {
+                checkDigit = 0;
+                explanation = `データ内の「1」の数は ${onesCount}個（奇数）です。全体の「1」の数を奇数にするため、チェックディジットは <strong>0</strong> になります。`;
+            }
+        }
+
+        originalDataSpan.textContent = data;
+        checkDigitSpan.textContent = checkDigit;
+        calcExplanation.innerHTML = explanation;
+        
+        renderErrorSimulator(data + checkDigit);
+        errorResult.innerHTML = '';
+        checkExplanation.style.display = 'none';
+    }
+    
+    function renderErrorSimulator(fullData) {
+        errorSimBitsContainer.innerHTML = '';
+        for (let i = 0; i < fullData.length; i++) {
+            const bitSpan = document.createElement('span');
+            bitSpan.className = 'sim-bit';
+            bitSpan.textContent = fullData[i];
+            bitSpan.addEventListener('click', () => {
+                bitSpan.textContent = (bitSpan.textContent === '0') ? '1' : '0';
+                bitSpan.classList.toggle('flipped');
+                errorResult.innerHTML = '';
+                checkExplanation.style.display = 'none';
+            });
+            errorSimBitsContainer.appendChild(bitSpan);
+        }
+    }
+    
+    function checkParity() {
+        const simBits = document.querySelectorAll('.sim-bit');
+        let currentData = '';
+        simBits.forEach(bit => { currentData += bit.textContent; });
+
+        const parityType = document.querySelector('input[name="parity"]:checked').value;
+        const onesCount = (currentData.match(/1/g) || []).length;
+
+        let isOk = false;
+        let explanation = '';
+
+        if (parityType === 'even') {
+            isOk = (onesCount % 2 === 0);
+            if (isOk) {
+                explanation = `全体の「1」の数が ${onesCount}個（偶数）なので、偶数パリティのルールに合っています。`;
+            } else {
+                explanation = `全体の「1」の数が ${onesCount}個（奇数）なので、偶数パリティのルールに反しています。`;
+            }
+        } else {
+            isOk = (onesCount % 2 !== 0);
+            if (isOk) {
+                explanation = `全体の「1」の数が ${onesCount}個（奇数）なので、奇数パリティのルールに合っています。`;
+            } else {
+                explanation = `全体の「1」の数が ${onesCount}個（偶数）なので、奇数パリティのルールに反しています。`;
+            }
+        }
+        
+        if (isOk) {
+            errorResult.innerHTML = '<span class="ok">OK! エラーは検出されませんでした。</span>';
+        } else {
+            errorResult.innerHTML = '<span class="error">エラー検出！ データが壊れています。</span>';
+        }
+        
+        checkExplanation.textContent = explanation;
+        checkExplanation.style.display = 'block';
+    }
+
+    binaryInput.addEventListener('input', calculateAndDisplay);
+    paritySelector.addEventListener('change', calculateAndDisplay);
+    checkButton.addEventListener('click', checkParity);
+
+    calculateAndDisplay();
+});
+</script>
+
+</body>
+</html>

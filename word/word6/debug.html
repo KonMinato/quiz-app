@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>デバッグ体験シミュレーター</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8; color: #333; font-size: 16px;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff; padding: 30px; border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 90%; max-width: 800px;
+        }
+        h1 { color: #2c3e50; text-align: center; }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #dce4ec;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            flex: 1;
+            text-align: center;
+        }
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        
+        .challenge-box {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .goal {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #3498db;
+            font-size: 1.1em;
+            margin: 0 0 20px 0;
+        }
+        textarea.code-editor {
+            width: 100%;
+            height: 150px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .controls button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        #run-btn { background-color: #2ecc71; flex-grow: 1; }
+        #hint-btn { background-color: #f39c12; }
+        #next-q-btn { background-color: #9b59b6; }
+
+        .output-console {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 80px;
+            white-space: pre-wrap;
+        }
+        .output-console.error { color: #ffa7a7; }
+        .output-console.success { color: #a7ffb8; }
+        
+        .hint-box {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fffde7;
+            border: 1px solid #fbc02d;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .return-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return-button:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+
+        .return {
+            position: fixed;
+            bottom: 20px;
+            left:15px;
+            padding: 12px 25px;
+            background-color: #5a6268; /* Gray */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .return:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            background-color: #494e53; /* Darker gray */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>デバッグ体験シミュレーター</h1>
+
+    <div class="tabs">
+        <div class="tab active" data-type="syntax">構文エラー</div>
+        <div class="tab" data-type="runtime">実行時エラー</div>
+        <div class="tab" data-type="logical">論理エラー</div>
+    </div>
+
+    <div class="challenge-box">
+        <p class="goal" id="challenge-goal"></p>
+        <textarea class="code-editor" id="code-editor"></textarea>
+        <div class="controls">
+            <button id="run-btn">実行</button>
+            <button id="hint-btn">ヒントを見る</button>
+            <button id="next-q-btn">別の問題</button>
+        </div>
+        <p id="status-text" style="text-align: center; font-weight: bold; min-height: 24px;"></p>
+        <div class="output-console" id="output-console"></div>
+        <div class="hint-box" id="hint-box"></div>
+    </div>
+
+    <a href="word6_30.html" class="return">説明ページへ戻る</a>
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+</div>
+
+<script src="debug.js"></script>
+</body>
+</html>

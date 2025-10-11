@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="word6.css">
+    <title>プログラミング＿探索のプログラム</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">３４　探索のプログラム</h1>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>線形探索</h2>
+            </div>
+            <div class="details">
+                <p>探索：配列などから目的の値を見つけること</p>
+                <p>線形探索：端から順に目的の値である探索値を探し出すアルゴリズム</p>
+                
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題1：線形探索のプログラム</h2>
+            </div>
+            <div class="details">
+                <h3>5個の整数「57,16,99,10,45」の中から線形探索で探索値を探し、最初に見つかった場所を表示するプログラムを作成しなさい。</h3>
+                <p style="color: red;">解答例</p>
+                <p>
+                    ①　a=[57,16,99,10,45]; n=len(a)
+                    <br>②　print('番号','　','データ')
+                    <br>③　for i in range(0,n,1):
+                    <br>④　　print(i,'　　　',a[i])
+                    <br>⑤　print('')
+                    <br>⑥　s=int(input('探索値の入力'))
+                    <br>⑦　for i in range(0,n,1): 
+                    <br>⑧　　if a[i] == s:
+                    <br>⑨　　　print(s,'は',i,\'番目に存在します')
+                    <br>⑩　　　break
+                </p>
+                <p>
+                    ②　「号」と「デ」の間の「'　'」の空白は1文字分の半角スペース
+                    <br>④　「'　　　'」の空白は3文字分の全角スペース
+                    <br>⑥　探索値を入力しsに代入
+                    <br>⑧～⑩　a[i]=sならば一致、場所を表示してループを抜ける
+                </p>
+                <p>
+                    番号　データ → 探索地の入力10 → 10 は 3 番目に存在します
+                    <br>0　57
+                    <br>1　16
+                    <br>2　99
+                    <br>3　10
+                    <br>4　45
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>繰り返す回数は配列aの要素数のnである。ループを抜ける条件は、繰り返す回数よりiが大きい時であるが、回数は1から数えるのに対して、
+                    配列は0から数えるのでnの値をそのまま使っている。探索値が見つかった場合は、以後の処理は不要なので、⑩行目の「break」により反復処理を抜ける。
+                </p>
+            </div>
+        </section>
+        
+        <section class="topic">
+            <div class="topic-header">
+                <h2>二分探索</h2>
+            </div>
+            <div class="details">
+                <p>二分探索：データが昇順または降順に整列されている配列に対して、探索範囲を半分に狭めることを繰り返して探索値を絞り込んでいくアルゴリズム</p>
+                
+                <p>
+                    探索範囲を半分に狭めるには、まず探索範囲の中央にある値(中央値)と探索値を比較する。
+                    データは整列されているため、探索値が中央値より小さい場合は中央値から大きい部分を除外する。
+                    また、探索値が中央値より大きい場合は中央値から小さい部分を除外する。
+                    これを繰り返していき、探索値の候補を絞り込んでいく。
+                </p>
+                <p>＜例＞下の配列で「46」を探索値とすると、次のような処理を行う</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>a[0]</th><th>a[1]</th><th>a[2]</th><th>a[3]</th><th>a[4]</th><th>a[5]</th><th>a[6]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>25</td><td>38</td><td>46</td><td>57</td><td>66</td><td>71</td><td>88</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul>
+                    <li>
+                        手順1：探索範囲の下限の添字は0、上限の添字は6である。
+                        下限の添字である0と上限の添字の6の平均値である3を中央値の添字とする。
+                        したがって中央値はa[3]の57になる。57は探索値ではない。
+                    </li>
+                    <li>
+                        手順2：探索値46＜中央値57なので、探索値は左半分にあるため、新たな上限の添字を中央値の添字の3より1つ減らして2にする。
+                        また、下限の添字は0で変わらないため、新たな探索範囲はa[0]～a[2]になる。
+                        下限の添字の0と上限の添字の2の平均値1を中央値の添字とする。
+                        したがって中央値はa[1]の38になる。38は探索値ではない。
+                    </li>
+                    <li>
+                        手順3：中央値38＜探索値46なので、探索値は右半分にあるため、新たな下限の添字を中央値の1より1つ増やして2にする。
+                        また、上限の添字は2で変わらないため、下限の添字の2と上限の添字の2の平均値2を中央値の添字とする。
+                        中央値は、a[2]の46となり、探索値を見つけることができた。
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題2：二分探索のプログラム</h2>
+                <h3>昇順(小さい順)で整列された5個の整数「10,16,45,57,99」の中から、二分探索で探索値「57」を探し、最初に見つかった場所を表示するプログラムを作成しなさい。</h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>変数i,j,mを以下のように定める。
+                    <br>i:下限の添字、j:上限の添字、m:中央値の添字
+                </p>
+                <p>
+                    ①　a=[10,,16,45,57,99]; n=len(a)
+                    <br>②　print('番号','　','データ')
+                    <br>③　for i in range(0,n,1):
+                    <br>④　　print(i,'　　　',a[i])
+                    <br>⑤　print('')
+                    <br>⑥　s=int(input('探索値の入力 '))
+                    <br>⑦　i=0; j=n-1
+                    <br>⑧　while i<=j:
+                    <br>⑨　　m=int((i+j)/2)
+                    <br>⑩　　if a[m] == s:
+                    <br>⑪　　　print(s , 'は' , m , '番目に存在')
+                    <br>⑫　　　break
+                    <br>⑬　　if a[m] > s:
+                    <br>⑭　　　j = m - 1
+                    <br>⑮　　else:
+                    <br>⑯　　　i = m + 1
+                </p>
+                <p>
+                    ①　配列aに昇順で設定
+                    <br>⑧　i≦jの間、繰り返し
+                    <br>⑨　(i+j)÷2の値の小数点以下を切り捨ててmに代入
+                    <br>⑩～⑫　a[m]とsが一致したら一致場所を表示してループを抜ける
+                    <br>⑬,⑭　中央値＞探索値なら上限の添え字j←中央値の添字m-1
+                    <br>⑮,⑯　中央値≦探索値なら下限の添字i←中央値の添字m+1
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>初期設定として、⑦行目で下限の添字iを0に、上限の添字jをn-1(=4)に設定し、⑧行目の条件「i≦j」が真の間、While内の処理を繰り返す。
+                    ⑭行目と⑯でiとjを変化させて、条件が偽になるとループを抜け出す。なおこのプログラムでは、探索値が重複して存在している時、そのうちのどの場所を表示するかは不定である。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>探索回数の比較</h2>
+            </div>
+            <div class="details">
+                <p>
+                    データ数がnの場合、線形探索では、最小探索回数は1回、最大探索回数はn回、したがって平均探索回数は(n+1)/2回になる。
+                    <br>一方、二分探索ではn=2^xのようにデータ数nが2の自然数乗で表現できる場合、最後に探索データが見つかるとすると、
+                    探索するたびに探索範囲のデータ数は、2^x,2^(x-1),…,2^1,2^0と毎回半分ずつ減っていくため、最大探索回数は(x+1)回となり、
+                    (log₂n)+1回と表すことができる。
+                    <br>また平均探索回数は、全体の半分を探索する回数であると考えられるため、最大探索回数の1つ前のlog₂n回探索すると半分程度探索したことになり、これが平均探索回数になる。
+                    ただし、n=10のようにnが2の自然数乗で表現できない場合を考慮して、最小探索回数1、最大探索回数は[log₂n]+1回、平均探索回数は[log₂n]になる。
+                    <br>線形探索はデータを整列しなくても探索できるというメリットがあるが、二分探索ではデータが整列してあることが条件になる。
+                    しかし、データの数が膨大になった時、線形探索より早く探索できるというメリットがある。
+                </p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>探索の種類</th><th>最小探索回数</th><th>最大探索回数</th><th>平均探索回数</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>線形探索</td><td>1</td><td>n</td><td>(n+1)/2</td>
+                            </tr>
+                            <tr>
+                                <td>二分探索</td><td>1</td><td>[log₂n]+1</td><td>[log₂n]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>例題3：最大探索回数と平均探索回数</h2>
+                <h3>データ数が10の時、線形探索と二分探索のそれぞれの場合で、平均探索回数と最大探索回数を求めなさい。</h3>
+            </div>
+            <div class="details">
+                
+                <p style="color: red;">解答例</p>
+                <p>n=10の場合に、線形探索では、最大探索回数は10回、平均探索解すは(10+1)/2=5.5回になる。二分探索では、最大探索回数は、
+                    [log₂n]+1=[log₂10]+1=[3.32…]+1=3+1=4回になり、平均探索回数は3回になる。
+                </p>
+                <p  style="color: blue;">考察</p>
+                <p>それぞれの最大探索回数は、線形探索はデータ数に比例して探索回数も増え、二分探索は線形探索に比べてそれほど増えない。</p>
+            </div>
+        </section>
+        <div class="show-button-container">
+            <a href="search.html" class="show-button">探索アルゴリズムを確認する</a>
+        </div>
+    </div>
+
+    <a href="../../../chapter6.html" class="return-button">章の目次へ戻る</a>
+    <script src="../word.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const questionForm = document.getElementById('questionForm');
+    const chapterSelect = document.getElementById('chapter');
+    const tangenSelect = document.getElementById('tangen');
+    const countSelect = document.getElementById('count');
+    const generateButton = document.getElementById('generateButton');
+    const outputArea = document.getElementById('outputArea');
+    const statusMessage = document.getElementById('statusMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const tangendata = {
+        programing: ["30 アルゴリズムとプログラミング", "31 プログラミングの基本", "32 配列", "33 関数", "34 探索のプログラム","35 整列のプログラム"],
+        problem: ["25 データの収集と整理", "26 ソフトウェアを利用したデータの処理", "27 統計量とデータの尺度", "28 時系列分析と回帰分析", "29 モデル化とシミュレーション"]
+    };
+
+    chapterSelect.addEventListener('change', function() {
+        const selectedChapter = this.value;
+
+        tangenSelect.innerHTML = '<option value="">単元を選択してください</option>';
+
+        if (selectedChapter) {
+            tangenSelect.disabled = false;
+            const tangen = tangendata[selectedChapter];
+
+            tangen.forEach(tangen => {
+                const option = document.createElement('option');
+                option.value = tangen;
+                option.textContent = tangen;
+                tangenSelect.appendChild(option);
+            });
+        } else {
+            tangenSelect.disabled = true;
+            tangenSelect.innerHTML = '<option value="">単元を選択してください</option>';
+        }
+    });
+
+    questionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const chapter = chapterSelect.value;
+        const tangen = tangenSelect.value;
+        const count = countSelect.value;
+
+        if (!chapter || !tangen || !count) {
+            errorMessage.textContent = '章、単元、問題数をすべて選択してください。';
+            statusMessage.textContent = '';
+            return;
+        }
+
+        statusMessage.textContent = '問題生成中……しばらくお待ちください。AIの応答には時間がかかる場合があります。';
+        errorMessage.textContent = '';
+        outputArea.innerHTML = '<p class="placeholder-text">AIが問題を生成しています……</p>';
+        generateButton.disabled = true;
+
+        try {
+            // Gemini APIに送るための具体的なプロンプト文字列を構築
+            const promptText = `情報Ⅰの${chapter}章、${tangen}単元に関する問題を${count}問作成してください。
+
+            以下の要件を厳守し、必ず指定されたJSON形式の配列で出力してください。
+            - 各問題は、問題文(question)、正解(correctAnswer)、不正解の選択肢3つを格納した配列(distractors)、そして解説(explanation)を含むJSONオブジェクトとします。
+            - 問題文(question)には、必要であれば穴埋め問題にできるよう重要語句を @@ で囲んでください。
+            - 全体を一つの配列 [] で囲み、それ以外の余計なテキストは一切含めないでください。
+
+            JSONフォーマットの例:
+            [
+            {
+                "question": "コンピュータの五大装置は、入力装置、出力装置、記憶装置、演算装置、そして@@制御装置@@です。",
+                "correctAnswer": "制御装置",
+                "distractors": ["補助記憶装置", "電源装置", "マザーボード"],
+                "explanation": "制御装置は、他の装置の動作を制御する中心的な役割を果たします。"
+            },
+            {
+                "question": "インターネット上でコンピュータを識別するための番号は@@IPアドレス@@と呼ばれます。",
+                "correctAnswer": "IPアドレス",
+                "distractors": ["MACアドレス", "URL", "ドメイン名"],
+                "explanation": "IPアドレスは、ネットワーク上の各デバイスに割り当てられる一意の識別子です。"
+            }
+            ]`;
+
+            const generatedJsonString=await fetchFromProxy(promptText);
+
+            //AIの応答がJSON形式でない場合のエラー処理
+            let questionsData;
+            try{
+                // AIの応答からJSON配列部分だけを抽出する
+                const startIndex = generatedJsonString.indexOf('[');
+                const endIndex = generatedJsonString.lastIndexOf(']');
+
+                if (startIndex === -1 || endIndex === -1) {
+                    // 応答に '[' または ']' が見つからない場合
+                    throw new Error("AIの応答から有効なJSON配列を見つけられませんでした。");
+                }
+
+                // '[' から ']' までの部分文字列を抜き出す
+                const jsonString = generatedJsonString.substring(startIndex, endIndex + 1);
+                
+                // 抜き出した文字列をJSONとして解析
+                questionsData = JSON.parse(jsonString);
+            } catch (parseError){
+                console.error("JSONの解析に失敗:",generatedJsonString);
+                throw new Error("AIから予期しない形式の応答がありました。もう一度お試しください。");
+            }
+            //問題表示エリアをクリア
+            outputArea.innerHTML='';
+            //問題データをもとにHTMLを動的生成
+            questionsData.forEach((q,index)=>{
+                //1.選択肢をシャッフル
+                const choices=[q.correctAnswer, ...q.distractors].sort(()=>Math.random()-0.5);
+                //2.各問題を囲むブロックを生成
+                const questionBlock=document.createElement('div');
+                questionBlock.className='question-block';
+                //正解と解説をdata属性として埋め込む
+                questionBlock.dataset.correctAnswer=q.correctAnswer;
+                questionBlock.dataset.explanation=q.explanation;
+                //3.問題文を作成(穴埋め処理もここで行う)
+                const questionText=q.question.replace(/@@(.*?)@@/g,'(　)');
+                questionBlock.innerHTML+=`<p class="question-text"><b>問題 ${index + 1}:</b> ${questionText}</p>`;
+                //4.選択肢のフォームを作成
+                const choicesHtml=choices.map(choice=>`
+                    <label>
+                        <input type="radio" name="question-${index}" value="${choice}">
+                        ${choice}
+                    </label>
+                `).join('');
+                questionBlock.innerHTML+=`<div class="choices">${choicesHtml}</div>`;
+                //5.結果表示用のエリアを作成
+                questionBlock.innerHTML+=`<div class="result-area"></div>`;
+                //6.全体をoutputAreaに追加
+                outputArea.appendChild(questionBlock);
+            });
+            // 全ての問題の後に「解答する」ボタンを追加
+        if (questionsData.length > 0) {
+            const submitButton = document.createElement('button');
+            submitButton.id = 'submitAnswersBtn';
+            submitButton.textContent = '解答する';
+            outputArea.appendChild(submitButton);
+
+            // ボタンに正誤判定イベントを追加
+            submitButton.addEventListener('click', () => {
+                const allQuestionBlocks = document.querySelectorAll('.question-block');
+                let correctCount = 0;
+
+                allQuestionBlocks.forEach((block, index) => {
+                    const resultArea = block.querySelector('.result-area');
+                    const selectedRadio = block.querySelector(`input[name="question-${index}"]:checked`);
+                    const userAnswer = selectedRadio ? selectedRadio.value : null;
+                    const correctAnswer = block.dataset.correctAnswer;
+                    const explanation = block.dataset.explanation;
+
+                    if (userAnswer === correctAnswer) {
+                        resultArea.innerHTML = `<p class="correct">正解！</p><p class="explanation">${explanation}</p>`;
+                        correctCount++;
+                    } else {
+                        resultArea.innerHTML = `<p class="incorrect">不正解... 正しい答えは「<b>${correctAnswer}</b>」です。</p><p class="explanation">${explanation}</p>`;
+                    }
+                });
+
+                // ボタンを無効化し、総合結果を表示
+                submitButton.disabled = true;
+                const finalResult = document.createElement('h3');
+                finalResult.className = 'final-result';
+                finalResult.textContent = `結果: ${allQuestionBlocks.length}問中 ${correctCount}問正解`;
+                outputArea.appendChild(finalResult);
+            });
+        }
+
+        statusMessage.textContent = '問題の準備ができました。解答してください。';
+
+        } catch (error) {
+            console.error('問題生成エラー:', error);
+            errorMessage.textContent = `問題の生成中にエラーが発生しました: ${error.message}`;
+            outputArea.innerHTML = '<p class="placeholder-text">問題の生成に失敗しました。</p>';
+            statusMessage.textContent = '';
+        } finally {
+            generateButton.disabled = false;
+        }
+    });
+});
+
+// fetchFromProxy 関数: プロキシサーバーにリクエストを送信
+// この関数は、プロキシサーバーがGeminiからのテキスト応答を直接返すと仮定します。
+async function fetchFromProxy(promptString) {
+    const proxyUrl = 'http://localhost:3000/api/gemini'; 
+
+    const response = await fetch(proxyUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: promptString }) 
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`サーバーエラー: ${response.status} - ${errorData.error || response.statusText}`);
+    }
+
+    // プロキシサーバーが直接テキストを返しているため、ここではそのままJSONとしてパースして返す
+    // server.jsがres.json(string)の場合、これは文字列としてパースされる
+    const result = await response.json(); 
+    return result; 
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML/CSS ビルダー体験</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="htmlcss.css">
+</head>
+<body>
+<header><h1>HTML/CSS ビルダー体験</h1></header>
+<div class="container">
+    <div class="editor-panel">
+        <h2>HTML要素を追加</h2>
+        <div class="builder">
+            <div class="builder-row">
+                <label for="html-tag-select">要素のタグ</label>
+                <select id="html-tag-select">
+                    <option value="h1">h1 (大見出し)</option>
+                    <option value="p">p (段落)</option>
+                    <option value="img">img (画像)</option>
+                    <option value="a">a (リンク)</option>
+                    <option value="table">table (表 2x2)</option>
+                    <option value="br">br (改行)</option>
+                    <option value="div">div (まとまり)</option>
+                    <option value="span">span (文字の範囲)</option>
+                </select>
+            </div>
+            <div class="builder-row" id="content-row">
+                <label for="html-content-input">表示する文字</label>
+                <input type="text" id="html-content-input" placeholder="例: こんにちは">
+            </div>
+            <div class="builder-row hidden" id="img-src-row">
+                <label for="html-img-src-input">画像URL</label>
+                <input type="text" id="html-img-src-input" placeholder="https://...">
+            </div>
+            <div class="builder-row hidden" id="img-alt-row">
+                <label for="html-img-alt-input">代替テキスト</label>
+                <input type="text" id="html-img-alt-input" placeholder="画像の説明">
+            </div>
+            <button id="add-html-element-btn">+ 要素を追加</button>
+        </div>
+        
+        <h2>CSSスタイルを適用</h2>
+        <div class="builder">
+            <div class="builder-row">
+                <label for="css-selector-select">スタイルの対象</label>
+                <select id="css-selector-select"></select>
+            </div>
+            <div class="builder-row">
+                <label for="css-property-select">スタイルの種類</label>
+                <select id="css-property-select"></select>
+            </div>
+            <div class="builder-row">
+                <label for="css-value-select">設定値</label>
+                <select id="css-value-select"></select>
+            </div>
+            <button id="apply-css-rule-btn">+ スタイルを適用</button>
+        </div>
+
+        <h2>生成されたコード</h2>
+        <div class="code-display" id="code-display"></div>
+    </div>
+    <div class="preview-panel">
+        <h2>プレビュー</h2>
+        <iframe id="preview-frame"></iframe>
+        
+        <div class="preview-actions">
+            <a href="word2_09.html" class="action-button">説明ページへ戻る</a>
+            <a href="../../../chapter2.html" class="action-button">章の目次へ戻る</a>
+        </div>
+    </div>
+</div>
+
+<script src="htmlcss.js"></script>
+</body>
+</html>

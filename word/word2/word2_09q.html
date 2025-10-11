@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../wordq.css">
+    <title>情報デザイン＿Webページと情報デザイン</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">０９　Webページと情報デザイン</h1>
+
+        <div class="controls">
+            <button id="hide-terms-button">単語だけ隠す</button>
+            <button id="hide-content-button">内容を隠す</button>
+            <button id="show-all-button">全て表示</button>
+        </div>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの特徴</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">Webページ</strong>：<span class="hide-me">ブラウザなどで表示されるデータのまとまり</span>で、<span class="hide-me">文字</span>や<span class="hide-me">図表</span>、<span class="hide-me">画像</span>、<span class="hide-me">音声</span>、<span class="hide-me">動画</span>、<span class="hide-me">プログラム</span>などさまざまな要素を
+                        組み合わせて構成することができる。
+                        <br>また、ブラウザさえあればコンピュータやタブレット、スマートフォンなどの端末やOSの種類などプラットフォームを選ばず
+                        表示させることができるため、今日ではインターネット上に膨大な情報がWebページとして蓄積されている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの公開</h2>
+            </div>
+            <div class="details">
+                <p>Webページをインターネットに公開するには、これまではパソコンなどで、テキストエディタやWebページ作成ソフトウェアなどを
+                        利用してWebページを作成し、ファイル転送ソフトウェアなどを使ってWebサーバに転送する方法が一般的であった。しかし、現在
+                        では、特別な知識を必要とせず、ブラウザ上でテキストや画像、レイアウト情報などを入力してサーバに送り、サーバ側でWebページを
+                        作成するシステムである<strong class="term">CMS</strong>が多く利用されている。CMSによって、スマートフォンなどを使ってどこからでも容易にWebページの更新
+                        が可能になった。個人で発信するWebページの一つであるブログも、CMSの一例である。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webサイトの設計</h2>
+            </div>
+            <div class="details">
+                <p><strong class="term">Webサイト</strong>：<span class="hide-me">同一の管理者が管理する複数のページで構成されたページの全体</span></p>
+                <p><span class="hide-me">Webサイトの入り口にあたるWebページ</span>を<strong class="term">トップページ</strong>といい、Webサイト内の各ページへハイパーリンクでつながれている。また、
+                        各ページは、表示されるイラストや写真などの画像や動画、音声など複数のファイルで構成されており、これらはWebサーバで管理されている。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの構成</h2>
+            </div>
+            <div class="details">
+                <p>Webページは、効果的に情報を提供するためにさまざまな工夫がされている。Webページの多くは、以下のような領域などで構成されている。</p>
+                <ul>
+                    <li><strong class="term">ヘッダ領域</strong>
+                        <p><span class="hide-me">一般的にはロゴやサイト名などを載せる。サイト内検索やお問い合わせページへのリンクを載せることもある。</span></p>
+                    </li>
+                    <li><strong class="term">ナビゲーション領域</strong>
+                        <p><span class="hide-me">Webサイト内でページ間移動できるようにメニューボタンを載せる。</span></p>
+                    </li>
+                    <li><strong class="term">メイン領域</strong>
+                        <p><span class="hide-me">Webページが表示されて最初に表示される部分(<strong class="term">ファーストビュー</strong>)。Webサイト訪問者を引き付けるイメージ画像やキャッチコピー、
+                                ページの内容を紹介するリード文などを載せる。
+                            </span></p>
+                    </li>
+                    <li><strong class="term">コンテンツ領域</strong>
+                        <p><span class="hide-me">Webページの主となる情報を載せる。見出しと内容をセットにして構成するとわかりやすい。</span></p>
+                    </li>
+                    <li><strong class="term">フッタ領域</strong>
+                        <p><span class="hide-me">一般的にはCopyrightや問い合わせ先などを載せる。</span></p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>HTMLの基礎</h2>
+            </div>
+            <div class="details">
+                <p>WebページはHTMLという言語で記述されている。これは、<span class="hide-me">表示する内容を文字の装飾やリンク、画像の挿入などの役割を表す</span><strong class="term">タグ</strong>と
+                        呼ばれる特殊な文字列で囲んで記述されている。
+                </p>
+                <p>おもなタグ</p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tbody><tr><td class="term">&lt;html&gt;～&lt;/html&gt;</td><td><span class="hide-me">HTML文書であることを宣言</span></td></tr>
+                        <tr><td class="term">&lt;head&gt;～&lt;/head&gt;</td><td><span class="hide-me">ヘッダ情報を示す</span></td></tr>
+                        <tr><td class="term">&lt;body&gt;～&lt;/body&gt;</td><td><span class="hide-me">文書の本体を示す</span></td></tr>
+                        <tr><td class="term">&lt;title&gt;～&lt;/title&gt;</td><td><span class="hide-me">タイトルを示す</span></td></tr>
+                        <tr><td class="term">&lt;hn&gt;～&lt;/hn&gt; (n=1~6)</td><td><span class="hide-me">見出し(数字が小さいほど文字は大きい)</span></td></tr>
+                        <tr><td class="term">&lt;br&gt;</td><td><span class="hide-me">改行</span></td></tr>
+                        <tr><td class="term">&lt;p&gt;～&lt;/p&gt;</td><td><span class="hide-me">段落</span></td></tr>
+                        <tr><td class="term">&lt;a href="リンク先ファイル名"&gt;～&lt;/a&gt;</td><td><span class="hide-me">ハイパーリンクなどを指定</span></td></tr>
+                        <tr><td class="term">&lt;img src="画像ファイル名"&gt;</td><td><span class="hide-me">画像の表示</span></td></tr>
+                        <tr><td class="term">&lt;table&gt;～&lt;/table&gt;</td><td><span class="hide-me">表(テーブル)を示す</span></td></tr>
+                        <tr><td class="term">&lt;tr&gt;～&lt;/tr&gt;</td><td><span class="hide-me">表内の一行を示す</span></td></tr>
+                        <tr><td class="term">&lt;td&gt;～&lt;/td&gt;,&lt;th&gt;～&lt;/th&gt;</td><td><span class="hide-me">表内のデータのセル、見出しのセルを示す</span></td></tr>
+                        <tr><td class="term">&lt;video&gt;～&lt;/video&gt;</td><td><span class="hide-me">ビデオを表示</span></td></tr>
+                        <tr><td class="term">&lt;span&gt;～&lt;/span&gt;,&lt;div&gt;～&lt;/div&gt;,</td><td><span class="hide-me">書式などを設定する際の要素範囲を指定</span></td></tr>
+                    </tbody></table>
+                </div>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>Webページの作成</h2>
+            </div>
+            <div class="details">
+                <p>①Webページの情報を記述</p>
+                <p>まず、&lt;head&gt;～&lt;/head&gt;の間にWebページの文字コードとタイトルなどを指定する。文字コードを指定しないと、
+                        ブラウザで表示された際に文字化けを起こす場合がある。&lt;title&gt;～&lt;/title&gt;の間に記述された文字列は、
+                        ブラウザのタブに表示されたり、ブックマークに登録された際のタイトルに利用される。なお、タグは必ず半角文字で入力する。
+                </p>
+                <p>②テキストの表示</p>
+                <p>Webページの表示タイトルとリード文を記述する。表示タイトルと各見出しは、見出しタグ&lt;hn&gt;(nは1~6)で指定する。
+                        リード文と内容の文章は、段落タグ&lt;p&gt;で指定する。テキストエディタ内で改行してもブラウザ上では改行されないため、
+                        改行位置に&lt;br&gt;を指定する。
+                </p>
+                <p>③表の作成</p>
+                <p>表は、&lt;table&gt;～&lt;/table&gt;タグで指定する。行は&lt;tr&gt;～&lt;/tr&gt;、見出しは&lt;th&gt;値&lt;/th&gt;
+                        、表の値はセル&lt;td&gt;値&lt;/td&gt;で指定する。
+                </p>
+                <p>④画像の表示</p>
+                <p>画像は別ファイルとして準備しておき、表示したい位置に&lt;img src="画像ファイル名"&gt;で指定する。この時、alt属性によって
+                        代替テキストも指定する。また、画像はWebページの表示に最適化されたサイズにする必要がある。
+                </p>
+                <p>⑤他ページへのリンク</p>
+                <p>Webページでは、閲覧者がクリックすると関連する別のWebページや特定の場所にジャンプできる。この機能をもつ文書を<strong class="term">ハイパーテキスト</strong>
+                        と呼び、関連付けることを<strong class="term">リンク</strong>という。リンクは、文字列や画像などに&lt;a href="リンク先ファイル名"&gt;～&lt;/a&gt;で設定する。
+                </p>
+                <p>⑥外部サービスの埋め込み</p>
+                <p>インターネット上にはさまざまなサービスが展開されており、中には自分のWebページにそのサービスの内容を埋め込む仕組みを提供
+                        しているものがある。例えば、地図提供サイトの地図や動画共有サイトで公開されている動画などは、サイトが指定するHTMLの記述
+                        を貼り付けるだけで自分のWebページに埋め込むことができる。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>CSSの活用</h2>
+            </div>
+            <div class="details">
+                <p>①CSSの目的</p>
+                <p><strong class="term">CSS(カスケーディング スタイル シート)</strong>とは<span class="hide-me">HTML文書を装飾するための技術</span>で、<span class="hide-me">文字や背景の色</span>、<span class="hide-me">文字や画像の大きさ</span>および<span class="hide-me">表示
+                        位置を指定する</span>などWebページのスタイルを適用するために利用される。これによって、文書の構造とスタイルを分離して管理することができる。
+                </p>
+                <p>スタイル設定の方法</p>
+                <p>CSSを要素に適用するためには、<strong class="term">セレクタ</strong>と呼ばれる識別子を使う。CSSは以下のような書式で指定する。</p>
+                <p>セレクタ{
+                        <br>プロパティ1:値1;
+                        <br>プロパティ2:値2;
+                        <br>}
+                </p>
+                <p>セレクタにはおもに三つの種類があり、目的によって適切に使い分ける。</p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tbody><tr>
+                            <td rowspan="2">セレクタの種類</td><td>記述方法</td><td>適用方法</td>
+                        </tr>
+                        <tr>
+                            <td>記述例</td><td>適用例</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">要素セレクタ</td><td class="yellow"><span class="hide-me">タグ{　　}</span></td><td class="pink"><span class="hide-me">&lt;タグ&gt;～&lt;/タグ&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">p{color:red}</span></td><td class="green"><span class="hide-me">&lt;p&gt;~&lt;/p&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">IDセレクタ</td><td class="yellow"><span class="hide-me">#ID{　　}</span></td><td class="pink"><span class="hide-me">&lt;タグ id="ID"&gt;~&lt;/タグ&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">#msg{color:red}</span></td><td class="green"><span class="hide-me">&lt;div id="msg"&gt;~&lt;/div&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">タグ#ID{　　}</span></td><td class="pink"><span class="hide-me">&lt;タグ id="ID"&gt;~&lt;/タグ&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">p#msg{color:red}</span></td><td class="green"><span class="hide-me">&lt;p id="msg"&gt;~&lt;/p&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">クラスセレクタ</td><td class="yellow"><span class="hide-me">.クラス名{　　}</span></td><td class="pink"><span class="hide-me">&lt;タグ class="sample"&gt;~&lt;/タグ&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">.sample{color:red}</span></td><td class="green"><span class="hide-me">&lt;div class="sample"&gt;~&lt;/div&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">タグ.クラス名{　　}</span></td><td class="pink"><span class="hide-me">&lt;タグ class="sample"&gt;~&lt;/タグ&gt;</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="hide-me">p.sample{color:red}</span></td><td class="green"><span class="hide-me">&lt;p class="sample"&gt;~&lt;/p&gt;</span></td>
+                        </tr>
+                    </tbody></table>
+                </div>
+                <p>CSSの要素は、タグのstyle属性として指定することもできるが、&lt;head&gt;~&lt;/head&gt;内の&lt;style&gt;~&lt;/style&gt;
+                        にまとめて記述することもできる。head要素の中に記述することによって、そのHTML文書の全体を通して共通のスタイルを設定
+                        することが可能になる。
+                </p>
+                <p>③CSSの共有</p>
+                <p>HTML文書とは別にスタイルシート用のファイルを作り、そこへスタイルの設定をまとめて記述することによって、複数の文書でスタイルを
+                        共有することができる。これによって、統一されたスタイルのWebサイトを構築することができるだけでなく、メンテナンスも容易になる。
+                        外部のCSSファイルを参照するためには、参照元の各HTML文書の&lt;head&gt;~&lt;/head&gt;内に外部ファイルを参照する次の内容を記述する。
+                </p>
+                <p class="hide-me">&lt;link rel="stylesheet" type="text/css" href~"style.css"&gt;</p>
+                <p>④CSSの適用</p>
+                <p>ここでは、背景と見出しおよび表に要素セレクタを設定する。要素セレクタは、指定したすべての要素にスタイルが適用される。ここでは、タグ
+                        &lt;body&gt;、&lt;h1&gt;、&lt;h2&gt;、&lt;table&gt;、&lt;th&gt;、&lt;td&gt;にそれぞれスタイルを設定する。
+                </p>
+                <div class="table-wrapper">
+                    <table border="1">
+                        <tbody><tr>
+                            <td>プロパティ(属性)</td><td>内容</td><td>値</td>
+                        </tr>
+                        <tr>
+                            <td class="term">background-color</td><td><span class="hide-me">背景色</span></td><td><span class="hide-me">例：#fffcdb 色をRGBで指定する</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">padding</td><td><span class="hide-me">要素の周りの余白</span></td><td><span class="hide-me">例：0.5em フォントサイズを1として0.5を指定する</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">color</td><td><span class="hide-me">文字色</span></td><td><span class="hide-me">例：#494949 色をRGBで指定する</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">background</td><td><span class="hide-me">背景</span></td><td><span class="hide-me">例：#fffaf4 色をRGBで指定する</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">border-left</td><td><span class="hide-me">左線</span></td><td><span class="hide-me">例：solid 5px #ffaf58 solid：実線5ピクセル</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">border-bottom</td><td><span class="hide-me">下の枠線</span></td><td><span class="hide-me">例：double 5px #ffc778 double：二重線5ピクセル</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">border-collapse</td><td><span class="hide-me">セルの線の表示</span></td><td><span class="hide-me">例：collapse 重ねる</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">border</td><td><span class="hide-me">枠線</span></td><td><span class="hide-me">例：solid 1px 実線1ピクセル</span></td>
+                        </tr>
+                        <tr>
+                            <td class="term">background</td><td><span class="hide-me">linear-gradient(方向、色 始点の位置、色 終点の位置)</span></td><td><span class="hide-me">linear-gradient(to bottom,transparent 60%,#FFFF66 60%) 領域内を下へ向かう線形グラデーション(透明から黄色)</span></td>
+                        </tr>
+                    </tbody></table>
+                </div>
+                <p>次に、強調したい文字にマーカーを付ける。ここでは、yellow_markerというクラスセレクタを作成し、タグ
+                        &lt;span&gt;~&lt;/span&gt;を利用し、設定する文字列の範囲を指定する。
+                </p>
+            </div>
+        </section>
+
+        <section class="topic">
+            <div class="topic-header">
+                <h2>より多くの人に閲覧してもらう工夫</h2>
+            </div>
+            <div class="details">
+                <p>より多くの人にWebページを閲覧してもらうためには、<span class="hide-me">掲載する情報がこまめに更新され、より多くの人が関心をもっている情報</span>である
+                        必要がある。また、<span class="hide-me">さまざまな端末からのアクセスを考え</span>、<span class="hide-me">誰が見ても見やすいWebページを作る</span>必要がある。
+                        <br>企業では、自社のWebサイトをより多くの人々に閲覧してもらうようさまざまな工夫を凝らしている。検索サイトで上位に表示
+                        されるよう<strong class="term">SEO対策(検索エンジン最適化)</strong>が行われていることが多い。例えば、<span class="hide-me">キーワードの入った内容をタイトルに入れたり</span>する
+                        などの<strong class="term">内部対策</strong>や、<span class="hide-me">外部サイトからリンクを増やす</span>などの<strong class="term">外部対策</strong>がある。
+                </p>
+            </div>
+        </section>
+        
+    </div>
+
+    <a href="../../../chapter2.html" class="return-button">章の目次へ戻る</a>
+    <script src="../wordq.js"></script>
+</body>
+</html>

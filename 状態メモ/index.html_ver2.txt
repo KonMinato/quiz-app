@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>問題作成ツール</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <h2>情報Ⅰ　問題作成ツール</h2>
+        <div id="status"></div>
+        <div id="error"></div>
+        
+        <form id="questionForm">
+            <div class="form-group">
+                <label for="chapter">章：</label>
+                <select id="chapter" required>
+                    <option value="">章を選択してください</option>
+                    <option value="programing">プログラミング</option>
+                    <option value="problem">問題解決</option>
+                </select>
+            </div>
+                
+            <br>
+
+            <div class="form-group">
+                <label for="tangen">単元：</label>
+                <select id="tangen" disabled>
+                    <option value="">単元を選択してください</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label for="count">問題数：</label>
+                <select id="count">
+                    <option value="">問題数を選択してください</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" id="generateButton">問題を作成する</button>
+        </form>
+        <div id="statusMessage" class="status-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+        
+        <h2>生成された問題</h2>
+        <div id="outputArea" class="output-area">
+            <p class="placeholder-text">ここに生成された問題が表示されます。</p>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
