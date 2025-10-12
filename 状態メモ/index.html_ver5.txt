@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <script src="/auth-check.js"></script>
+    <script src="auth-check.js"></script>
     <title>問題作成ツール</title>
     <link rel="stylesheet" href="/index.css">
 </head>
@@ -98,15 +98,6 @@
             
             <br>
 
-            <div class="form-group">
-                <label for="aiModel">AIモデル：</label>
-                <select id="aiModel">
-                    <option value="flash">速度重視 (Flash)</option>
-                    <option value="pro">品質重視 (Pro)</option>
-                </select>
-            </div>
-            <br>
-            
             <div class="form-group">
                 <label for="count">問題数：</label>
                 <select id="count">

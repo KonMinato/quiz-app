@@ -63,12 +63,14 @@ app.get('/api/scores', async (req, res) => {
     res.status(200).json(data);
 });
 
+// ▼▼▼【ここからが修正箇所】▼▼▼
 app.post('/api/scores', async (req, res) => {
     const { user, error } = await getUser(req);
     if (error || !user) return res.status(401).json({ error: '認証に失敗しました。' });
 
     const { chapter, tangen, type, correct, total } = req.body;
 
+    // 1. 既存の成績記録があるか確認
     const { data: existingScore, error: selectError } = await supabase
         .from('scores')
         .select('*')
@@ -76,13 +78,14 @@ app.post('/api/scores', async (req, res) => {
         .eq('chapter', chapter)
         .eq('tangen', tangen)
         .eq('type', type)
-        .single();
+        .single(); // 1件だけ取得
 
-    if (selectError && selectError.code !== 'PGRST116') {
+    if (selectError && selectError.code !== 'PGRST116') { // PGRST116は「データが見つからない」エラーなので無視
         return res.status(500).json({ error: '成績の確認に失敗しました。' });
     }
 
     if (existingScore) {
+        // 2. 存在する場合：合算して更新 (Update)
         const newCorrect = existingScore.correct + correct;
         const newTotal = existingScore.total + total;
         const { error: updateError } = await supabase
@@ -91,7 +94,9 @@ app.post('/api/scores', async (req, res) => {
             .eq('id', existingScore.id);
         
         if (updateError) return res.status(500).json({ error: '成績の更新に失敗しました。' });
+
     } else {
+        // 3. 存在しない場合：新しく作成 (Insert)
         const { error: insertError } = await supabase
             .from('scores')
             .insert([{ user_id: user.id, chapter, tangen, type, correct, total }]);
@@ -101,6 +106,7 @@ app.post('/api/scores', async (req, res) => {
     
     res.status(200).send();
 });
+// ▲▲▲【修正箇所ここまで】▲▲▲
 
 // --- 保存済み問題データ用API ---
 app.get('/api/saved-questions', async (req, res) => {
@@ -149,16 +155,12 @@ app.post('/api/gemini', async (req, res) => {
         return res.status(500).json({ error: 'Gemini APIキーがサーバーに設定されていません。' });
     }
     
-    const { prompt: userPrompt, model: selectedModel } = req.body;
+    const userPrompt = req.body.prompt;
     if (!userPrompt) {
         return res.status(400).json({ error: 'プロンプトが提供されていません。' });
     }
 
-    let modelName = 'models/gemini-flash-latest'; // デフォルトはflash
-    if (selectedModel === 'pro') {
-        modelName = 'models/gemini-pro-latest';
-    }
-    
+    const modelName = 'models/gemini-flash-latest';
     const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${geminiApiKey}`;
     
     const body = {

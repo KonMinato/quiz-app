@@ -16,18 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginLink = document.getElementById('loginLink');
     const registerLink = document.getElementById('registerLink');
     const logoutButton = document.getElementById('logoutButton');
-    const aiModelSelect = document.getElementById('aiModel');
 
     // --- ログイン状態をチェックしてUIを更新 ---
     const authData = JSON.parse(localStorage.getItem('supabase.auth.token'));
     if (authData && authData.user) {
-        loginLink.style.display = 'none';
-        registerLink.style.display = 'none';
+        // ログインしている場合：「ログアウト」ボタンのみ表示
         logoutButton.style.display = 'inline-block';
     } else {
+        // ログアウトしている場合：「ログイン」「新規登録」リンクを表示
         loginLink.style.display = 'inline-block';
         registerLink.style.display = 'inline-block';
-        logoutButton.style.display = 'none';
     }
 
     // --- ログアウト機能 ---
@@ -188,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const tangen = tangenSelect.value;
         const count = countSelect.value;
         const questionType = questionTypeSelect.value;
-        const selectedModel = aiModelSelect.value;
 
         if (!chapter || !tangen || !count || !questionType) {
             errorMessage.textContent = '章、単元、問題種別、問題数をすべて選択してください。';
@@ -330,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
 \n---\n【参考情報】\n${referenceContent}`;
             }
 
-            const generatedText = await fetchFromProxy({ prompt: promptText, model: selectedModel });
+            const generatedText = await fetchFromProxy(promptText);
             const questionsData = parseStructuredText(generatedText);
             
             if (questionsData.length === 0) {
@@ -482,12 +479,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-async function fetchFromProxy(data) {
+async function fetchFromProxy(promptString) {
     const proxyUrl = '/api/gemini'; 
     const response = await fetch(proxyUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ prompt: promptString }) 
     });
     if (!response.ok) {
         const errorData = await response.json();
