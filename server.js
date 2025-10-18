@@ -17,6 +17,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(cors());
 app.use(express.json());
 
+// ▼▼▼【ここから追加】ルートURL('/')へのリクエストでregister.htmlを返す ▼▼▼
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'register.html'));
+});
+// ▲▲▲【追加ここまで】▲▲▲
+
 // 静的ファイルの配信設定
 app.use(express.static(__dirname));
 app.use('/word', express.static(path.join(__dirname, 'word')));

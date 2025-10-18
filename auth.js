@@ -5,6 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 新規登録フォームの処理
     if (registerForm) {
+        // ▼▼▼【ここから追加】▼▼▼
+        const agreeCheckbox = document.getElementById('agreeCheckbox');
+        const registerButton = document.getElementById('registerButton');
+
+        // チェックボックスの状態を監視
+        agreeCheckbox.addEventListener('change', () => {
+            // チェックされていればdisabledを解除、されていなければdisabledに戻す
+            registerButton.disabled = !agreeCheckbox.checked;
+        });
+        // ▲▲▲【追加ここまで】▲▲▲
+
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const username = document.getElementById('username').value;
@@ -45,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('supabase.auth.token', JSON.stringify(data));
                 messageDiv.style.color = 'green';
                 messageDiv.textContent = 'ログインに成功しました。';
-                window.location.href = '/index.html'; // 問題作成ページへ
+                window.location.href = 'index.html'; // 問題作成ページへ
             } else {
                 messageDiv.textContent = data.error || 'ログインに失敗しました。';
             }
