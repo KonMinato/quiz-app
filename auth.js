@@ -5,16 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 新規登録フォームの処理
     if (registerForm) {
-        // ▼▼▼【ここから追加】▼▼▼
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         const registerButton = document.getElementById('registerButton');
 
         // チェックボックスの状態を監視
         agreeCheckbox.addEventListener('change', () => {
-            // チェックされていればdisabledを解除、されていなければdisabledに戻す
             registerButton.disabled = !agreeCheckbox.checked;
         });
-        // ▲▲▲【追加ここまで】▲▲▲
 
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -29,10 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const data = await response.json();
+            
+            // ▼▼▼【ここからが修正箇所】▼▼▼
             if (response.ok) {
                 messageDiv.style.color = 'green';
-                messageDiv.textContent = '登録ありがとうございます。確認メールを送信しましたので、メール内のリンクをクリックして登録を完了してください。';
+                // フォームを非表示にする
+                registerForm.style.display = 'none'; 
+                // 表示するメッセージを変更し、ログインページへのリンクを追加
+                messageDiv.innerHTML = `
+                    <p style="font-weight: bold; font-size: 1.1em;">登録ありがとうございます！</p>
+                    <p style="text-align: left; margin-top: 15px;">
+                        確認メールを <strong>${escapeHtml(email)}</strong> 宛に送信しました。<br><br>
+                        1. メール内の「Confirm your email」リンクをクリックして、認証を完了させてください。<br>
+                        2. 認証完了後、<a href="/login.html">ログインページ</a>からログインしてください。
+                    </p>
+                `;
             } else {
+            // ▲▲▲【修正箇所ここまで】▲▲▲
                 messageDiv.textContent = data.error || '登録に失敗しました。';
             }
         });
@@ -56,10 +66,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('supabase.auth.token', JSON.stringify(data));
                 messageDiv.style.color = 'green';
                 messageDiv.textContent = 'ログインに成功しました。';
-                window.location.href = 'index.html'; // 問題作成ページへ
+                window.location.href = '/toppage.html'; // トップページに変更
             } else {
                 messageDiv.textContent = data.error || 'ログインに失敗しました。';
             }
         });
     }
 });
+
+// この関数をauth.jsの末尾に追加します
+function escapeHtml(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
