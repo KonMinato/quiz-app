@@ -55,6 +55,10 @@ select:focus {
     outline:none;
     box-shadow:0 0 5px rgba(52,152,219,0.5);
 }
+
+/* ▼▼▼【ここから修正】ボタンのスタイル定義を明確化 ▼▼▼ */
+
+/* フォーム内のメインボタン（青） */
 button#generateButton {
     display:block;
     width:100%;
@@ -76,10 +80,74 @@ button#generateButton:active {
     transform:translateY(0);
     background-color:#216d93;
 }
+
+/* 解答するボタン（緑） */
+#submitAnswersBtn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease,transform 0.2s ease;
+    font-weight: bold;
+    margin-top: 20px;
+}
+#submitAnswersBtn:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+/* 保存ボタン（水色） */
+.save-button {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin-top: 15px;
+    background-color: #1abc9c;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto; /* 幅は自動 */
+    display: inline-block; /* インラインブロックに変更 */
+}
+.save-button:hover {
+    background-color: #16a085;
+}
+
+/* ログアウトボタン（赤） */
+.logout-button {
+    padding: 8px 16px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    line-height: 1.6;
+    display: inline-block;
+    width: auto;
+}
+.logout-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 全てのボタンに共通の無効化スタイル */
 button:disabled {
     background-color:#95a5a6;
     cursor:not-allowed;
+    transform: none;
 }
+/* ▲▲▲【修正ここまで】▲▲▲ */
+
+
 .status-message {
     text-align:center;
     font-style:italic;
@@ -163,20 +231,6 @@ button:disabled {
     color: #555;
     border-top: 1px solid #eee;
     padding-top: 10px;
-}
-#submitAnswersBtn {
-    margin-top: 20px;
-    background-color: #2ecc71;
-    width: auto;
-    padding: 10px 20px;
-    font-size: 1rem;
-}
-#submitAnswersBtn:hover {
-    background-color: #27ae60;
-}
-#submitAnswersBtn:disabled {
-    background-color: #95a5a6;
-    transform: none;
 }
 .final-result {
     text-align: center;
@@ -310,24 +364,6 @@ code {
     align-items: center;
     gap: 5px;
 }
-.save-button {
-    padding: 6px 12px;
-    font-size: 13px;
-    margin-top: 15px;
-    background-color: #1abc9c;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    width: auto;
-}
-.save-button:hover {
-    background-color: #16a085;
-}
-.save-button:disabled {
-    background-color: #95a5a6;
-    cursor: not-allowed;
-}
 
 /* --- スマートフォン対応 --- */
 @media screen and (max-width: 768px) {
@@ -368,13 +404,16 @@ code {
         padding: 8px 14px;
         font-size: 15px;
     }
+    .auth-links a, .auth-links button {
+        font-size: 15px;
+    }
     form {
         padding: 20px;
     }
     label {
         font-size: 16px;
     }
-    select, button#generateButton {
+    select, button#generateButton, #submitAnswersBtn {
         padding: 14px 12px;
         font-size: 16px;
     }

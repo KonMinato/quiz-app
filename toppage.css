@@ -94,6 +94,47 @@ body {
     flex-grow: 1; 
 }
 
+/* ========= グローバルヘッダー用のスタイル ========= */
+.global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px 40px;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end; /* 右寄せにする */
+}
+
+.auth-links a,
+.auth-links button {
+    margin-left: 20px;
+    font-weight: bold;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.auth-links button {
+    color: #e74c3c;
+}
+
+/* ヘッダーがコンテンツに被らないように、bodyに余白を追加 */
+body {
+    padding-top: 60px;
+}
+
 
 /* --- スマートフォン対応 (2列表示) --- */
 /* 画面幅が768px以下の場合に適用 */

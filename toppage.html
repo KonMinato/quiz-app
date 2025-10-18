@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,6 +10,13 @@
     <title>トップページ</title>
 </head>
 <body>
+    <div class="global-header">
+        <div class="auth-links">
+            <a href="/login.html" id="loginLink" style="display: none;">ログイン</a>
+            <a href="/register.html" id="registerLink" style="display: none;">新規登録</a>
+            <button id="logoutButton" style="display: none;">ログアウト</button>
+        </div>
+    </div>
     <div class="container">
         <h1 class="main-title">高校情報Ⅰ</h1>
         <h2 class="subtitle">目次</h2>
@@ -56,5 +63,7 @@
             </a>
         </div>
     </div>
-</body>
+    
+    <script src="/global-header.js"></script>
+    </body>
 </html>

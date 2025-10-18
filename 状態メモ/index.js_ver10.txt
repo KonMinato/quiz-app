@@ -13,7 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const subTopicSelector = document.getElementById('subTopicSelector');
     const searchTopicSelector = document.getElementById('searchTopicSelector');
     const sortTopicSelector = document.getElementById('sortTopicSelector');
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    const logoutButton = document.getElementById('logoutButton');
     const aiModelSelect = document.getElementById('aiModel');
+
+    // --- ログイン状態をチェックしてUIを更新 ---
+    const authData = JSON.parse(localStorage.getItem('supabase.auth.token'));
+    if (authData && authData.user) {
+        loginLink.style.display = 'none';
+        registerLink.style.display = 'none';
+        logoutButton.style.display = 'inline-block';
+    } else {
+        loginLink.style.display = 'inline-block';
+        registerLink.style.display = 'inline-block';
+        logoutButton.style.display = 'none';
+    }
+
+    // --- ログアウト機能 ---
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('supabase.auth.token');
+        window.location.href = 'login.html';
+    });
 
     // --- 認証済みAPIリクエストのためのヘッダーを生成するヘルパー関数 ---
     function getAuthHeaders() {
@@ -49,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const binaryUnits = ["11 数値と文字の表現", "12 演算の仕組み"];
     const calculationUnits = ["27 統計量とデータの尺度"];
 
-    // 単元とローカルHTMLファイルのパスを対応付けるオブジェクト
     const filePathMap = {
         "01 情報と情報社会": "/word/word1/word1_01.html", "02 問題解決の考え方": "/word/word1/word1_02.html", "03 法規による安全対策": "/word/word1/word1_03.html", "04 個人情報とその扱い": "/word/word1/word1_04.html", "05 知的財産権の概要と産業財産権": "/word/word1/word1_05.html", "06 著作権": "/word/word1/word1_06.html",
         "07 コミュニケーションとメディア": "/word/word2/word2_07.html", "08 情報デザインと表現の工夫": "/word/word2/word2_08.html", "09 Webページと情報デザイン": "/word/word2/word2_09.html",
@@ -59,14 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
         "30 アルゴリズムとプログラミング": "/word/word6/word6_30.html", "31 プログラミングの基本": "/word/word6/word6_31.html", "32 配列": "/word/word6/word6_32.html", "33 関数": "/word/word6/word6_33.html", "34 探索のプログラム": "/word/word6/word6_34.html", "35 整列のプログラム": "/word/word6/word6_35.html"
     };
     
-    // 単元ごとの特別な指示を定義するオブジェクト
     const promptMap = {
         "33 関数": "`def`キーワードを使ってユーザーが独自に定義する「ユーザー定義関数」のプログラム問題を作成してください。引数や戻り値（return）の有無など、様々なパターンの問題を生成してください。",
         "32 配列": "配列の要素を追加する`append`、要素を削除する`del`や`pop`、配列の長さを調べる`len`など、多様な操作に関する問題を作成してください。",
         "25 データの収集と整理": "1次データと2次データの違いに関する問題を作成してください。例えば、「調査によって直接集められた生データ」はどちらに該当するか、といった形式の問題が望ましいです。"
     };
 
-    // 章選択時のイベントリスナー
     chapterSelect.addEventListener('change', function() {
         const selectedChapter = this.value;
         tangenSelect.innerHTML = '<option value="">単元を選択してください</option>';
@@ -88,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 単元選択時のイベントリスナー
     tangenSelect.addEventListener('change', function() {
         const selectedTangen = this.value;
         questionTypeSelect.innerHTML = '<option value="">問題種別を選択してください</option>';
@@ -137,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // AIからの特殊なテキスト形式を解析してオブジェクト配列に変換する関数
     function parseStructuredText(text) {
         const questionsData = [];
         if (!text) return questionsData;
@@ -164,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return questionsData;
     }
 
-    // 「問題を作成する」ボタンが押されたときの処理
     questionForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const startTime = performance.now();
