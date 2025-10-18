@@ -101,9 +101,8 @@
             <div class="form-group">
                 <label for="aiModel">AIモデル：</label>
                 <select id="aiModel">
-                    <option value="flash">Gemini Flash (速度重視)</option>
-                    <option value="pro">Gemini Pro (品質重視)</option>
-                    <option value="gpt">ChatGPT (GPT-4o mini)</option>
+                    <option value="flash">速度重視 (Flash)</option>
+                    <option value="pro">品質重視 (Pro)</option>
                 </select>
             </div>
             <br>

@@ -5,7 +5,6 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
-const { OpenAI } = require('openai'); // OpenAIライブラリ
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,13 +14,14 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// OpenAIクライアントを初期化
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
 app.use(cors());
 app.use(express.json());
+
+// ▼▼▼【ここから追加】ルートURL('/')へのリクエストでregister.htmlを返す ▼▼▼
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'register.html'));
+});
+// ▲▲▲【追加ここまで】▲▲▲
 
 // 静的ファイルの配信設定
 app.use(express.static(__dirname));
@@ -150,90 +150,54 @@ app.delete('/api/saved-questions', async (req, res) => {
 
 // --- 問題生成API ---
 app.post('/api/gemini', async (req, res) => {
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    if (!geminiApiKey) {
+        return res.status(500).json({ error: 'Gemini APIキーがサーバーに設定されていません。' });
+    }
     
     const { prompt: userPrompt, model: selectedModel } = req.body;
     if (!userPrompt) {
         return res.status(400).json({ error: 'プロンプトが提供されていません。' });
     }
 
+    let modelName = 'models/gemini-flash-latest'; // デフォルトはflash
+    if (selectedModel === 'pro') {
+        modelName = 'models/gemini-pro-latest';
+    }
+    
+    const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${geminiApiKey}`;
+    
+    const body = {
+        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
+        generationConfig: { temperature: 0.3, maxOutputTokens: 4096 }
+    };
+
     try {
-        let responseText = "";
+        const geminiResponse = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
 
-        if (selectedModel === 'gpt') {
-            // ▼▼▼【ここからが修正箇所】▼▼▼
-            // --- ChatGPT (GPT-4o mini) を呼び出す ---
-            const chatCompletion = await openai.chat.completions.create({
-                messages: [
-                    { 
-                        role: "system", 
-                        content: `あなたは、情報Ⅰの学習支援のためのクイズを生成するAIです。以下の指示に従って、厳密なテキスト形式で問題を作成してください。
-- 各問題の始まりは必ず ===QUESTION=== で開始してください。
-- 問題文の次は ---ANSWER--- で区切り、正解を1つだけ記述してください。
-- 正解の次は ---DISTRACTORS--- で区切り、不正解の選択肢を記述してください。
-- **最重要ルール：プログラム問題の不正解の選択肢(DISTRACTORS)は、必ず3つの選択肢を ;;; （セミコロン3つ）で区切って記述してください。各選択肢は1つの答えだけにしてください。**
-- 最後に ---EXPLANATION--- で区切り、解説を記述してください。
-- 解説は必ず丁寧な日本語で記述してください。`
-                    },
-                    { 
-                        role: "user", 
-                        content: userPrompt // index.jsから渡されたプロンプト全体
-                    }
-                ],
-                model: "gpt-4o-mini",
-                temperature: 0.3,
-            });
-            responseText = chatCompletion.choices[0].message.content;
-            // ▲▲▲【修正箇所ここまで】▲▲▲
-
-        } else {
-            // --- Gemini (FlashまたはPro) を呼び出す ---
-            const geminiApiKey = process.env.GEMINI_API_KEY;
-            if (!geminiApiKey) {
-                return res.status(500).json({ error: 'Gemini APIキーがサーバーに設定されていません。' });
+        if (!geminiResponse.ok) {
+            const errorText = await geminiResponse.text();
+            try {
+                const errorJson = JSON.parse(errorText);
+                const message = errorJson.error?.message || 'Gemini APIからエラーが返されました。';
+                throw new Error(message);
+            } catch (e) {
+                throw new Error(`Gemini APIから予期しない形式(HTML等)のエラーが返されました。ステータス: ${geminiResponse.status}`);
             }
-
-            let modelName = 'models/gemini-flash-latest'; // デフォルトはflash
-            if (selectedModel === 'pro') {
-                modelName = 'models/gemini-pro-latest';
-            }
-            
-            const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${geminiApiKey}`;
-            
-            const body = {
-                contents: [{ role: "user", parts: [{ text: userPrompt }] }],
-                generationConfig: { temperature: 0.3, maxOutputTokens: 4096 }
-            };
-
-            const geminiResponse = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            });
-
-            if (!geminiResponse.ok) {
-                const errorText = await geminiResponse.text();
-                try {
-                    const errorJson = JSON.parse(errorText);
-                    const message = errorJson.error?.message || 'Gemini APIからエラーが返されました。';
-                    throw new Error(message);
-                } catch (e) {
-                    throw new Error(`Gemini APIから予期しない形式(HTML等)のエラーが返されました。ステータス: ${geminiResponse.status}`);
-                }
-            }
-
-            const data = await geminiResponse.json();
-            responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
         }
+
+        const data = await geminiResponse.json();
+        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
         
         res.json(responseText);
 
     } catch (err) {
         console.error('プロキシサーバーでエラーが発生:', err);
-        if (err.code === 'invalid_api_key' || (err.response && err.response.status === 401)) {
-             res.status(500).json({ error: 'OpenAI APIキーが無効か、設定されていません。' });
-        } else {
-             res.status(500).json({ error: err.message || 'プロキシサーバーで不明なエラーが発生しました。' });
-        }
+        res.status(500).json({ error: err.message || 'プロキシサーバーで不明なエラーが発生しました。' });
     }
 });
 
