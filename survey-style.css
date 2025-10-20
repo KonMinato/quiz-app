@@ -118,3 +118,40 @@ button {
 .auth-links button {
     color: #e74c3c;
 }
+/* 縦並びの5段階評価用 */
+.rating-vertical {
+    display: flex;
+    flex-direction: column; /* 縦に並べる */
+    align-items: flex-start; /* 左揃えにする */
+    gap: 8px; /* 各選択肢の間隔 */
+    padding-left: 20px; /* 左側に少し余白を設ける */
+}
+
+.rating-vertical label {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+/* 5段階評価の凡例（説明） */
+.rating-legend {
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+.rating-legend p {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+.rating-legend ul {
+    list-style: none;
+    padding-left: 10px;
+    margin: 0;
+    text-align: left;
+    font-size: 14px;
+}
+.rating-legend li {
+    margin-bottom: 3px;
+}

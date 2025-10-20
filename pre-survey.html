@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>事前アンケート</title>
+    <link rel="stylesheet" href="/survey-style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>事前アンケートご協力のお願い</h1>
+        <p>学習支援サイトのご利用前に、いくつかの質問にお答えください。</p>
+
+        <form id="surveyForm">
+
+            <div class="form-group rating-legend">
+                <p>以下の質問について、あなたの考えに最も近いものを5段階でお答えください。</p>
+                <ul>
+                    <li><strong>5：</strong> 強くそう思う</li>
+                    <li><strong>4：</strong> ややそう思う</li>
+                    <li><strong>3：</strong> どちらともいえない</li>
+                    <li><strong>2：</strong> あまりそう思わない</li>
+                    <li><strong>1：</strong> まったくそう思わない</li>
+                </ul>
+            </div>
+            <fieldset class="form-group">
+                <legend>1. 授業中にできた・わかったという実感がありましたか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q1_realization" value="1" required> 1</label>
+                    <label><input type="radio" name="q1_realization" value="2"> 2</label>
+                    <label><input type="radio" name="q1_realization" value="3"> 3</label>
+                    <label><input type="radio" name="q1_realization" value="4"> 4</label>
+                    <label><input type="radio" name="q1_realization" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>2. 授業の内容は親しみやすかったですか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q2_familiarity" value="1" required> 1</label>
+                    <label><input type="radio" name="q2_familiarity" value="2"> 2</label>
+                    <label><input type="radio" name="q2_familiarity" value="3"> 3</label>
+                    <label><input type="radio" name="q2_familiarity" value="4"> 4</label>
+                    <label><input type="radio" name="q2_familiarity" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>3. 情報Ⅰの授業は楽しいと思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q3_fun" value="1" required> 1</label>
+                    <label><input type="radio" name="q3_fun" value="2"> 2</label>
+                    <label><input type="radio" name="q3_fun" value="3"> 3</label>
+                    <label><input type="radio" name="q3_fun" value="4"> 4</label>
+                    <label><input type="radio" name="q3_fun" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>4. 情報Ⅰの授業は理解しやすかったですか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q4_understanding" value="1" required> 1</label>
+                    <label><input type="radio" name="q4_understanding" value="2"> 2</label>
+                    <label><input type="radio" name="q4_understanding" value="3"> 3</label>
+                    <label><input type="radio" name="q4_understanding" value="4"> 4</label>
+                    <label><input type="radio" name="q4_understanding" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>5. プログラミングの授業で、自分が入力したプログラムの動作結果を見るのは楽しかったですか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q5_programming_fun" value="1" required> 1</label>
+                    <label><input type="radio" name="q5_programming_fun" value="2"> 2</label>
+                    <label><input type="radio" name="q5_programming_fun" value="3"> 3</label>
+                    <label><input type="radio" name="q5_programming_fun" value="4"> 4</label>
+                    <label><input type="radio" name="q5_programming_fun" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>6. 授業の意義や目的がはっきりしていましたか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q6_purpose" value="1" required> 1</label>
+                    <label><input type="radio" name="q6_purpose" value="2"> 2</label>
+                    <label><input type="radio" name="q6_purpose" value="3"> 3</label>
+                    <label><input type="radio" name="q6_purpose" value="4"> 4</label>
+                    <label><input type="radio" name="q6_purpose" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>7. 授業では好奇心を刺激されましたか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q7_curiosity" value="1" required> 1</label>
+                    <label><input type="radio" name="q7_curiosity" value="2"> 2</label>
+                    <label><input type="radio" name="q7_curiosity" value="3"> 3</label>
+                    <label><input type="radio" name="q7_curiosity" value="4"> 4</label>
+                    <label><input type="radio" name="q7_curiosity" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>8. 将来に役立つと思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q8_utility" value="1" required> 1</label>
+                    <label><input type="radio" name="q8_utility" value="2"> 2</label>
+                    <label><input type="radio" name="q8_utility" value="3"> 3</label>
+                    <label><input type="radio" name="q8_utility" value="4"> 4</label>
+                    <label><input type="radio" name="q8_utility" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>9. もっと情報Ⅰの勉強を努力しようと思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q9_effort" value="1" required> 1</label>
+                    <label><input type="radio" name="q9_effort" value="2"> 2</label>
+                    <label><input type="radio" name="q9_effort" value="3"> 3</label>
+                    <label><input type="radio" name="q9_effort" value="4"> 4</label>
+                    <label><input type="radio" name="q9_effort" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>10. 授業で学習したことを基にして，自分で工夫し勉強してみようと思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q10_self_study" value="1" required> 1</label>
+                    <label><input type="radio" name="q10_self_study" value="2"> 2</label>
+                    <label><input type="radio" name="q10_self_study" value="3"> 3</label>
+                    <label><input type="radio" name="q10_self_study" value="4"> 4</label>
+                    <label><input type="radio" name="q10_self_study" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>11. 自分の到達すべき学習の目標がはっきりしていますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q11_goals" value="1" required> 1</label>
+                    <label><input type="radio" name="q11_goals" value="2"> 2</label>
+                    <label><input type="radio" name="q11_goals" value="3"> 3</label>
+                    <label><input type="radio" name="q11_goals" value="4"> 4</label>
+                    <label><input type="radio" name="q11_goals" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>12. 情報Ⅰを学習することは重要だと思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q12_importance" value="1" required> 1</label>
+                    <label><input type="radio" name="q12_importance" value="2"> 2</label>
+                    <label><input type="radio" name="q12_importance" value="3"> 3</label>
+                    <label><input type="radio" name="q12_importance" value="4"> 4</label>
+                    <label><input type="radio" name="q12_importance" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>13. 情報Ⅰで習った内容に関して、現在の時点で知識・技術は身についていると思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q13_knowledge" value="1" required> 1</label>
+                    <label><input type="radio" name="q13_knowledge" value="2"> 2</label>
+                    <label><input type="radio" name="q13_knowledge" value="3"> 3</label>
+                    <label><input type="radio" name="q13_knowledge" value="4"> 4</label>
+                    <label><input type="radio" name="q13_knowledge" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>14. 情報Ⅰで習った内容に関して、もっと知識や技術を高めたいと思いますか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q14_desire_to_improve" value="1" required> 1</label>
+                    <label><input type="radio" name="q14_desire_to_improve" value="2"> 2</label>
+                    <label><input type="radio" name="q14_desire_to_improve" value="3"> 3</label>
+                    <label><input type="radio" name="q14_desire_to_improve" value="4"> 4</label>
+                    <label><input type="radio" name="q14_desire_to_improve" value="5"> 5</label>
+                </div>
+            </fieldset>
+            <button type="submit">アンケートを送信する</button>
+        </form>
+
+        <div id="thankYouMessage" class="thank-you-message" style="display: none;">
+            <h2>ご協力ありがとうございました！</h2>
+            <p>学習をお楽しみください。</p>
+        </div>
+
+    </div>
+    <a href="/toppage.html" class="return">トップへ戻る</a>
+    <script src="/pre-survey.js"></script>
+</body>
+</html>
