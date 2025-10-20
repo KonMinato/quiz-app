@@ -21,6 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
             q12_importance: document.querySelector('input[name="q12_importance"]:checked')?.value,
             q13_knowledge: document.querySelector('input[name="q13_knowledge"]:checked')?.value,
             q14_desire_to_improve: document.querySelector('input[name="q14_desire_to_improve"]:checked')?.value,
+            
+            // ▼▼▼【ここから追加】▼▼▼
+            q15_ai_difficulty: document.querySelector('input[name="q15_ai_difficulty"]:checked')?.value,
+            q16_ai_speed: document.querySelector('input[name="q16_ai_speed"]:checked')?.value,
+            q17_ai_relevance: document.querySelector('input[name="q17_ai_relevance"]:checked')?.value,
+            q18_ai_usability: document.querySelector('input[name="q18_ai_usability"]:checked')?.value,
+            ai_comments: document.getElementById('ai_comments').value
+            // ▲▲▲【追加ここまで】▲▲▲
         };
 
         // 

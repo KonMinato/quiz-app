@@ -155,3 +155,13 @@ button {
 .rating-legend li {
     margin-bottom: 3px;
 }
+/* フォーム内のセクションタイトル */
+.form-section-title {
+    font-size: 1.2em;
+    color: #34495e;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 8px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: left;
+}

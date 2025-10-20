@@ -32,7 +32,7 @@
             </div>
 
             <fieldset class="form-group">
-                <legend>1. 授業中にできた・わかったという実感がありましたか</legend>
+                <legend>1. できた・わかったという実感がありましたか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q1_realization" value="1" required> 1</label>
                     <label><input type="radio" name="q1_realization" value="2"> 2</label>
@@ -43,7 +43,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <legend>2. 授業の内容は親しみやすかったですか</legend>
+                <legend>2. 内容は親しみやすかったですか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q2_familiarity" value="1" required> 1</label>
                     <label><input type="radio" name="q2_familiarity" value="2"> 2</label>
@@ -54,7 +54,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <legend>3. 情報Ⅰの授業は楽しいと思いますか</legend>
+                <legend>3. 情報Ⅰの内容は楽しいと思いますか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q3_fun" value="1" required> 1</label>
                     <label><input type="radio" name="q3_fun" value="2"> 2</label>
@@ -65,7 +65,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <legend>4. 情報Ⅰの授業は理解しやすかったですか</legend>
+                <legend>4. 内容は理解しやすかったですか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q4_understanding" value="1" required> 1</label>
                     <label><input type="radio" name="q4_understanding" value="2"> 2</label>
@@ -76,7 +76,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <legend>5. プログラミングの授業で、自分が入力したプログラムの動作結果を見るのは楽しかったですか</legend>
+                <legend>5. 実践ページの操作は楽しかったですか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q5_programming_fun" value="1" required> 1</label>
                     <label><input type="radio" name="q5_programming_fun" value="2"> 2</label>
@@ -87,7 +87,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <legend>6. 授業の意義や目的がはっきりしていましたか</legend>
+                <legend>6. 内容を学ぶ意義や目的がはっきりしていましたか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q6_purpose" value="1" required> 1</label>
                     <label><input type="radio" name="q6_purpose" value="2"> 2</label>
@@ -98,7 +98,7 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <legend>7. 授業では好奇心を刺激されましたか</legend>
+                <legend>7. 情報Ⅰ内容に好奇心を刺激されましたか</legend>
                 <div class="rating">
                     <label><input type="radio" name="q7_curiosity" value="1" required> 1</label>
                     <label><input type="radio" name="q7_curiosity" value="2"> 2</label>
@@ -184,6 +184,46 @@
                     <label><input type="radio" name="q14_desire_to_improve" value="5"> 5</label>
                 </div>
             </fieldset>
+
+            <h2 class="form-section-title">AIモデルについて</h2>
+
+            <fieldset class="form-group">
+                <legend>15. AIモデルによって、難易度の違いを感じたか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q15_ai_difficulty" value="1" required> 1</label>
+                    <label><input type="radio" name="q15_ai_difficulty" value="2"> 2</label>
+                    <label><input type="radio" name="q15_ai_difficulty" value="3"> 3</label>
+                    <label><input type="radio" name="q15_ai_difficulty" value="4"> 4</label>
+                    <label><input type="radio" name="q15_ai_difficulty" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>16. AIモデルを変えたことによって、生成にかかる時間が変化したと感じたか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q16_ai_speed" value="1" required> 1</label>
+                    <label><input type="radio" name="q16_ai_speed" value="2"> 2</label>
+                    <label><input type="radio" name="q16_ai_speed" value="3"> 3</label>
+                    <label><input type="radio" name="q16_ai_speed" value="4"> 4</label>
+                    <label><input type="radio" name="q16_ai_speed" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend>17. AIモデルを変えることで、出題される内容は学びたい内容と合致していると感じたか</legend>
+                <div class="rating">
+                    <label><input type="radio" name="q17_ai_relevance" value="1" required> 1</label>
+                    <label><input type="radio" name="q17_ai_relevance" value="2"> 2</label>
+                    <label><input type="radio" name="q17_ai_relevance" value="3"> 3</label>
+                    <label><input type="radio" name="q17_ai_relevance" value="4"> 4</label>
+                    <label><input type="radio" name="q17_ai_relevance" value="5"> 5</label>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <label for="ai_comments">ご意見・ご感想があれば自由にお書きください</label>
+                <textarea id="ai_comments" name="ai_comments" rows="4"></textarea>
+            </div>
 
             <button type="submit">アンケートを送信する</button>
         </form>
