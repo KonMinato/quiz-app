@@ -242,6 +242,5 @@
     </div>
     <a href="/toppage.html" class="return">トップへ戻る</a>
     <script src="/pre-survey.js"></script>
-    <script src="/global-header.js"></script>
 </body>
 </html>

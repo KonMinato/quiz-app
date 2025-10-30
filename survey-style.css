@@ -4,6 +4,7 @@ body {
     color: #333;
     margin: 0;
     padding: 20px;
+    padding-top: 70px; /* グローバルヘッダーの高さ分、余白を追加 */
 }
 .container {
     max-width: 800px;
@@ -83,7 +84,7 @@ button {
     border-radius: 50px; font-weight: bold; z-index: 100;
 }
 
-/* ▼▼▼【ここから追加】グローバルヘッダー用のスタイル ▼▼▼ */
+/* グローバルヘッダー用のスタイル */
 .global-header {
     position: fixed;
     top: 0;
@@ -121,10 +122,10 @@ button {
 /* 縦並びの5段階評価用 */
 .rating-vertical {
     display: flex;
-    flex-direction: column; /* 縦に並べる */
-    align-items: flex-start; /* 左揃えにする */
-    gap: 8px; /* 各選択肢の間隔 */
-    padding-left: 20px; /* 左側に少し余白を設ける */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-left: 20px;
 }
 
 .rating-vertical label {
@@ -165,3 +166,92 @@ button {
     margin-bottom: 20px;
     text-align: left;
 }
+
+/* ▼▼▼【ここから修正】スマートフォン対応 ▼▼▼ */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+        padding-top: 60px; /* ヘッダーの高さ */
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%; /* フォントブーストを無効化 */
+    }
+    .container {
+        margin: 10px auto;
+        padding: 20px 15px;
+    }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.2em; }
+
+    .global-header {
+        padding: 10px 15px;
+    }
+    .auth-links a,
+    .auth-links button {
+        font-size: 14px;
+        margin-left: 15px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    /* フォーム内の文字サイズを 1rem (16px) に統一 */
+    p {
+        font-size: 1rem;
+    }
+    legend, label {
+        font-size: 1rem;
+    }
+    fieldset label {
+        font-size: 1rem; /* 修正 */
+    }
+    .rating label {
+        font-size: 1rem;
+    }
+    .rating-vertical label {
+        font-size: 1rem; /* 修正 */
+    }
+    .rating-legend p {
+        font-size: 1rem;
+    }
+    .rating-legend ul {
+        font-size: 0.95rem; /* 凡例だけ少し小さく (約15px) */
+    }
+    .form-section-title {
+        font-size: 1.1em;
+    }
+    textarea {
+        font-size: 1rem;
+    }
+
+    .rating {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-around;
+    }
+    .rating label {
+        padding: 5px;
+    }
+
+    .rating-vertical {
+        padding-left: 5px;
+    }
+
+    .rating-legend {
+        padding: 10px;
+    }
+
+    button {
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    .return {
+        padding: 10px 15px;
+        font-size: 14px;
+        right: 10px;
+        bottom: 10px;
+    }
+}
+/* ▲▲▲【修正ここまで】▲▲▲ */
