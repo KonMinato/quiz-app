@@ -14,15 +14,18 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px; /* bodyにもpaddingを追加 */
+            box-sizing: border-box; /* paddingを含めて計算 */
         }
         .container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 100%; /* 幅を100%に */
             max-width: 700px;
             text-align: center;
+            box-sizing: border-box;
         }
         h1 {
             color: #2c3e50;
@@ -32,6 +35,7 @@
             display: flex;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap; /* スマホ用に折り返しを許可 */
         }
         .gate-selector label {
             padding: 10px 20px;
@@ -132,7 +136,7 @@
             bottom: 20px;
             right: 20px;
             padding: 12px 25px;
-            background-color: #5a6268; /* Gray */
+            background-color: #5a6268;
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
@@ -144,15 +148,14 @@
         .return-button:hover{
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            background-color: #494e53; /* Darker gray */
+            background-color: #494e53;
         }
-
         .return {
             position: fixed;
             bottom: 20px;
             left:15px;
             padding: 12px 25px;
-            background-color: #5a6268; /* Gray */
+            background-color: #5a6268;
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
@@ -164,8 +167,45 @@
         .return:hover{
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            background-color: #494e53; /* Darker gray */
+            background-color: #494e53;
         }
+
+        /* ▼▼▼【ここから追加】スマートフォン対応 ▼▼▼ */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px; /* 左右の余白を減らす */
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em; /* 見出しを少し小さく */
+            }
+            .simulator {
+                flex-direction: column; /* 縦積みに変更 */
+                gap: 30px; /* 要素間のスペースを確保 */
+                padding: 30px 15px;
+            }
+            .gate-visual {
+                font-size: 3.5em;
+                margin: 20px 0;
+                transform: rotate(90deg); /* ゲート記号を90度回転 */
+            }
+            .output-lamp {
+                width: 70px;
+                height: 70px;
+                font-size: 1.3em;
+            }
+
+            /* 戻るボタンの調整 */
+            .return, .return-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            .return { left: 10px; bottom: 10px; }
+            .return-button { right: 10px; bottom: 10px; }
+        }
+        /* ▲▲▲【追加ここまで】▲▲▲ */
     </style>
 </head>
 <body>
@@ -233,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
 
-        // 出力ランプの表示を更新
         if (result) {
             outputLamp.classList.add('on');
             outputLamp.textContent = 'ON';
@@ -247,7 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedGate = document.querySelector('input[name="gate"]:checked').value;
         gateVisual.textContent = selectedGate;
 
-        // NOTゲートの時は入力Bを隠す
         if (selectedGate === 'NOT') {
             switchBContainer.style.display = 'none';
         } else {
@@ -256,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateOutput();
     }
 
-    // イベントリスナー
     gateSelector.addEventListener('change', updateUI);
     switchA.addEventListener('click', () => {
         switchA.classList.toggle('on');
@@ -267,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateOutput();
     });
 
-    // 初期化
     updateUI();
 });
 </script>

@@ -95,6 +95,7 @@ h1 { text-align: center; }
 .code-display {
     background-color: #2d2d2d; color: #f8f8f2; font-family: 'Courier New', monospace;
     padding: 15px; border-radius: 8px; white-space: pre; font-size: 0.9em;
+    overflow-x: auto; /* 横スクロールを追加 */
 }
 .code-line { transition: background-color 0.3s; display: block; }
 .code-line.highlight-code { background-color: #555; }
@@ -109,3 +110,41 @@ h1 { text-align: center; }
 .return-button { right: 20px; }
 .return { left:15px; }
 .return-button:hover, .return:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); background-color: #494e53; }
+
+/* ▼▼▼【ここから追加】スマートフォン対応 ▼▼▼ */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+    }
+    .container {
+        grid-template-columns: 1fr; /* 1カラムに変更 */
+        gap: 15px;
+    }
+    h1 { font-size: 1.8em; }
+    h2 { font-size: 1.3em; }
+
+    .variable {
+        font-size: 1em; /* 変数表示を少し小さく */
+        flex-direction: column; /* 変数名と値を縦積みに */
+        align-items: flex-start; /* 左揃え */
+        gap: 5px;
+    }
+    .variable .value {
+        align-self: flex-end; /* 値を右寄せに */
+    }
+    
+    .code-display {
+        font-size: 0.85em; /* コード表示を小さく */
+    }
+
+    /* 戻るボタンの調整 */
+    .return, .return-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    .return { left: 10px; bottom: 10px; }
+    .return-button { right: 10px; bottom: 10px; }
+}
+/* ▲▲▲【追加ここまで】▲▲▲ */

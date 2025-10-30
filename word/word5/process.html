@@ -17,6 +17,7 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 100%;
             max-width: 1000px;
             margin: auto;
+            box-sizing: border-box; /* paddingを含めて計算 */
         }
         h1, h2, h3 { color: #2c3e50; }
         h1 { text-align: center; }
@@ -71,7 +72,6 @@
         .formula-display { font-size: 0.9em !important; color: #34495e !important; }
         @keyframes flash { from { opacity: 0.5; } to { opacity: 1; } }
 
-        /* ▼▼▼【変更点1】ここから戻るボタンのスタイルを追加 ▼▼▼ */
         .return-button {
             position: fixed;
             bottom: 20px;
@@ -110,7 +110,43 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
             background-color: #494e53;
         }
-        /* ▲▲▲ ここまで ▲▲▲ */
+
+        /* ▼▼▼【ここから追加】スマートフォン対応 ▼▼▼ */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+                font-size: 16px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .container {
+                padding: 15px;
+                margin: 10px auto;
+            }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.3em; }
+
+            /* データソースを縦積みに */
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+
+            /* コントロールボタンを縦積みに */
+            .controls {
+                flex-direction: column;
+            }
+            .controls button {
+                font-size: 1.1em;
+            }
+
+            /* 戻るボタンの調整 */
+            .return, .return-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            .return { left: 10px; bottom: 10px; }
+            .return-button { right: 10px; bottom: 10px; }
+        }
+        /* ▲▲▲【追加ここまで】▲▲▲ */
     </style>
 </head>
 <body>
@@ -291,7 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 初期化用にダミーのdivを作成
     if (!document.getElementById('result-table-container')) {
         const dummyDiv = document.createElement('div');
         dummyDiv.id = 'result-table-container';

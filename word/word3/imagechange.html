@@ -35,7 +35,6 @@
         .control-group { margin-bottom: 25px; }
         .control-group input[type="range"] { width: 100%; margin-top: 5px; }
         
-        /* ▼▼▼【変更点1】ここからスライダーボタン用のスタイルを追加 ▼▼▼ */
         .slider-label {
             display: flex;
             justify-content: space-between;
@@ -57,7 +56,7 @@
             background-color: #ecf0f1;
             border-radius: 50%;
             cursor: pointer;
-            line-height: 26px; /* 中央寄せ */
+            line-height: 26px;
         }
         .value-display {
             font-weight: bold;
@@ -65,10 +64,10 @@
             min-width: 40px;
             text-align: center;
         }
-        /* ▲▲▲ ここまで ▲▲▲ */
         
         canvas, #original-image {
             max-width: 100%;
+            height: auto; /* 高さを自動に設定 */
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -79,7 +78,7 @@
             bottom: 20px;
             right: 20px;
             padding: 12px 25px;
-            background-color: #5a6268; /* Gray */
+            background-color: #5a6268;
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
@@ -91,15 +90,14 @@
         .return-button:hover{
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            background-color: #494e53; /* Darker gray */
+            background-color: #494e53;
         }
-
         .return {
             position: fixed;
             bottom: 20px;
             left:15px;
             padding: 12px 25px;
-            background-color: #5a6268; /* Gray */
+            background-color: #5a6268;
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
@@ -111,8 +109,50 @@
         .return:hover{
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            background-color: #494e53; /* Darker gray */
+            background-color: #494e53;
         }
+
+        /* ▼▼▼【ここから追加】スマートフォン対応 ▼▼▼ */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+                margin: 10px auto;
+            }
+            .main-content {
+                flex-direction: column; /* 縦積みに変更 */
+            }
+            .image-panel {
+                flex-direction: column; /* 画像も縦積みに変更 */
+            }
+            
+            /* 画像のサイズ調整 */
+            canvas, #original-image {
+                width: 100%; /* 横幅を100%に */
+                height: auto; /* 高さは自動 */
+            }
+
+            /* ボタンのテキストがはみ出ないように調整 */
+            .slider-label {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .slider-controls {
+                align-self: flex-end; /* +/-ボタンを右寄せに */
+            }
+
+            /* 戻るボタンの調整 */
+            .return, .return-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            .return { left: 10px; bottom: 10px; }
+            .return-button { right: 10px; bottom: 10px; }
+        }
+        /* ▲▲▲【追加ここまで】▲▲▲ */
     </style>
 </head>
 <body>
@@ -189,11 +229,18 @@ document.addEventListener('DOMContentLoaded', () => {
         sourceImage.src = src;
         sourceImage.onload = () => {
             originalImage.src = sourceImage.src;
+            
+            // ▼▼▼【ここを修正】画像幅の計算を動的に ▼▼▼
+            const containerWidth = canvas.parentElement.offsetWidth;
+            const displayWidth = Math.min(400, containerWidth); // PCでは最大400px、スマホではコンテナ幅に合わせる
             const aspectRatio = sourceImage.width / sourceImage.height;
-            const displayWidth = 400;
+
             canvas.width = displayWidth;
             canvas.height = displayWidth / aspectRatio;
+            originalImage.style.width = `${displayWidth}px`; // widthも指定
             originalImage.style.height = `${canvas.height}px`;
+            // ▲▲▲【修正ここまで】▲▲▲
+            
             processImage();
         };
     }
@@ -258,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
         processImage();
     });
 
-    // ▼▼▼【変更点3】スライダーボタンのクリックイベントを追加 ▼▼▼
     controlsPanel.addEventListener('click', (e) => {
         if (e.target.classList.contains('slider-btn')) {
             const targetSliderId = e.target.dataset.target;
@@ -267,12 +313,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (slider) {
                 const newValue = parseInt(slider.value, 10) + step;
-                // スライダーのmin/maxの範囲内に収める
                 const min = parseInt(slider.min, 10);
                 const max = parseInt(slider.max, 10);
                 if (newValue >= min && newValue <= max) {
                     slider.value = newValue;
-                    // inputイベントを強制的に発生させて、画像処理を実行させる
                     slider.dispatchEvent(new Event('input'));
                 }
             }
@@ -280,6 +324,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadImage('https://storage.googleapis.com/gemini-prod-us-west1-assets/images/photorealistic_flower.jpeg');
+    
+    // ▼▼▼【ここから追加】画面リサイズ時に画像サイズを再計算 ▼▼▼
+    window.addEventListener('resize', () => {
+        if (sourceImage.src) {
+            const containerWidth = canvas.parentElement.offsetWidth;
+            const displayWidth = Math.min(400, containerWidth);
+            const aspectRatio = sourceImage.width / sourceImage.height;
+
+            canvas.width = displayWidth;
+            canvas.height = displayWidth / aspectRatio;
+            originalImage.style.width = `${displayWidth}px`;
+            originalImage.style.height = `${canvas.height}px`;
+            processImage();
+        }
+    });
+    // ▲▲▲【追加ここまで】▲▲▲
 });
 </script>
 </body>

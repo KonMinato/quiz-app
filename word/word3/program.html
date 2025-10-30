@@ -14,7 +14,9 @@
             gap: 20px;
             max-width: 1200px;
             margin: 20px auto;
-            height: calc(100vh - 40px);
+            /* ▼▼▼ スマホ対応のため高さを自動に ▼▼▼ */
+            height: auto;
+            min-height: calc(100vh - 40px);
         }
         .column {
             display: flex;
@@ -78,7 +80,7 @@
         
         .memory-table-container { overflow-y: auto; flex-grow: 1; }
         #memory-table { width: 100%; border-collapse: collapse; }
-        #memory-table th, #memory-table td { border: 1px solid #e0e0e0; padding: 4px 8px; text-align: center; font-family: 'Courier New', Courier, monospace; }
+        #memory-table th, #memory-table td { border: 1px solid #e0e0e0; padding: 4px 8px; text-align: center; font-family: 'Courier New', monospace; }
         #memory-table th { background-color: #ecf0f1; font-size: 0.9em; position: sticky; top: 0; }
         #memory-table td:first-child { font-weight: bold; color: #7f8c8d; background-color: #fafafa; }
         .value-input { font-size: 1.1em; font-weight: bold; width: 100%; border: none; text-align: center; background-color: transparent; box-sizing: border-box; }
@@ -86,6 +88,56 @@
         #memory-table tr.highlight-active { outline: 2px solid #3498db; outline-offset: -2px; }
         
         #status-panel { flex-grow: 1; font-size: 1.1em; color: #2980b9; line-height: 1.5; }
+    
+        /* ▼▼▼【ここから追加】スマートフォン対応 ▼▼▼ */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+                font-size: 16px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .container {
+                flex-direction: column; /* 3カラムを縦積みに */
+                height: auto;
+                margin: 10px auto;
+                padding: 15px;
+            }
+            .column-left, .column-middle, .column-right {
+                flex: 1; /* 幅の比率をリセット */
+            }
+
+            /* CPUとステータスを縦積みに */
+            .column-middle {
+                order: -1; /* CPUを一番上に表示 */
+            }
+
+            /* メモリの高さを固定（スクロールさせる） */
+            .memory-table-container {
+                height: 300px; /* 高さを固定してスクロール可能に */
+            }
+            
+            /* 操作パネルを小さく */
+            .program-builder {
+                flex-wrap: wrap; /* 折り返し */
+            }
+            .program-builder select, .program-builder input {
+                flex-grow: 1;
+                width: auto;
+            }
+            
+            .controls-buttons, .navigation-buttons {
+                flex-wrap: wrap; /* ボタンを折り返し */
+            }
+            .controls button, .nav-button {
+                flex-basis: 45%; /* 2列になるように調整 */
+            }
+            
+            /* フォントサイズ調整 */
+            #program-list li { font-size: 1em; }
+            .cpu-reg div { font-size: 1.2em; }
+            #status-panel { font-size: 1em; }
+        }
+        /* ▲▲▲【追加ここまで】▲▲▲ */
     </style>
 </head>
 <body>
@@ -178,7 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function initialize() {
         memory.fill(0);
-        // ▼▼▼【変更点1】初期状態でSTOP命令をプログラムに追加 ▼▼▼
         program = [{ instr: 'STOP', addr: null }];
         registerValue = 0;
         programCounter = 0;
@@ -217,7 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearHighlights();
     }
 
-    // ▼▼▼【変更点2】最後のSTOP命令には削除ボタンを表示しないように修正 ▼▼▼
     function renderProgramList() {
         programList.innerHTML = '';
         program.forEach((line, index) => {
@@ -232,15 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ▼▼▼【変更点3】命令を末尾ではなく、STOPの一つ手前に追加するように修正 ▼▼▼
     function addInstruction() {
         if (program.length >= MEMORY_SIZE) { alert('これ以上命令を追加できません。'); return; }
         const instr = instrSelect.value;
         const addr = (instr === 'STOP') ? null : parseInt(addrInput.value);
-
-        // 配列の末尾（STOP）の一つ手前に新しい命令を挿入
         program.splice(program.length - 1, 0, { instr, addr });
-
         renderProgramList();
     }
 

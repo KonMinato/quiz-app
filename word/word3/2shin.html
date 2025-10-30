@@ -14,20 +14,22 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px; /* bodyにもpaddingを追加 */
+            box-sizing: border-box; /* paddingを含めて計算 */
         }
         .container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 100%; /* 幅を100%に */
             max-width: 600px;
             text-align: center;
+            box-sizing: border-box;
         }
         h1 {
             color: #2c3e50;
         }
-        /* ▼▼▼【変更点1】説明文のスタイルを追加 ▼▼▼ */
         .description {
             margin: -10px auto 25px auto;
             color: #555;
@@ -52,6 +54,7 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             font-family: 'Courier New', Courier, monospace;
+            box-sizing: border-box; /* width計算のため追加 */
         }
         input[type="text"] {
             background-color: #ecf0f1;
@@ -63,6 +66,7 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap; /* 折り返しを許可 */
         }
         .bit {
             display: flex;
@@ -94,7 +98,7 @@
             bottom: 20px;
             right: 20px;
             padding: 12px 25px;
-            background-color: #5a6268; /* Gray */
+            background-color: #5a6268;
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
@@ -106,15 +110,14 @@
         .return-button:hover{
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            background-color: #494e53; /* Darker gray */
+            background-color: #494e53;
         }
-
         .return {
             position: fixed;
             bottom: 20px;
             left:15px;
             padding: 12px 25px;
-            background-color: #5a6268; /* Gray */
+            background-color: #5a6268;
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
@@ -126,8 +129,50 @@
         .return:hover{
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            background-color: #494e53; /* Darker gray */
+            background-color: #494e53;
         }
+
+        /* ▼▼▼【ここから追加】スマートフォン対応 ▼▼▼ */
+        @media screen and (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .description {
+                font-size: 0.95em;
+            }
+            input[type="number"], input[type="text"] {
+                width: 100%; /* 入力欄の幅を広げる */
+                font-size: 1.3em;
+            }
+            
+            /* 電球を4つで折り返す */
+            .visualizer {
+                gap: 15px;
+                padding: 10px;
+            }
+            .bit {
+                flex-basis: calc(25% - 12px); /* 4列レイアウト */
+            }
+            .bulb {
+                width: 35px;
+                height: 35px;
+            }
+
+            /* 戻るボタンの調整 */
+            .return, .return-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            .return { left: 10px; bottom: 10px; }
+            .return-button { right: 10px; bottom: 10px; }
+        }
+        /* ▲▲▲【追加ここまで】▲▲▲ */
     </style>
 </head>
 <body>
@@ -163,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const binaryOutput = document.getElementById('binary-output');
     const visualizer = document.getElementById('visualizer');
     
+    // 8ビット（128, 64, ..., 1）の電球を生成
     for (let i = 7; i >= 0; i--) {
         const bitValue = Math.pow(2, i);
         
@@ -182,9 +228,11 @@ document.addEventListener('DOMContentLoaded', () => {
         visualizer.appendChild(bitDiv);
     }
 
+    // 10進数の入力から、2進数と電球を更新する
     function updateFromDecimal(value) {
         if (value < 0 || value > 255) return;
         
+        // 10進数を8桁の2進数文字列に変換
         const binaryString = value.toString(2).padStart(8, '0');
         binaryOutput.value = binaryString;
         
@@ -198,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 電球の状態から、10進数と2進数を更新する
     function updateFromVisual() {
         let decimalValue = 0;
         const bulbs = document.querySelectorAll('.bulb');
@@ -207,9 +256,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         decimalInput.value = decimalValue;
-        updateFromDecimal(decimalValue); 
+        updateFromDecimal(decimalValue); // 2進数表示も更新
     }
 
+    // 10進数入力欄のイベント
     decimalInput.addEventListener('input', () => {
         let value = parseInt(decimalInput.value);
         if (isNaN(value)) value = 0;
@@ -219,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateFromDecimal(value);
     });
 
+    // 電球クリックのイベント
     visualizer.addEventListener('click', (e) => {
         if (e.target.classList.contains('bulb')) {
             e.target.classList.toggle('on');
@@ -226,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 初期化
     updateFromDecimal(0);
 });
 </script>
