@@ -1,15 +1,71 @@
-body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-.auth-container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 320px; }
-h2 { color: #2c3e50; margin-bottom: 25px; }
-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-button { width: 100%; padding: 12px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
-button:hover { background-color: #2980b9; }
-#message { margin-top: 15px; color: #e74c3c; font-weight: bold; }
-p { color: #555; margin-top: 20px; }
-a { color: #3498db; text-decoration: none; }
-a:hover { text-decoration: underline; }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* heightからmin-heightに変更 */
+    margin: 0;
+    padding: 20px; /* bodyにpaddingを追加 */
+    box-sizing: border-box; /* paddingを含めて計算 */
+}
 
-/* auth.css の末尾に追加 */
+.auth-container {
+    background: white;
+    padding: 30px; /* paddingを少し調整 */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%; /* 幅を100%にし、max-widthで制限 */
+    max-width: 400px; /* 最大幅を少し広げる */
+    box-sizing: border-box;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px; /* スマホでズームされないよう調整 */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+button:hover {
+    background-color: #2980b9;
+}
+#message {
+    margin-top: 15px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+p {
+    color: #555;
+    margin-top: 20px;
+}
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
 
 .form-group {
     margin-bottom: 15px;
@@ -29,9 +85,8 @@ a:hover { text-decoration: underline; }
     font-size: 12px;
     line-height: 1.6;
     color: #555;
-    box-sizing: border-box; /* パディングを含めて幅100%にする */
+    box-sizing: border-box;
 }
-
 .consent-check {
     margin-bottom: 20px;
     text-align: left;
@@ -39,28 +94,24 @@ a:hover { text-decoration: underline; }
 .consent-check label {
     font-size: 13px;
     font-weight: normal;
-    display: flex; /* チェックボックスとテキストを横並びにする */
-    align-items: flex-start; /* 上端揃え */
+    display: flex;
+    align-items: flex-start;
     cursor: pointer;
 }
 .consent-check input[type="checkbox"] {
     margin-right: 8px;
-    margin-top: 2px; /* テキストとの高さを微調整 */
+    margin-top: 2px;
 }
-
-/* disabled状態のボタンスタイルを追加 */
 button:disabled {
     background-color: #95a5a6;
     cursor: not-allowed;
 }
-
-/* リアルタイムエラーメッセージ用のスタイル */
 .error-text {
-    display: none; /* 初期状態では非表示 */
+    display: none;
     color: #e74c3c;
     font-size: 13px;
     text-align: left;
-    margin-top: -10px; /* 入力欄との間隔を詰める */
+    margin-top: -10px;
     margin-bottom: 10px;
     padding-left: 5px;
 }
