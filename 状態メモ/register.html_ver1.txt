@@ -9,8 +9,8 @@
     <div class="auth-container">
         <h2>新規登録</h2>
         <form id="registerForm">
-            <input type="text" id="username" placeholder="ユーザー名 (半角英数字のみ)" required>
-            <span id="usernameError" class="error-text"></span>
+            <input type="text" id="username" placeholder="ユーザー名" required>
+            <input type="email" id="email" placeholder="メールアドレス" required>
             <input type="password" id="password" placeholder="パスワード（6文字以上）" required>
 
             <div class="form-group">
@@ -25,15 +25,18 @@
 2. 取得する個人情報
 ご参加にあたり、以下の個人情報を取得いたします。
 ・ユーザー名
+・メールアドレス
 ・パスワード（暗号化されます）
 
 3. 個人情報の利用目的
 取得した個人情報は、以下の目的にのみ利用します。
 ・本サイトの利用登録および本人確認のため
+・本サイト運営に関する重要なご連絡のため（メールアドレス）
+・パスワードリセットなど、お問い合わせに対応するため
 ・ユーザーごとに成績や保存問題を管理するため
 
 4. 個人情報の管理と保護
-取得した個人情報は、サイト運営者（昆 水音）が責任を持って厳重に管理し、不正アクセス、紛失、漏洩、改ざんを防ぐために適切なセキュリティ対策（Supabaseの認証・データベース機能）を講じます。
+取得した個人情報は、サイト運営者（[あなたの氏名や所属]）が責任を持って厳重に管理し、不正アクセス、紛失、漏洩、改ざんを防ぐために適切なセキュリティ対策（Supabaseの認証・データベース機能）を講じます。
 法令に基づく開示請求があった場合を除き、ご本人の同意なしに個人情報を第三者に開示・提供することはありません。
 
 5. データの保存期間と廃棄
@@ -60,7 +63,7 @@
             <button type="submit" id="registerButton" disabled>同意して登録する</button>
         </form>
         <div id="message"></div>
-        <p id="loginPrompt">アカウントをお持ちですか？ <a href="/login.html">ログイン</a></p>
+        <p>アカウントをお持ちですか？ <a href="/login.html">ログイン</a></p>
     </div>
     <script src="/auth.js"></script>
 </body>

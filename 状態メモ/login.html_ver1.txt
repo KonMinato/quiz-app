@@ -9,7 +9,7 @@
     <div class="auth-container">
         <h2>ログイン</h2>
         <form id="loginForm">
-            <input type="text" id="username" placeholder="ユーザー名" required>
+            <input type="email" id="email" placeholder="メールアドレス" required>
             <input type="password" id="password" placeholder="パスワード" required>
             <button type="submit">ログイン</button>
         </form>

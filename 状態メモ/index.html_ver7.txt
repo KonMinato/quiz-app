@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <script src="/auth-check.js"></script>
+    <title>問題作成ツール</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div class="global-header">
+        <div class="auth-links">
+            <a href="/login.html" id="loginLink" style="display: none;">ログイン</a>
+            <a href="/register.html" id="registerLink" style="display: none;">新規登録</a>
+            <button id="logoutButton" style="display: none;">ログアウト</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="app-header">
+            <h2>情報Ⅰ 問題作成ツール</h2>
+            <div class="header-actions">
+                <a href="/dashboard.html" class="dashboard-link" title="成績を見る">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                        <path d="M4 11h6a1 1 0 0 1 1 1v8H3v-8a1 1 0 0 1 1-1zm11.293-4.707L12 9.586l-3.293-3.293a1 1 0 0 1 1.414-1.414L12 6.758l2.879-2.879a1 1 0 1 1 1.414 1.414zM13 11h6a1 1 0 0 1 1 1v8h-8v-8a1 1 0 0 1 1-1z" />
+                    </svg>
+                    <span>成績</span>
+                </a>
+                <a href="/saved.html" class="dashboard-link" title="保存した問題を見る">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                        <path d="M5 3h14a2 2 0 0 1 2 2v16l-7-3.5L5 21V5a2 2 0 0 1 2-2z"/>
+                    </svg>
+                    <span>保存問題</span>
+                </a>
+            </div>
+        </header>
+
+        <div id="status"></div>
+        <div id="error"></div>
+        
+        <form id="questionForm">
+            <div class="form-group">
+                <label for="chapter">章：</label>
+                <select id="chapter" required>
+                    <option value="">章を選択してください</option>
+                    <option value="information_society">情報社会</option>
+                    <option value="information_design">情報デザイン</option>
+                    <option value="digital">デジタル</option>
+                    <option value="network">ネットワーク</option>
+                    <option value="problem">問題解決</option>
+                    <option value="programing">プログラミング</option>
+                </select>
+            </div>
+            
+            <br>
+
+            <div class="form-group">
+                <label for="tangen">単元：</label>
+                <select id="tangen" disabled>
+                    <option value="">単元を選択してください</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div class="form-group" id="subTopicSelector" style="display: none;">
+                <label>特に重点を置く項目：</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="subtopic" value="順次構造"> 順次構造</label>
+                    <label><input type="checkbox" name="subtopic" value="選択構造(if文)"> 選択構造 (if)</label>
+                    <label><input type="checkbox" name="subtopic" value="反復構造(for文)"> 反復構造 (for)</label>
+                </div>
+            </div>
+
+            <div class="form-group" id="searchTopicSelector" style="display: none;">
+                <label>探索アルゴリズムを選択：</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="searchtopic" value="線形探索"> 線形探索</label>
+                    <label><input type="checkbox" name="searchtopic" value="二分探索"> 二分探索</label>
+                </div>
+            </div>
+
+            <div class="form-group" id="sortTopicSelector" style="display: none;">
+                <label>整列アルゴリズムを選択：</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="sorttopic" value="交換法（バブルソート）"> 交換法</label>
+                    <label><input type="checkbox" name="sorttopic" value="選択法（セレクションソート）"> 選択法</label>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="form-group" id="questionTypeGroup">
+                <label for="questionType">問題種別：</label>
+                <select id="questionType" disabled>
+                    <option value="">問題種別を選択してください</option>
+                </select>
+            </div>
+            
+            <br>
+
+            <div class="form-group">
+                <label for="aiModel">AIモデル：</label>
+                <select id="aiModel">
+                    <option value="flash">Gemini Flash (速度重視)</option>
+                    <option value="pro">Gemini Pro (品質重視)</option>
+                    <option value="gpt">ChatGPT (GPT-4o mini)</option>
+                </select>
+            </div>
+            <br>
+            
+            <div class="form-group">
+                <label for="count">問題数：</label>
+                <select id="count">
+                    <option value="">問題数を選択してください</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" id="generateButton">問題を作成する</button>
+        </form>
+        <div id="statusMessage" class="status-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+        
+        <h2>生成された問題</h2>
+        <div id="outputArea" class="output-area">
+            <p class="placeholder-text">ここに生成された問題が表示されます。</p>
+        </div>
+    </div>
+
+    <a href="/toppage.html" class="return">トップへ戻る</a>
+
+    <script src="/global-header.js"></script>
+    <script src="/index.js"></script>
+</body>
+</html>

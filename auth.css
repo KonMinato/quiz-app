@@ -53,3 +53,14 @@ button:disabled {
     background-color: #95a5a6;
     cursor: not-allowed;
 }
+
+/* リアルタイムエラーメッセージ用のスタイル */
+.error-text {
+    display: none; /* 初期状態では非表示 */
+    color: #e74c3c;
+    font-size: 13px;
+    text-align: left;
+    margin-top: -10px; /* 入力欄との間隔を詰める */
+    margin-bottom: 10px;
+    padding-left: 5px;
+}

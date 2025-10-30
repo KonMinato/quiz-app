@@ -18,9 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
             q9_effort: document.querySelector('input[name="q9_effort"]:checked')?.value,
             q10_self_study: document.querySelector('input[name="q10_self_study"]:checked')?.value,
             q11_goals: document.querySelector('input[name="q11_goals"]:checked')?.value,
-            q12_importance: document.querySelector('input[name="q12_importance"]:checked')?.value,
-            q13_knowledge: document.querySelector('input[name="q13_knowledge"]:checked')?.value,
-            q14_desire_to_improve: document.querySelector('input[name="q14_desire_to_improve"]:checked')?.value,
+            // ▼▼▼【ここから追加/修正】▼▼▼
+            q12_communication: document.querySelector('input[name="q12_communication"]:checked')?.value,
+            q13_reaction: document.querySelector('input[name="q13_reaction"]:checked')?.value,
+            q14_relevance: document.querySelector('input[name="q14_relevance"]:checked')?.value,
+            q15_attendance: document.querySelector('input[name="q15_attendance"]:checked')?.value,
+            q16_participation: document.querySelector('input[name="q16_participation"]:checked')?.value,
+            q17_importance: document.querySelector('input[name="q17_importance"]:checked')?.value,
+            q18_knowledge: document.querySelector('input[name="q18_knowledge"]:checked')?.value,
+            q19_desire_to_improve: document.querySelector('input[name="q19_desire_to_improve"]:checked')?.value
+            // ▲▲▲【修正ここまで】▲▲▲
         };
 
         // 

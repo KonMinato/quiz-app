@@ -2,54 +2,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageDiv = document.getElementById('message');
     const registerForm = document.getElementById('registerForm');
     const loginForm = document.getElementById('loginForm');
-    
-    const FAKE_EMAIL_DOMAIN = '@example.com';
-
-    // ユーザー名の形式をチェックする関数
-    function validateUsername(username) {
-        const usernameRegex = /^[a-zA-Z0-9]+$/; // 半角英数字のみ
-        return usernameRegex.test(username);
-    }
 
     // 新規登録フォームの処理
     if (registerForm) {
         const agreeCheckbox = document.getElementById('agreeCheckbox');
         const registerButton = document.getElementById('registerButton');
-        const usernameInput = document.getElementById('username');
-        const usernameError = document.getElementById('usernameError');
-        const loginPrompt = document.getElementById('loginPrompt'); // ★ 追加
 
-        usernameInput.addEventListener('blur', () => {
-            const username = usernameInput.value;
-            if (username.length > 0 && !validateUsername(username)) {
-                usernameError.textContent = 'ユーザー名は半角英数字のみで入力してください。';
-                usernameError.style.display = 'block';
-            } else {
-                usernameError.textContent = '';
-                usernameError.style.display = 'none';
-            }
-        });
-
+        // チェックボックスの状態を監視
         agreeCheckbox.addEventListener('change', () => {
             registerButton.disabled = !agreeCheckbox.checked;
         });
 
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const username = usernameInput.value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
-            if (!validateUsername(username)) {
-                messageDiv.textContent = 'ユーザー名は半角英数字のみで入力してください。';
-                return;
-            }
-
-            usernameError.textContent = '';
-            usernameError.style.display = 'none';
-            messageDiv.textContent = ''; 
-
-            const email = username + FAKE_EMAIL_DOMAIN;
 
             const response = await fetch('/api/register', {
                 method: 'POST',
@@ -59,18 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
+            // ▼▼▼【ここからが修正箇所】▼▼▼
             if (response.ok) {
                 messageDiv.style.color = 'green';
+                // フォームを非表示にする
                 registerForm.style.display = 'none'; 
-                loginPrompt.style.display = 'none'; // ★ 追加
+                // 表示するメッセージを変更し、ログインページへのリンクを追加
                 messageDiv.innerHTML = `
                     <p style="font-weight: bold; font-size: 1.1em;">登録ありがとうございます！</p>
                     <p style="text-align: left; margin-top: 15px;">
-                        登録が完了しました。<br><br>
-                        <a href="/login.html">ログインページ</a>からログインしてください。
+                        確認メールを <strong>${escapeHtml(email)}</strong> 宛に送信しました。<br><br>
+                        1. メール内の「Confirm your email」リンクをクリックして、認証を完了させてください。<br>
+                        2. 認証完了後、<a href="/login.html">ログインページ</a>からログインしてください。
                     </p>
                 `;
             } else {
+            // ▲▲▲【修正箇所ここまで】▲▲▲
                 messageDiv.textContent = data.error || '登録に失敗しました。';
             }
         });
@@ -80,9 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const email = username + FAKE_EMAIL_DOMAIN;
 
             const response = await fetch('/api/login', {
                 method: 'POST',
@@ -95,14 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('supabase.auth.token', JSON.stringify(data));
                 messageDiv.style.color = 'green';
                 messageDiv.textContent = 'ログインに成功しました。';
-                window.location.href = '/toppage.html';
+                window.location.href = '/toppage.html'; // トップページに変更
             } else {
-                messageDiv.textContent = 'ユーザー名またはパスワードが間違っています。';
+                messageDiv.textContent = data.error || 'ログインに失敗しました。';
             }
         });
     }
 });
 
+// この関数をauth.jsの末尾に追加します
 function escapeHtml(str) {
     if (typeof str !== 'string') return '';
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
