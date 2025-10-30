@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="/survey-style.css">
 </head>
 <body>
+    <div class="global-header">
+        <div class="auth-links">
+            <a href="/login.html" id="loginLink" style="display: none;">ログイン</a>
+            <a href="/register.html" id="registerLink" style="display: none;">新規登録</a>
+            <button id="logoutButton" style="display: none;">ログアウト</button>
+        </div>
+    </div>
+
     <div class="container">
         <h1>事前アンケートご協力のお願い</h1>
         <p>学習支援サイトのご利用前に、いくつかの質問にお答えください。</p>
@@ -145,71 +153,69 @@
                 </div>
             </fieldset>
 
-            
-
             <fieldset class="form-group">
                 <legend>12. 情報Ⅰの授業での演習問題などは授業内容と一致していましたか</legend>
                 <div class="rating">
-                    <label><input type="radio" name="q14_relevance" value="1" required> 1</label>
-                    <label><input type="radio" name="q14_relevance" value="2"> 2</label>
-                    <label><input type="radio" name="q14_relevance" value="3"> 3</label>
-                    <label><input type="radio" name="q14_relevance" value="4"> 4</label>
-                    <label><input type="radio" name="q14_relevance" value="5"> 5</label>
+                    <label><input type="radio" name="q12_relevance" value="1" required> 1</label>
+                    <label><input type="radio" name="q12_relevance" value="2"> 2</label>
+                    <label><input type="radio" name="q12_relevance" value="3"> 3</label>
+                    <label><input type="radio" name="q12_relevance" value="4"> 4</label>
+                    <label><input type="radio" name="q12_relevance" value="5"> 5</label>
                 </div>
             </fieldset>
 
             <fieldset class="form-group">
                 <legend>13. 休まずに出席しようという意欲が起こる授業でしたか</legend>
                 <div class="rating">
-                    <label><input type="radio" name="q15_attendance" value="1" required> 1</label>
-                    <label><input type="radio" name="q15_attendance" value="2"> 2</label>
-                    <label><input type="radio" name="q15_attendance" value="3"> 3</label>
-                    <label><input type="radio" name="q15_attendance" value="4"> 4</label>
-                    <label><input type="radio" name="q15_attendance" value="5"> 5</label>
+                    <label><input type="radio" name="q13_attendance" value="1" required> 1</label>
+                    <label><input type="radio" name="q13_attendance" value="2"> 2</label>
+                    <label><input type="radio" name="q13_attendance" value="3"> 3</label>
+                    <label><input type="radio" name="q13_attendance" value="4"> 4</label>
+                    <label><input type="radio" name="q13_attendance" value="5"> 5</label>
                 </div>
             </fieldset>
 
             <fieldset class="form-group">
                 <legend>14. 授業での自分の参加態度は積極的でしたか</legend>
                 <div class="rating">
-                    <label><input type="radio" name="q16_participation" value="1" required> 1</label>
-                    <label><input type="radio" name="q16_participation" value="2"> 2</label>
-                    <label><input type="radio" name="q16_participation" value="3"> 3</label>
-                    <label><input type="radio" name="q16_participation" value="4"> 4</label>
-                    <label><input type="radio" name="q16_participation" value="5"> 5</label>
+                    <label><input type="radio" name="q14_participation" value="1" required> 1</label>
+                    <label><input type="radio" name="q14_participation" value="2"> 2</label>
+                    <label><input type="radio" name="q14_participation" value="3"> 3</label>
+                    <label><input type="radio" name="q14_participation" value="4"> 4</label>
+                    <label><input type="radio" name="q14_participation" value="5"> 5</label>
                 </div>
             </fieldset>
 
             <fieldset class="form-group">
                 <legend>15. 情報Ⅰを学習することは重要だと思いますか</legend>
                 <div class="rating">
-                    <label><input type="radio" name="q17_importance" value="1" required> 1</label>
-                    <label><input type="radio" name="q17_importance" value="2"> 2</label>
-                    <label><input type="radio" name="q17_importance" value="3"> 3</label>
-                    <label><input type="radio" name="q17_importance" value="4"> 4</label>
-                    <label><input type="radio" name="q17_importance" value="5"> 5</label>
+                    <label><input type="radio" name="q15_importance" value="1" required> 1</label>
+                    <label><input type="radio" name="q15_importance" value="2"> 2</label>
+                    <label><input type="radio" name="q15_importance" value="3"> 3</label>
+                    <label><input type="radio" name="q15_importance" value="4"> 4</label>
+                    <label><input type="radio" name="q15_importance" value="5"> 5</label>
                 </div>
             </fieldset>
 
             <fieldset class="form-group">
                 <legend>16. 情報Ⅰで習った内容に関して、現在の時点で知識・技術は身についていると思いますか</legend>
                 <div class="rating">
-                    <label><input type="radio" name="q18_knowledge" value="1" required> 1</label>
-                    <label><input type="radio" name="q18_knowledge" value="2"> 2</label>
-                    <label><input type="radio" name="q18_knowledge" value="3"> 3</label>
-                    <label><input type="radio" name="q18_knowledge" value="4"> 4</label>
-                    <label><input type="radio" name="q18_knowledge" value="5"> 5</label>
+                    <label><input type="radio" name="q16_knowledge" value="1" required> 1</label>
+                    <label><input type="radio" name="q16_knowledge" value="2"> 2</label>
+                    <label><input type="radio" name="q16_knowledge" value="3"> 3</label>
+                    <label><input type="radio" name="q16_knowledge" value="4"> 4</label>
+                    <label><input type="radio" name="q16_knowledge" value="5"> 5</label>
                 </div>
             </fieldset>
 
             <fieldset class="form-group">
                 <legend>17. 情報Ⅰで習った内容に関して、もっと知識や技術を高めたいと思いましたか</legend>
                 <div class="rating">
-                    <label><input type="radio" name="q19_desire_to_improve" value="1" required> 1</label>
-                    <label><input type="radio" name="q19_desire_to_improve" value="2"> 2</label>
-                    <label><input type="radio" name="q19_desire_to_improve" value="3"> 3</label>
-                    <label><input type="radio" name="q19_desire_to_improve" value="4"> 4</label>
-                    <label><input type="radio" name="q19_desire_to_improve" value="5"> 5</label>
+                    <label><input type="radio" name="q17_desire_to_improve" value="1" required> 1</label>
+                    <label><input type="radio" name="q17_desire_to_improve" value="2"> 2</label>
+                    <label><input type="radio" name="q17_desire_to_improve" value="3"> 3</label>
+                    <label><input type="radio" name="q17_desire_to_improve" value="4"> 4</label>
+                    <label><input type="radio" name="q17_desire_to_improve" value="5"> 5</label>
                 </div>
             </fieldset>
             <button type="submit">アンケートを送信する</button>
