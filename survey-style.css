@@ -167,6 +167,36 @@ button {
     text-align: left;
 }
 
+.ranking-group .ranking-options {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.ranking-group .ranking-options label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    gap: 5px;
+}
+.ranking-group select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+.ranking-group .ranking-none {
+    font-weight: normal;
+    font-size: 0.95rem;
+    display: flex; /* 横並びにする */
+    justify-content: center; /* 中央揃えにする */
+    align-items: center;
+    margin-top: 10px;
+}
+
 /* ▼▼▼【ここから修正】スマートフォン対応 ▼▼▼ */
 @media screen and (max-width: 768px) {
     body {
@@ -252,6 +282,18 @@ button {
         font-size: 14px;
         right: 10px;
         bottom: 10px;
+    }
+
+    .ranking-group .ranking-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .ranking-group .ranking-options label {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .ranking-group select {
+        width: 150px;
     }
 }
 /* ▲▲▲【修正ここまで】▲▲▲ */

@@ -23,7 +23,6 @@ const openai = new OpenAI({
 app.use(cors());
 app.use(express.json());
 
-// デフォルトページを register.html に設定
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'register.html'));
 });
@@ -31,7 +30,7 @@ app.get('/', (req, res) => {
 // 静的ファイルの配信設定
 app.use(express.static(__dirname));
 app.use('/word', express.static(path.join(__dirname, 'word')));
-// app.use(express.static(path.join(__dirname, '..'))); // Renderでは不要
+app.use(express.static(path.join(__dirname, '..')));
 
 // --- ユーザー認証API ---
 app.post('/api/register', async (req, res) => {
@@ -153,118 +152,6 @@ app.delete('/api/saved-questions', async (req, res) => {
     res.status(200).send();
 });
 
-// --- アンケート送信API (古い/汎用) ---
-app.post('/api/submit-survey', async (req, res) => {
-    const { role, usage, satisfaction, comments } = req.body;
-    const { error } = await supabase.from('surveys').insert([{ role, usage, satisfaction, comments }]);
-    if (error) {
-        console.error('Survey submission error:', error);
-        return res.status(500).json({ error: 'アンケートの送信に失敗しました。' });
-    }
-    res.status(200).json({ message: 'アンケートが正常に送信されました。' });
-});
-
-// --- 事前アンケート送信API ---
-app.post('/api/submit-pre-survey', async (req, res) => {
-    const { user, error: userError } = await getUser(req);
-    if (userError || !user) return res.status(401).json({ error: '認証に失敗しました。' });
-
-    const {
-        q1_realization, q2_familiarity, q3_fun, q4_understanding, q5_programming_fun,
-        q6_purpose, q7_curiosity, q8_utility, q9_effort, q10_self_study, q11_goals,
-        q12_communication, q13_reaction, q14_relevance, q15_attendance, q16_participation,
-        q17_importance, q18_knowledge, q19_desire_to_improve
-    } = req.body;
-
-    const surveyData = {
-        user_id: user.id,
-        q1_realization: parseInt(q1_realization) || null,
-        q2_familiarity: parseInt(q2_familiarity) || null,
-        q3_fun: parseInt(q3_fun) || null,
-        q4_understanding: parseInt(q4_understanding) || null,
-        q5_programming_fun: parseInt(q5_programming_fun) || null,
-        q6_purpose: parseInt(q6_purpose) || null,
-        q7_curiosity: parseInt(q7_curiosity) || null,
-        q8_utility: parseInt(q8_utility) || null,
-        q9_effort: parseInt(q9_effort) || null,
-        q10_self_study: parseInt(q10_self_study) || null,
-        q11_goals: parseInt(q11_goals) || null,
-        q12_communication: parseInt(q12_communication) || null,
-        q13_reaction: parseInt(q13_reaction) || null,
-        q14_relevance: parseInt(q14_relevance) || null,
-        q15_attendance: parseInt(q15_attendance) || null,
-        q16_participation: parseInt(q16_participation) || null,
-        q17_importance: parseInt(q17_importance) || null,
-        q18_knowledge: parseInt(q18_knowledge) || null,
-        q19_desire_to_improve: parseInt(q19_desire_to_improve) || null
-    };
-
-    const { error: dbError } = await supabase.from('pre_survey_responses').insert([surveyData]);
-
-    if (dbError) {
-        console.error('Pre-survey submission error:', dbError);
-        return res.status(500).json({ error: '事前アンケートの送信に失敗しました。' });
-    }
-    res.status(200).json({ message: '事前アンケートが正常に送信されました。' });
-});
-
-// --- 事後アンケート送信API ---
-app.post('/api/submit-post-survey', async (req, res) => {
-    const { user, error: userError } = await getUser(req);
-    if (userError || !user) return res.status(401).json({ error: '認証に失敗しました。' });
-
-    const {
-        q1_realization, q2_familiarity, q3_fun, q4_understanding, q5_programming_fun,
-        q6_purpose, q7_curiosity, q8_utility, q9_effort, q10_self_study, q11_goals,
-        q12_communication, q13_reaction, q14_relevance, q15_attendance, q16_participation,
-        q17_importance, q18_knowledge, q19_desire_to_improve,
-        q20_rank_1, q20_rank_2, q20_rank_3, q20_rank_none,
-        q21_rank_1, q21_rank_2, q21_rank_3, q21_rank_none,
-        q22_rank_1, q22_rank_2, q22_rank_3, q22_rank_none,
-        q23_ai_usability,
-        ai_comments
-    } = req.body;
-
-    const surveyData = {
-        user_id: user.id,
-        q1_realization: parseInt(q1_realization) || null,
-        q2_familiarity: parseInt(q2_familiarity) || null,
-        q3_fun: parseInt(q3_fun) || null,
-        q4_understanding: parseInt(q4_understanding) || null,
-        q5_programming_fun: parseInt(q5_programming_fun) || null,
-        q6_purpose: parseInt(q6_purpose) || null,
-        q7_curiosity: parseInt(q7_curiosity) || null,
-        q8_utility: parseInt(q8_utility) || null,
-        q9_effort: parseInt(q9_effort) || null,
-        q10_self_study: parseInt(q10_self_study) || null,
-        q11_goals: parseInt(q11_goals) || null,
-        q12_communication: parseInt(q12_communication) || null,
-        q13_reaction: parseInt(q13_reaction) || null,
-        q14_relevance: parseInt(q14_relevance) || null,
-        q15_attendance: parseInt(q15_attendance) || null,
-        q16_participation: parseInt(q16_participation) || null,
-        q17_importance: parseInt(q17_importance) || null,
-        q18_knowledge: parseInt(q18_knowledge) || null,
-        q19_desire_to_improve: parseInt(q19_desire_to_improve) || null,
-        
-        q20_rank_1, q20_rank_2, q20_rank_3, q20_rank_none,
-        q21_rank_1, q21_rank_2, q21_rank_3, q21_rank_none,
-        q22_rank_1, q22_rank_2, q22_rank_3, q22_rank_none,
-        
-        q23_ai_usability: parseInt(q23_ai_usability) || null,
-        ai_comments
-    };
-
-    const { error: dbError } = await supabase.from('post_survey_responses').insert([surveyData]);
-
-    if (dbError) {
-        console.error('Post-survey submission error:', dbError);
-        return res.status(500).json({ error: '事後アンケートの送信に失敗しました。' });
-    }
-
-    res.status(200).json({ message: '事後アンケートが正常に送信されました。' });
-});
-
 // --- 問題生成API ---
 app.post('/api/gemini', async (req, res) => {
     
@@ -277,6 +164,7 @@ app.post('/api/gemini', async (req, res) => {
         let responseText = "";
 
         if (selectedModel === 'gpt') {
+            // ▼▼▼【ここからが修正箇所】▼▼▼
             // --- ChatGPT (GPT-4o mini) を呼び出す ---
             const chatCompletion = await openai.chat.completions.create({
                 messages: [
@@ -299,6 +187,7 @@ app.post('/api/gemini', async (req, res) => {
                 temperature: 0.3,
             });
             responseText = chatCompletion.choices[0].message.content;
+            // ▲▲▲【修正箇所ここまで】▲▲▲
 
         } else {
             // --- Gemini (FlashまたはPro) を呼び出す ---

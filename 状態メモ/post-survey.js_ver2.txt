@@ -1,0 +1,48 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const surveyForm = document.getElementById('surveyForm');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+
+    surveyForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // フォームからデータを収集
+        const data = {
+            // ▼▼▼【ここから修正】17項目 + AI 4項目 + コメント ▼▼▼
+            q1_realization: document.querySelector('input[name="q1_realization"]:checked')?.value,
+            q2_familiarity: document.querySelector('input[name="q2_familiarity"]:checked')?.value,
+            q3_fun: document.querySelector('input[name="q3_fun"]:checked')?.value,
+            q4_understanding: document.querySelector('input[name="q4_understanding"]:checked')?.value,
+            q5_programming_fun: document.querySelector('input[name="q5_programming_fun"]:checked')?.value,
+            q6_purpose: document.querySelector('input[name="q6_purpose"]:checked')?.value,
+            q7_curiosity: document.querySelector('input[name="q7_curiosity"]:checked')?.value,
+            q8_utility: document.querySelector('input[name="q8_utility"]:checked')?.value,
+            q9_effort: document.querySelector('input[name="q9_effort"]:checked')?.value,
+            q10_self_study: document.querySelector('input[name="q10_self_study"]:checked')?.value,
+            q11_goals: document.querySelector('input[name="q11_goals"]:checked')?.value,
+            q12_relevance: document.querySelector('input[name="q12_relevance"]:checked')?.value,
+        q13_attendance: document.querySelector('input[name="q13_attendance"]:checked')?.value,
+            q14_participation: document.querySelector('input[name="q14_participation"]:checked')?.value,
+            q15_importance: document.querySelector('input[name="q15_importance"]:checked')?.value,
+            q16_knowledge: document.querySelector('input[name="q16_knowledge"]:checked')?.value,
+            q17_desire_to_improve: document.querySelector('input[name="q17_desire_to_improve"]:checked')?.value,
+            
+            q18_ai_difficulty: document.querySelector('input[name="q18_ai_difficulty"]:checked')?.value,
+            q19_ai_speed: document.querySelector('input[name="q19_ai_speed"]:checked')?.value,
+            q20_ai_relevance: document.querySelector('input[name="q20_ai_relevance"]:checked')?.value,
+            q21_ai_usability: document.querySelector('input[name="q21_ai_usability"]:checked')?.value,
+            ai_comments: document.getElementById('ai_comments').value
+            // ▲▲▲【修正ここまで】▲▲▲
+        };
+        
+        // 
+        // ここに将来、データをSupabaseに送信する処理を記述します。
+        // （/api/submit-post-survey のような、事前アンケートとは別のAPIエンドポイントが必要です）
+        //
+        
+        // フォームを非表示にし、サンキューメッセージを表示
+        surveyForm.style.display = 'none';
+        thankYouMessage.style.display = 'block';
+
+        alert('アンケートにご協力いただき、ありがとうございます！');
+    });
+});

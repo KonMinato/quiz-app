@@ -2,26 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const surveyForm = document.getElementById('surveyForm');
     const thankYouMessage = document.getElementById('thankYouMessage');
 
-    // ▼▼▼【ここから追加】認証ヘッダー取得関数 ▼▼▼
-    function getAuthHeaders() {
-        const authData = JSON.parse(localStorage.getItem('supabase.auth.token'));
-        if (!authData || !authData.session || !authData.session.access_token) {
-            alert('セッションが切れました。再度ログインしてください。');
-            window.location.href = 'login.html';
-            return null;
-        }
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + authData.session.access_token
-        };
-    }
-    // ▲▲▲【追加ここまで】▲▲▲
-
-    surveyForm.addEventListener('submit', async (e) => { // ★ asyncを追加
+    surveyForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         // フォームからデータを収集
         const data = {
+            // ▼▼▼【ここから修正】19項目 + AI 4項目 + コメント ▼▼▼
             q1_realization: document.querySelector('input[name="q1_realization"]:checked')?.value,
             q2_familiarity: document.querySelector('input[name="q2_familiarity"]:checked')?.value,
             q3_fun: document.querySelector('input[name="q3_fun"]:checked')?.value,
@@ -40,35 +26,25 @@ document.addEventListener('DOMContentLoaded', () => {
             q16_participation: document.querySelector('input[name="q16_participation"]:checked')?.value,
             q17_importance: document.querySelector('input[name="q17_importance"]:checked')?.value,
             q18_knowledge: document.querySelector('input[name="q18_knowledge"]:checked')?.value,
-            q19_desire_to_improve: document.querySelector('input[name="q19_desire_to_improve"]:checked')?.value
+            q19_desire_to_improve: document.querySelector('input[name="q19_desire_to_improve"]:checked')?.value,
+            
+            q20_ai_difficulty: document.querySelector('input[name="q20_ai_difficulty"]:checked')?.value,
+            q21_ai_speed: document.querySelector('input[name="q21_ai_speed"]:checked')?.value,
+            q22_ai_relevance: document.querySelector('input[name="q22_ai_relevance"]:checked')?.value,
+            q23_ai_usability: document.querySelector('input[name="q23_ai_usability"]:checked')?.value,
+            ai_comments: document.getElementById('ai_comments').value
+            // ▲▲▲【修正ここまで】▲▲▲
         };
+        
+        // 
+        // ここに将来、データをSupabaseに送信する処理を記述します。
+        // （/api/submit-post-survey のような、事前アンケートとは別のAPIエンドポイントが必要です）
+        //
+        
+        // フォームを非表示にし、サンキューメッセージを表示
+        surveyForm.style.display = 'none';
+        thankYouMessage.style.display = 'block';
 
-        // ▼▼▼【ここから修正】データをSupabaseに送信 ▼▼▼
-        try {
-            const headers = getAuthHeaders();
-            if (!headers) return; // 認証ヘッダーがなければ処理中断
-
-            const response = await fetch('/api/submit-pre-survey', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'サーバーへの送信に失敗しました。');
-            }
-
-            // フォームを非表示にし、サンキューメッセージを表示
-            surveyForm.style.display = 'none';
-            thankYouMessage.style.display = 'block';
-
-            alert('アンケートにご協力いただき、ありがとうございます！');
-
-        } catch (error) {
-            console.error('アンケート送信エラー:', error);
-            alert('エラーが発生しました。もう一度お試しください。\n' + error.message);
-        }
-        // ▲▲▲【修正ここまで】▲▲▲
+        alert('アンケートにご協力いただき、ありがとうございます！');
     });
 });
