@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const surveyForm = document.getElementById('surveyForm');
     const thankYouMessage = document.getElementById('thankYouMessage');
 
+    // ▼▼▼【ここから追加】認証ヘッダー取得関数 ▼▼▼
     function getAuthHeaders() {
         const authData = JSON.parse(localStorage.getItem('supabase.auth.token'));
         if (!authData || !authData.session || !authData.session.access_token) {
@@ -14,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
             'Authorization': 'Bearer ' + authData.session.access_token
         };
     }
+    // ▲▲▲【追加ここまで】▲▲▲
 
-    surveyForm.addEventListener('submit', async (e) => {
+    surveyForm.addEventListener('submit', async (e) => { // ★ asyncを追加
         e.preventDefault();
 
+        // フォームからデータを収集
         const data = {
             q1_realization: document.querySelector('input[name="q1_realization"]:checked')?.value,
             q2_familiarity: document.querySelector('input[name="q2_familiarity"]:checked')?.value,
@@ -40,9 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
             q19_desire_to_improve: document.querySelector('input[name="q19_desire_to_improve"]:checked')?.value
         };
 
+        // ▼▼▼【ここから修正】データをSupabaseに送信 ▼▼▼
         try {
             const headers = getAuthHeaders();
-            if (!headers) return;
+            if (!headers) return; // 認証ヘッダーがなければ処理中断
 
             const response = await fetch('/api/submit-pre-survey', {
                 method: 'POST',
@@ -50,30 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(data)
             });
 
-            // ▼▼▼【ここから修正】エラーハンドリングを強化 ▼▼▼
             if (!response.ok) {
                 const errorData = await response.json();
-                // 409 (回答済み) エラーの場合
-                if (response.status === 409) {
-                    alert(errorData.error); // 「このアンケートは既に回答済みです。」
-                    surveyForm.style.display = 'none';
-                    thankYouMessage.querySelector('h2').textContent = 'ご回答済みです';
-                    thankYouMessage.querySelector('p').textContent = '既にこのアンケートには回答いただいています。ご協力ありがとうございました。';
-                    thankYouMessage.style.display = 'block';
-                } else {
-                    throw new Error(errorData.error || 'サーバーへの送信に失敗しました。');
-                }
-                return; // 処理を中断
+                throw new Error(errorData.error || 'サーバーへの送信に失敗しました。');
             }
-            // ▲▲▲【修正ここまで】▲▲▲
 
+            // フォームを非表示にし、サンキューメッセージを表示
             surveyForm.style.display = 'none';
             thankYouMessage.style.display = 'block';
+
             alert('アンケートにご協力いただき、ありがとうございます！');
 
         } catch (error) {
             console.error('アンケート送信エラー:', error);
             alert('エラーが発生しました。もう一度お試しください。\n' + error.message);
         }
+        // ▲▲▲【修正ここまで】▲▲▲
     });
 });

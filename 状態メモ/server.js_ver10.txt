@@ -169,24 +169,6 @@ app.post('/api/submit-pre-survey', async (req, res) => {
     const { user, error: userError } = await getUser(req);
     if (userError || !user) return res.status(401).json({ error: '認証に失敗しました。' });
 
-    // 1. 既に回答済みかチェック
-    const { data: existing, error: checkError } = await supabase
-        .from('pre_survey_responses')
-        .select('id')
-        .eq('user_id', user.id)
-        .limit(1);
-
-    if (checkError) {
-        console.error('Pre-survey check error:', checkError);
-        return res.status(500).json({ error: 'アンケート履歴の確認に失敗しました。' });
-    }
-
-    // 2. 既に存在する場合は 409 Conflict エラーを返す
-    if (existing.length > 0) {
-        return res.status(409).json({ error: 'このアンケートは既に回答済みです。' }); 
-    }
-
-    // 3. 存在しない場合のみ、データを挿入
     const {
         q1_realization, q2_familiarity, q3_fun, q4_understanding, q5_programming_fun,
         q6_purpose, q7_curiosity, q8_utility, q9_effort, q10_self_study, q11_goals,
@@ -231,24 +213,6 @@ app.post('/api/submit-post-survey', async (req, res) => {
     const { user, error: userError } = await getUser(req);
     if (userError || !user) return res.status(401).json({ error: '認証に失敗しました。' });
 
-    // 1. 既に回答済みかチェック
-    const { data: existing, error: checkError } = await supabase
-        .from('post_survey_responses')
-        .select('id')
-        .eq('user_id', user.id)
-        .limit(1);
-
-    if (checkError) {
-        console.error('Post-survey check error:', checkError);
-        return res.status(500).json({ error: 'アンケート履歴の確認に失敗しました。' });
-    }
-
-    // 2. 既に存在する場合は 409 Conflict エラーを返す
-    if (existing.length > 0) {
-        return res.status(409).json({ error: 'このアンケートは既に回答済みです。' }); 
-    }
-
-    // 3. 存在しない場合のみ、データを挿入
     const {
         q1_realization, q2_familiarity, q3_fun, q4_understanding, q5_programming_fun,
         q6_purpose, q7_curiosity, q8_utility, q9_effort, q10_self_study, q11_goals,

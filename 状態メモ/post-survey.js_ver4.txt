@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const surveyForm = document.getElementById('surveyForm');
     const thankYouMessage = document.getElementById('thankYouMessage');
 
-    // --- 認証済みAPIリクエストのためのヘッダーを生成 ---
+    // ▼▼▼【ここから追加】認証ヘッダー取得関数 ▼▼▼
     function getAuthHeaders() {
         const authData = JSON.parse(localStorage.getItem('supabase.auth.token'));
         if (!authData || !authData.session || !authData.session.access_token) {
@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'Authorization': 'Bearer ' + authData.session.access_token
         };
     }
+    // ▲▲▲【追加ここまで】▲▲▲
 
-    // --- 順位付けのロジック ---
+    // --- 順位付けのロジック (変更なし) ---
     function setupRankingGroup(groupName) {
         const selects = [
             document.querySelector(`select[name="${groupName}_rank_1"]`),
@@ -25,68 +26,48 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
         const noneCheckbox = document.querySelector(`input[name="${groupName}_rank_none"]`);
 
-        // 他のドロップダウンで選択済みの選択肢を無効化する関数
         function updateDropdowns() {
-            const selectedValues = selects.map(s => s.value); // このグループで選択中の全（3つ）の値
-
+            const selectedValues = selects.map(s => s.value);
             selects.forEach(currentSelect => {
                 Array.from(currentSelect.options).forEach(option => {
-                    if (option.value === "") { // 「選択」オプションは常に有効
-                        option.disabled = false;
-                        return;
-                    }
-                    
-                    // 「他の」ドロップダウンで選択されているか
+                    if (option.value === "") { option.disabled = false; return; }
                     const isSelectedElsewhere = selectedValues.includes(option.value);
-                    // 「この」ドロップダウンで選択されているか
                     const isSelectedHere = (currentSelect.value === option.value);
-
-                    // 他で選択されている、かつ、自分で選択したものでないなら無効化
                     option.disabled = (isSelectedElsewhere && !isSelectedHere);
                 });
             });
         }
 
-        // 「差はなし」チェックボックスの処理
         noneCheckbox.addEventListener('change', () => {
             if (noneCheckbox.checked) {
-                // チェックされたら、ドロップダウンを無効化＆クリア
                 selects.forEach((select) => {
                     select.disabled = true;
                     select.value = "";
                 });
             } else {
-                // チェックが外されたら、ドロップダウンを有効化
                 selects.forEach(select => {
                     select.disabled = false;
                 });
             }
-            updateDropdowns(); // オプションの有効/無効状態をリセット
+            updateDropdowns();
         });
 
-        // ドロップダウンが変更された時の処理
         selects.forEach(select => {
             select.addEventListener('change', () => {
-                // 何か選択されたら、「差はなし」のチェックを外す
                 if (select.value !== "") {
                     noneCheckbox.checked = false;
                 }
-                // 他のドロップダウンの選択肢を更新
                 updateDropdowns();
             });
         });
-
-        // 初期読み込み時にも一度実行（ブラウザが値を記憶している場合のため）
         updateDropdowns();
     }
-
-    // 3つの質問グループにロジックを適用
     setupRankingGroup('q20');
     setupRankingGroup('q21');
     setupRankingGroup('q22');
     // --- 順位付けロジックここまで ---
 
-    surveyForm.addEventListener('submit', async (e) => {
+    surveyForm.addEventListener('submit', async (e) => { // ★ asyncを追加
         e.preventDefault();
 
         // フォームからデータを収集
@@ -130,10 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ai_comments: document.getElementById('ai_comments').value
         };
         
-        // データをSupabaseに送信
+        // ▼▼▼【ここから修正】データをSupabaseに送信 ▼▼▼
         try {
             const headers = getAuthHeaders();
-            if (!headers) return; // 認証ヘッダーがなければ処理中断
+            if (!headers) return;
 
             const response = await fetch('/api/submit-post-survey', {
                 method: 'POST',
@@ -143,20 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                // 409 (回答済み) エラーの場合
-                if (response.status === 409) {
-                    alert(errorData.error); // 「このアンケートは既に回答済みです。」
-                    surveyForm.style.display = 'none';
-                    thankYouMessage.querySelector('h2').textContent = 'ご回答済みです';
-                    thankYouMessage.querySelector('p').textContent = '既にこのアンケートには回答いただいています。ご協力ありがとうございました。';
-                    thankYouMessage.style.display = 'block';
-                } else {
-                    throw new Error(errorData.error || 'サーバーへの送信に失敗しました。');
-                }
-                return; // 処理を中断
+                throw new Error(errorData.error || 'サーバーへの送信に失敗しました。');
             }
 
-            // 成功したらメッセージを表示
             surveyForm.style.display = 'none';
             thankYouMessage.style.display = 'block';
 
@@ -166,5 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('アンケート送信エラー:', error);
             alert('エラーが発生しました。もう一度お試しください。\n' + error.message);
         }
+        // ▲▲▲【修正ここまで】▲▲▲
     });
 });
